@@ -1,6 +1,5 @@
 package com.example.conference.dao;
 
-import com.example.conference.dao.implementation.DataBaseSelector;
 import com.example.conference.exceptions.DBException;
 import com.example.conference.exceptions.Messages;
 

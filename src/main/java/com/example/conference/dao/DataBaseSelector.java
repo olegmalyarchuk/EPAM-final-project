@@ -1,4 +1,4 @@
-package com.example.conference.dao.implementation;
+package com.example.conference.dao;
 
 public enum DataBaseSelector {
     MY_SQL {
