@@ -10,6 +10,9 @@ public class Speaker_preposition implements Serializable {
     private int speaker_id;
     private User speaker;
 
+    public Speaker_preposition() {
+    }
+
     public Speaker_preposition(int id) {
         this.id = id;
     }

@@ -1,6 +1,7 @@
 package com.example.conference.entity;
 
 import java.io.Serializable;
+import java.lang.annotation.Target;
 
 public class Reports implements Serializable {
     private static final long serialVersionUID = 182926643433707L;
@@ -11,6 +12,10 @@ public class Reports implements Serializable {
     private String report_name_en;
 
     private Report_speakers report_speaker;
+
+    public Reports() {
+
+    }
 
     public Reports(int report_id) {
         this.report_id = report_id;
