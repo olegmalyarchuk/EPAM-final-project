@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class EventImpl extends GenericAbstractDao<Events> implements IEventDao {
+public class EventDaoImpl extends GenericAbstractDao<Events> implements IEventDao {
     private Connection connection;
     public static final String SQL_SELECT_BASE = "select * from events order by event_id;";
     public static final String SQL_SELECT_ALL = "select * from events order by event_id;";
@@ -61,7 +61,7 @@ public class EventImpl extends GenericAbstractDao<Events> implements IEventDao {
         }
     };
 
-    public EventImpl(Connection connection) {
+    public EventDaoImpl(Connection connection) {
         super.setMapperToDB(mapperToDB);
         super.setMapperFromDB(mapperFromDB);
         this.connection = connection;

@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReportsImpl extends GenericAbstractDao<Reports> implements IReportDao {
+public class ReportsDaoImpl extends GenericAbstractDao<Reports> implements IReportDao {
     private Connection connection;
     public static final String SQL_SELECT_BASE = "select * from reports order by report_id;";
     public static final String SQL_SELECT_ALL = "select * from reports order by report_id;";
@@ -38,7 +38,7 @@ public class ReportsImpl extends GenericAbstractDao<Reports> implements IReportD
 
     };
 
-    public ReportsImpl(Connection connection) {
+    public ReportsDaoImpl(Connection connection) {
         super.setMapperToDB(mapperToDB);
         super.setMapperFromDB(mapperFromDB);
         this.connection = connection;

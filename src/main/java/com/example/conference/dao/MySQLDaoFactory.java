@@ -2,10 +2,8 @@ package com.example.conference.dao;
 
 import com.example.conference.dao.implementation.*;
 import com.example.conference.exceptions.DBException;
-import org.apache.commons.dbcp2.BasicDataSource;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
 public class MySQLDaoFactory extends DaoFactory{
 
@@ -24,42 +22,42 @@ public class MySQLDaoFactory extends DaoFactory{
 
     @Override
     public IUserRolesDao getUserRolesDao() {
-        return new UserRolesImpl(connection);
+        return new UserRolesDaoImpl(connection);
     }
 
     @Override
     public IEventDao getEventDao() {
-        return new EventImpl(connection);
+        return new EventDaoImpl(connection);
     }
 
     @Override
     public IReportDao getReportDao() {
-        return new ReportsImpl(connection);
+        return new ReportsDaoImpl(connection);
     }
 
     @Override
     public IReportSpeakerDao getReportSpeakersDao() {
-        return new ReportSpeakerImpl(connection);
+        return new ReportSpeakerDaoImpl(connection);
     }
 
     @Override
     public IEventUsersDao getEventUsersDao() {
-        return new EventUsersImpl(connection);
+        return new EventUsersDaoImpl(connection);
     }
 
     @Override
     public IReportPrepositionDao getReportPrepositionDao() {
-        return new ReportPrepositionImpl(connection);
+        return new ReportPrepositionDaoImpl(connection);
     }
 
     @Override
     public ISpeakerPrepositionDao getSpeakerPrepositionDao() {
-        return new SpeakerPrepositionImpl(connection);
+        return new SpeakerPrepositionDaoImpl(connection);
     }
 
     @Override
     public IModeratorPrepositionDao getModeratorPrepositionDao() {
-        return new ModeratorPrepositionImpl(connection);
+        return new ModeratorPrepositionDaoImpl(connection);
     }
 
 }

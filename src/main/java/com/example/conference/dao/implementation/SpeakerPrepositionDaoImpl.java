@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SpeakerPrepositionImpl extends GenericAbstractDao<Speaker_preposition> implements ISpeakerPrepositionDao {
+public class SpeakerPrepositionDaoImpl extends GenericAbstractDao<Speaker_preposition> implements ISpeakerPrepositionDao {
    private Connection connection;
     public static final String SQL_SELECT_BASE = "select * from speaker_preposition order by id;";
     public static final String SQL_SELECT_ALL = "select * from speaker_preposition order by id;";
@@ -39,7 +39,7 @@ public class SpeakerPrepositionImpl extends GenericAbstractDao<Speaker_prepositi
         speaker_preposition.setReport_id(resultSet.getInt("report_id"));
     };
 
-    public SpeakerPrepositionImpl(Connection connection) {
+    public SpeakerPrepositionDaoImpl(Connection connection) {
         super.setMapperToDB(mapperToDB);
         super.setMapperFromDB(mapperFromDB);
         this.connection = connection;

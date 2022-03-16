@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ModeratorPrepositionImpl extends GenericAbstractDao<Moderator_preposition> implements IModeratorPrepositionDao {
+public class ModeratorPrepositionDaoImpl extends GenericAbstractDao<Moderator_preposition> implements IModeratorPrepositionDao {
     private Connection connection;
     public static final String SQL_SELECT_BASE = "select * from moderator_preposition order by id;";
     public static final String SQL_SELECT_ALL = "select * from moderator_preposition order by id;";
@@ -35,7 +35,7 @@ public class ModeratorPrepositionImpl extends GenericAbstractDao<Moderator_prepo
         moderator_preposition.setReport_id(resultSet.getInt("report_id"));
     };
 
-    public ModeratorPrepositionImpl(Connection connection) {
+    public ModeratorPrepositionDaoImpl(Connection connection) {
         super.setMapperToDB(mapperToDB);
         super.setMapperFromDB(mapperFromDB);
         this.connection = connection;

@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReportPrepositionImpl extends GenericAbstractDao<Report_preposition> implements IReportPrepositionDao {
+public class ReportPrepositionDaoImpl extends GenericAbstractDao<Report_preposition> implements IReportPrepositionDao {
     private Connection connection;
     public static final String SQL_SELECT_BASE = "select * from report_preposition order by id;";
     public static final String SQL_SELECT_ALL = "select * from report_preposition order by id;";
@@ -39,7 +39,7 @@ public class ReportPrepositionImpl extends GenericAbstractDao<Report_preposition
         report_preposition.setReport_name_en(resultSet.getString("report_name_en"));
     };
 
-    public ReportPrepositionImpl(Connection connection) {
+    public ReportPrepositionDaoImpl(Connection connection) {
         super.setMapperToDB(mapperToDB);
         super.setMapperFromDB(mapperFromDB);
         this.connection = connection;

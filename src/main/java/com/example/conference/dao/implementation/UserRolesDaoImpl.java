@@ -13,7 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class UserRolesImpl extends GenericAbstractDao<User_roles> implements IUserRolesDao {
+public class UserRolesDaoImpl extends GenericAbstractDao<User_roles> implements IUserRolesDao {
     private Connection connection;
     public static final String SQL_SELECT_BY_ROLE = "SELECT * FROM user_roles WHERE role_description=?";
     public static final String SQL_SELECT_BASE = "SELECT * FROM user_roles ORDER BY role_id";
@@ -34,7 +34,7 @@ public class UserRolesImpl extends GenericAbstractDao<User_roles> implements IUs
         user_roles.setRole_description(resultSet.getString("role_description"));
     };
 
-    public UserRolesImpl(Connection connection) {
+    public UserRolesDaoImpl(Connection connection) {
         this.connection = connection;
         super.setMapperToDB(mapperToDB);
         super.setMapperFromDB(mapperFromDB);

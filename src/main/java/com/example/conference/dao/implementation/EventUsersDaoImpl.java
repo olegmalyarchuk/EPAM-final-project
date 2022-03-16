@@ -16,7 +16,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventUsersImpl extends GenericAbstractDao<Event_users> implements IEventUsersDao {
+public class EventUsersDaoImpl extends GenericAbstractDao<Event_users> implements IEventUsersDao {
     private Connection connection;
     public static final String SQL_SELECT_BASE = "select * from event_users order by id;";
     public static final String SQL_SELECT_ALL = "select * from event_users order by id;";
@@ -41,7 +41,7 @@ public class EventUsersImpl extends GenericAbstractDao<Event_users> implements I
        event_users.setPresent(resultSet.getBoolean("present"));
     };
 
-    public EventUsersImpl(Connection connection) {
+    public EventUsersDaoImpl(Connection connection) {
         super.setMapperToDB(mapperToDB);
         super.setMapperFromDB(mapperFromDB);
         this.connection = connection;

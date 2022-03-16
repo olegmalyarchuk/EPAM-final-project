@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReportSpeakerImpl extends GenericAbstractDao<Report_speakers> implements IReportSpeakerDao {
+public class ReportSpeakerDaoImpl extends GenericAbstractDao<Report_speakers> implements IReportSpeakerDao {
     private Connection connection;
     public static final String SQL_SELECT_BASE = "select * from reports_speakers order by id;";
     public static final String SQL_SELECT_ALL = "select * from reports_speakers order by id;";
@@ -38,7 +38,7 @@ public class ReportSpeakerImpl extends GenericAbstractDao<Report_speakers> imple
         reports_speakers.setSpeaker_id(resultSet.getInt("speaker_id"));
     };
 
-    public ReportSpeakerImpl(Connection connection) {
+    public ReportSpeakerDaoImpl(Connection connection) {
         super.setMapperToDB(mapperToDB);
         super.setMapperFromDB(mapperFromDB);
         this.connection = connection;
