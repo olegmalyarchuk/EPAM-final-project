@@ -4,10 +4,30 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
+    <display-name>Conference</display-name>
+
     <resource-ref>
         <res-ref-name>jdbc/conferences</res-ref-name>
         <res-type>javax.sql.DataSource</res-type>
         <res-auth>Container</res-auth>
     </resource-ref>
+
+    <filter>
+        <filter-name>charsetFilter</filter-name>
+        <filter-class>com.example.conference.filter.CharsetFilterr</filter-class>
+        <init-param>
+            <param-name>requestEncoding</param-name>
+            <param-value>UTF8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>responseEncoding</param-name>
+            <param-value>cp1251</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>charsetFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
 </web-app>
