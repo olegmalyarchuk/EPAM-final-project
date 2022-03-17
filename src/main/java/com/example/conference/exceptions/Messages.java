@@ -51,4 +51,12 @@ public class Messages {
 
     public static final String ERR_DATA_BASE_NOT_SUPPORTED = "Data base not supported";
 
+    public static final String ERR_CANNOT_ROLL_BACK = "Cannot rollback transaction";
+
+    public static final String ERR_CANNOT_COMMIT = "Cannot commit transaction";
+
+    public static final String ERR_BEGIN_TRANSACTION = "Cannot begin transaction";
+
+    public static final String ERR_CLOSE_TRANSACTION = "Cannot close transaction";
+
 }

@@ -26,60 +26,165 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public Integer calculateUsersNumber() throws DBException {
-        Integer result = userDao.calculateUsersNumber();
+    public Integer calculateUsersNumber() {
+        Integer result = 0;
+        try {
+            daoFactory.beginTransaction();
+            userDao = daoFactory.getUserDao();
+            result = userDao.calculateUsersNumber();
+            daoFactory.commitTransaction();
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
         return result;
     }
 
     @Override
-    public List<User> findAllUsersInDB() throws DBException {
+    public List<User> findAllUsersInDB(){
         List<User> users = new ArrayList<>();
-        users = userDao.findAllUsersInDB();
+        try {
+            daoFactory.open();
+            userDao = daoFactory.getUserDao();
+            users = new ArrayList<>();
+            users = userDao.findAllUsersInDB();
+            daoFactory.close();
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
         return users;
     }
 
     @Override
-    public List<User> findUsers(Integer first, Integer offset) throws DBException {
-        return userDao.findUsers(first, offset);
+    public List<User> findUsers(Integer first, Integer offset) {
+        List<User> users = new ArrayList<>();
+        try {
+            daoFactory.open();
+            userDao = daoFactory.getUserDao();
+            users = new ArrayList<>();
+            users = userDao.findUsers(first, offset);
+            daoFactory.close();
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+        return users;
     }
 
     @Override
-    public List<User> findUserByRole(User_roles user_roles) throws DBException {
-        return userDao.findUserByRole(user_roles);
+    public List<User> findUserByRole(User_roles user_roles) {
+        List<User> users = new ArrayList<>();
+        try {
+            daoFactory.open();
+            userDao = daoFactory.getUserDao();
+            users = new ArrayList<>();
+            users = userDao.findUserByRole(user_roles);
+            daoFactory.close();
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+        return users;
     }
 
     @Override
-    public User findUserById(Integer id) throws DBException {
-        return userDao.findUserById(id);
+    public User findUserById(Integer id) {
+        User user = null;
+        try {
+            daoFactory.open();
+            userDao = daoFactory.getUserDao();
+            user = userDao.findUserById(id);
+            daoFactory.close();
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+        return user;
     }
 
     @Override
-    public User findUserByEmail(String email) throws DBException {
-        return userDao.findUserByEmail(email);
+    public User findUserByEmail(String email) {
+        User user = null;
+        try {
+            daoFactory.open();
+            userDao = daoFactory.getUserDao();
+            user = userDao.findUserByEmail(email);
+            daoFactory.close();
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+        return user;
     }
 
     @Override
-    public boolean addUserToDB(User user) {
-        return userDao.addUserToDB(user);
+    public synchronized boolean addUserToDB(User user) {
+        boolean result;
+        try {
+            daoFactory.beginTransaction();
+            userDao = daoFactory.getUserDao();
+            result = userDao.addUserToDB(user);
+            daoFactory.commitTransaction();
+        } catch (DBException e) {
+           // e.printStackTrace();
+            return false;
+        }
+        return result;
     }
 
     @Override
-    public boolean updateUserInDB(User user) {
-        return userDao.updateUserInDB(user);
+    public synchronized boolean updateUserInDB(User user) {
+
+        boolean result;
+        try {
+            daoFactory.beginTransaction();
+            userDao = daoFactory.getUserDao();
+            result = userDao.updateUserInDB(user);
+            daoFactory.commitTransaction();
+        } catch (DBException e) {
+            // e.printStackTrace();
+            return false;
+        }
+        return result;
     }
 
     @Override
-    public boolean deleteUserFromDB(User user) {
-        return userDao.deleteUserFromDB(user);
+    public synchronized boolean deleteUserFromDB(User user) {
+        boolean result;
+        try {
+            daoFactory.beginTransaction();
+            userDao = daoFactory.getUserDao();
+            result = userDao.deleteUserFromDB(user);
+            daoFactory.commitTransaction();
+        } catch (DBException e) {
+            // e.printStackTrace();
+            return false;
+        }
+        return result;
     }
 
     @Override
     public List<User> findAvailableSpeakersForPrepositionByReport(int reportId) {
-        return userDao.findAvailableSpeakersForPrepositionByReport(reportId);
+        List<User> users = new ArrayList<>();
+        try {
+            daoFactory.open();
+            userDao = daoFactory.getUserDao();
+            users = new ArrayList<>();
+            users = userDao.findAvailableSpeakersForPrepositionByReport(reportId);
+            daoFactory.close();
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+        return users;
     }
 
     @Override
-    public boolean updateUserImagePath(User user) {
-        return userDao.updateUserImagePath(user);
+    public synchronized boolean updateUserImagePath(User user) {
+        boolean result;
+        try {
+            daoFactory.beginTransaction();
+            userDao = daoFactory.getUserDao();
+            result = userDao.updateUserImagePath(user);
+            daoFactory.commitTransaction();
+        } catch (DBException e) {
+            // e.printStackTrace();
+            return false;
+        }
+        return result;
     }
 }

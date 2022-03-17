@@ -5,9 +5,11 @@ import com.example.conference.dao.DataBaseSelector;
 import com.example.conference.dao.IModeratorPrepositionDao;
 import com.example.conference.dao.IUserDao;
 import com.example.conference.entity.Moderator_preposition;
+import com.example.conference.entity.User;
 import com.example.conference.exceptions.DBException;
 import com.example.conference.service.IModeratorPrepositionService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ModeratorPrepositionService implements IModeratorPrepositionService {
@@ -26,36 +28,105 @@ public class ModeratorPrepositionService implements IModeratorPrepositionService
 
     @Override
     public Integer calculateModeratorPrepositionNumber() throws DBException {
-        return moderatorPrepositionDao.calculateModeratorPrepositionNumber();
+        Integer result = 0;
+        try {
+            daoFactory.beginTransaction();
+            moderatorPrepositionDao = daoFactory.getModeratorPrepositionDao();
+            result = moderatorPrepositionDao.calculateModeratorPrepositionNumber();
+            daoFactory.commitTransaction();
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     @Override
     public List<Moderator_preposition> findAllModeratorPrepositionInDB() throws DBException {
-        return moderatorPrepositionDao.findAllModeratorPrepositionInDB();
+        List<Moderator_preposition> moderator_prepositions = new ArrayList<>();
+        try {
+            daoFactory.open();
+            moderatorPrepositionDao = daoFactory.getModeratorPrepositionDao();
+            moderator_prepositions = new ArrayList<>();
+            moderator_prepositions = moderatorPrepositionDao.findAllModeratorPrepositionInDB();
+            daoFactory.close();
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+        return moderator_prepositions;
     }
 
     @Override
     public List<Moderator_preposition> findModeratorPreposition(Integer first, Integer offset) throws DBException {
-        return moderatorPrepositionDao.findModeratorPreposition(first, offset);
+        List<Moderator_preposition> moderator_prepositions = new ArrayList<>();
+        try {
+            daoFactory.open();
+            moderatorPrepositionDao = daoFactory.getModeratorPrepositionDao();
+            moderator_prepositions = new ArrayList<>();
+            moderator_prepositions = moderatorPrepositionDao.findModeratorPreposition(first, offset);
+            daoFactory.close();
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+        return moderator_prepositions;
     }
 
     @Override
-    public boolean addModeratorPrepositionToDB(Moderator_preposition moderator_preposition) {
-        return moderatorPrepositionDao.addModeratorPrepositionToDB(moderator_preposition);
+    public synchronized boolean addModeratorPrepositionToDB(Moderator_preposition moderator_preposition) {
+        boolean result;
+        try {
+            daoFactory.beginTransaction();
+            moderatorPrepositionDao = daoFactory.getModeratorPrepositionDao();
+            result = moderatorPrepositionDao.addModeratorPrepositionToDB(moderator_preposition);
+            daoFactory.commitTransaction();
+        } catch (DBException e) {
+            // e.printStackTrace();
+            return false;
+        }
+        return result;
     }
 
     @Override
-    public boolean updateModeratorPrepositionInDB(Moderator_preposition moderator_preposition) {
-        return moderatorPrepositionDao.updateModeratorPrepositionInDB(moderator_preposition);
+    public synchronized boolean updateModeratorPrepositionInDB(Moderator_preposition moderator_preposition) {
+        boolean result;
+        try {
+            daoFactory.beginTransaction();
+            moderatorPrepositionDao = daoFactory.getModeratorPrepositionDao();
+            result = moderatorPrepositionDao.updateModeratorPrepositionInDB(moderator_preposition);
+            daoFactory.commitTransaction();
+        } catch (DBException e) {
+            // e.printStackTrace();
+            return false;
+        }
+        return result;
     }
 
     @Override
-    public boolean deleteModeratorPrepositionFromDB(Moderator_preposition moderator_preposition) {
-        return moderatorPrepositionDao.deleteModeratorPrepositionFromDB(moderator_preposition);
+    public synchronized boolean deleteModeratorPrepositionFromDB(Moderator_preposition moderator_preposition) {
+        boolean result;
+        try {
+            daoFactory.beginTransaction();
+            moderatorPrepositionDao = daoFactory.getModeratorPrepositionDao();
+            result = moderatorPrepositionDao.deleteModeratorPrepositionFromDB(moderator_preposition);
+            daoFactory.commitTransaction();
+        } catch (DBException e) {
+            // e.printStackTrace();
+            return false;
+        }
+        return result;
     }
 
     @Override
-    public boolean deleteProposal(Moderator_preposition moderator_preposition) {
-        return moderatorPrepositionDao.deleteProposal(moderator_preposition);
+    public synchronized boolean deleteProposal(Moderator_preposition moderator_preposition) {
+        boolean result;
+        try {
+            daoFactory.beginTransaction();
+            moderatorPrepositionDao = daoFactory.getModeratorPrepositionDao();
+            result = moderatorPrepositionDao.deleteProposal(moderator_preposition);
+            daoFactory.commitTransaction();
+        } catch (DBException e) {
+            // e.printStackTrace();
+            return false;
+        }
+        return result;
     }
 }

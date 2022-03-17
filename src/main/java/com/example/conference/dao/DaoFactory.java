@@ -63,7 +63,40 @@ public abstract class DaoFactory {
      */
     public abstract IModeratorPrepositionDao getModeratorPrepositionDao();
 
+    /**
+     * Closes connection to Data Source
+     * @throws DBException if unable to close connection
+     */
+    abstract void closeConnection() throws DBException;
 
+    /**
+     * Opens connection to Data Source
+     * @throws DBException if unable to open connection
+     */
+    public abstract void open() throws DBException;
+
+    /**
+     * Closes connection to Data Source
+     */
+    public abstract void close();
+
+    /**
+     * Opens DB data transaction
+     * @throws DBException if unable to open data transaction
+     */
+    public abstract void beginTransaction() throws DBException;
+
+    /**
+     * Commits transaction results and closes transaction
+     * @throws DBException if unable to commit data transaction
+     */
+    public abstract void commitTransaction() throws DBException;
+
+    /**
+     * Rollbacks transaction results and closes transaction
+     * @throws DBException if unable to rollback transaction
+     */
+    public abstract void rollbackTransaction() throws DBException;
 
     public static DaoFactory getDaoFactory(DataBaseSelector dataBase) throws DBException{
         switch (dataBase) {

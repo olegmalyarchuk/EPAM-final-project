@@ -6,9 +6,11 @@ import com.example.conference.dao.IEventDao;
 import com.example.conference.dao.IUserDao;
 import com.example.conference.entity.Events;
 import com.example.conference.entity.Reports;
+import com.example.conference.entity.User;
 import com.example.conference.exceptions.DBException;
 import com.example.conference.service.IEventService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EventService implements IEventService {
@@ -27,61 +29,180 @@ public class EventService implements IEventService {
 
     @Override
     public Integer calculateEventNumber() throws DBException {
-        return eventDao.calculateEventNumber();
+        Integer result = 0;
+        try {
+            daoFactory.beginTransaction();
+            eventDao = daoFactory.getEventDao();
+            result = eventDao.calculateEventNumber();
+            daoFactory.commitTransaction();
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     @Override
     public Integer calculateRegistered(Integer event_id) throws DBException {
-        return eventDao.calculateRegistered(event_id);
+        Integer result = 0;
+        try {
+            daoFactory.beginTransaction();
+            eventDao = daoFactory.getEventDao();
+            result = eventDao.calculateRegistered(event_id);
+            daoFactory.commitTransaction();
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     @Override
     public Integer calculatePresent(Integer event_id) throws DBException {
-        return eventDao.calculatePresent(event_id);
+        Integer result = 0;
+        try {
+            daoFactory.beginTransaction();
+            eventDao = daoFactory.getEventDao();
+            result = eventDao.calculatePresent(event_id);
+            daoFactory.commitTransaction();
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     @Override
     public List<Reports> findAllReports(Integer event_id) throws DBException {
-        return eventDao.findAllReports(event_id);
+        List<Reports> reports = new ArrayList<>();
+        try {
+            daoFactory.open();
+            eventDao = daoFactory.getEventDao();
+            reports = new ArrayList<>();
+            reports = eventDao.findAllReports(event_id);
+            daoFactory.close();
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+        return reports;
     }
 
     @Override
     public List<Events> findAllEventsInDB() throws DBException {
-        return eventDao.findAllEventsInDB();
+        List<Events> events = new ArrayList<>();
+        try {
+            daoFactory.open();
+            eventDao = daoFactory.getEventDao();
+            events = new ArrayList<>();
+            events = eventDao.findAllEventsInDB();
+            daoFactory.close();
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+        return events;
     }
 
     @Override
-    public List<Events> findEvents(Integer first, Integer offset) throws DBException {
-        return eventDao.findEvents(first, offset);
+    public List<Events> findEvents(Integer first, Integer offset) {
+        List<Events> events = new ArrayList<>();
+        try {
+            daoFactory.open();
+            eventDao = daoFactory.getEventDao();
+            events = new ArrayList<>();
+            events = eventDao.findEvents(first, offset);
+            daoFactory.close();
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+        return events;
     }
 
     @Override
-    public List<Events> findEventsByPlaceUa(String event_place_ua) throws DBException {
-        return eventDao.findEventsByPlaceUa(event_place_ua);
+    public List<Events> findEventsByPlaceUa(String event_place_ua) {
+        List<Events> events = new ArrayList<>();
+        try {
+            daoFactory.open();
+            eventDao = daoFactory.getEventDao();
+            events = new ArrayList<>();
+            events = eventDao.findEventsByPlaceUa(event_place_ua);
+            daoFactory.close();
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+        return events;
     }
 
     @Override
-    public List<Events> findEventsByPlaceEn(String event_place_en) throws DBException {
-        return eventDao.findEventsByPlaceEn(event_place_en);
+    public List<Events> findEventsByPlaceEn(String event_place_en) {
+        List<Events> events = new ArrayList<>();
+        try {
+            daoFactory.open();
+            eventDao = daoFactory.getEventDao();
+            events = new ArrayList<>();
+            events = eventDao.findEventsByPlaceEn(event_place_en);
+            daoFactory.close();
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+        return events;
     }
 
     @Override
-    public boolean addEventsToDB(Events events) {
-        return eventDao.addEventsToDB(events);
+    public synchronized boolean addEventsToDB(Events events)
+    {
+        boolean result;
+        try {
+            daoFactory.beginTransaction();
+            eventDao = daoFactory.getEventDao();
+            result = eventDao.addEventsToDB(events);
+            daoFactory.commitTransaction();
+        } catch (DBException e) {
+            // e.printStackTrace();
+            return false;
+        }
+        return result;
     }
 
     @Override
-    public boolean updateEventsInDB(Events events) {
-        return eventDao.updateEventsInDB(events);
+    public synchronized boolean updateEventsInDB(Events events)
+    {
+        boolean result;
+        try {
+            daoFactory.beginTransaction();
+            eventDao = daoFactory.getEventDao();
+            result = eventDao.updateEventsInDB(events);
+            daoFactory.commitTransaction();
+        } catch (DBException e) {
+            // e.printStackTrace();
+            return false;
+        }
+        return result;
     }
 
     @Override
-    public boolean deleteEventsFromDB(Events events) {
-        return eventDao.deleteEventsFromDB(events);
+    public synchronized boolean deleteEventsFromDB(Events events) {
+        boolean result;
+        try {
+            daoFactory.beginTransaction();
+            eventDao = daoFactory.getEventDao();
+            result = eventDao.deleteEventsFromDB(events);
+            daoFactory.commitTransaction();
+        } catch (DBException e) {
+            // e.printStackTrace();
+            return false;
+        }
+        return result;
     }
 
     @Override
-    public boolean updateMeetingEditableData(Events events) {
-        return eventDao.updateMeetingEditableData(events);
+    public synchronized boolean updateMeetingEditableData(Events events) {
+        boolean result;
+        try {
+            daoFactory.beginTransaction();
+            eventDao = daoFactory.getEventDao();
+            result = eventDao.updateMeetingEditableData(events);
+            daoFactory.commitTransaction();
+        } catch (DBException e) {
+            // e.printStackTrace();
+            return false;
+        }
+        return result;
     }
 }

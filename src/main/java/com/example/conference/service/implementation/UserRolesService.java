@@ -4,10 +4,12 @@ import com.example.conference.dao.DaoFactory;
 import com.example.conference.dao.DataBaseSelector;
 import com.example.conference.dao.IUserDao;
 import com.example.conference.dao.IUserRolesDao;
+import com.example.conference.entity.User;
 import com.example.conference.entity.User_roles;
 import com.example.conference.exceptions.DBException;
 import com.example.conference.service.IUserRolesService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserRolesService implements IUserRolesService {
@@ -26,36 +28,105 @@ public class UserRolesService implements IUserRolesService {
 
     @Override
     public Integer calculateUserRolesNumber() throws DBException {
-        return userRolesDao.calculateUserRolesNumber();
+        Integer result = 0;
+        try {
+            daoFactory.beginTransaction();
+            userRolesDao = daoFactory.getUserRolesDao();
+            result = userRolesDao.calculateUserRolesNumber();
+            daoFactory.commitTransaction();
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     @Override
     public List<User_roles> findAllUserRolesInDB() throws DBException {
-        return userRolesDao.findAllUserRolesInDB();
+        List<User_roles> user_roles = new ArrayList<>();
+        try {
+            daoFactory.open();
+            userRolesDao = daoFactory.getUserRolesDao();
+            user_roles = new ArrayList<>();
+            user_roles = userRolesDao.findAllUserRolesInDB();
+            daoFactory.close();
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+        return user_roles;
     }
 
     @Override
     public List<User_roles> findUserRoles(Integer first, Integer offset) throws DBException {
-        return userRolesDao.findUserRoles(first, offset);
+        List<User_roles> user_roles = new ArrayList<>();
+        try {
+            daoFactory.open();
+            userRolesDao = daoFactory.getUserRolesDao();
+            user_roles = new ArrayList<>();
+            user_roles = userRolesDao.findUserRoles(first, offset);
+            daoFactory.close();
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+        return user_roles;
     }
 
     @Override
-    public boolean addUserRolesToDB(User_roles user_roles) {
-        return userRolesDao.addUserRolesToDB(user_roles);
+    public synchronized boolean addUserRolesToDB(User_roles user_roles) {
+        boolean result;
+        try {
+            daoFactory.beginTransaction();
+            userRolesDao = daoFactory.getUserRolesDao();
+            result = userRolesDao.addUserRolesToDB(user_roles);
+            daoFactory.commitTransaction();
+        } catch (DBException e) {
+            // e.printStackTrace();
+            return false;
+        }
+        return result;
     }
 
     @Override
-    public boolean updateUserRolesInDB(User_roles user_roles) {
-        return userRolesDao.updateUserRolesInDB(user_roles);
+    public synchronized boolean updateUserRolesInDB(User_roles user_roles) {
+
+        boolean result;
+        try {
+            daoFactory.beginTransaction();
+            userRolesDao = daoFactory.getUserRolesDao();
+            result = userRolesDao.updateUserRolesInDB(user_roles);
+            daoFactory.commitTransaction();
+        } catch (DBException e) {
+            // e.printStackTrace();
+            return false;
+        }
+        return result;
     }
 
     @Override
-    public boolean deleteUserRolesFromDB(User_roles user_roles) {
-        return userRolesDao.deleteUserRolesFromDB(user_roles);
+    public synchronized boolean deleteUserRolesFromDB(User_roles user_roles) {
+        boolean result;
+        try {
+            daoFactory.beginTransaction();
+            userRolesDao = daoFactory.getUserRolesDao();
+            result = userRolesDao.deleteUserRolesFromDB(user_roles);
+            daoFactory.commitTransaction();
+        } catch (DBException e) {
+            // e.printStackTrace();
+            return false;
+        }
+        return result;
     }
 
     @Override
     public User_roles findByDescription(String role_description) {
-        return userRolesDao.findByDescription(role_description);
+        User_roles user_roles = null;
+        try {
+            daoFactory.open();
+            userRolesDao = daoFactory.getUserRolesDao();
+            user_roles = userRolesDao.findByDescription(role_description);
+            daoFactory.close();
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+        return user_roles;
     }
 }

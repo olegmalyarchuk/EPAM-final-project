@@ -65,7 +65,7 @@ public interface IUserService {
      * @param user - user to add in DB
      * @return true if operation success and false if fails
      */
-    boolean addUserToDB(User user);
+     boolean addUserToDB(User user);
 
     /**
      * Updats user in DB

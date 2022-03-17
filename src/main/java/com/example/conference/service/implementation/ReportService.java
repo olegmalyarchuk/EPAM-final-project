@@ -5,9 +5,11 @@ import com.example.conference.dao.DataBaseSelector;
 import com.example.conference.dao.IReportDao;
 import com.example.conference.dao.IUserDao;
 import com.example.conference.entity.Reports;
+import com.example.conference.entity.User;
 import com.example.conference.exceptions.DBException;
 import com.example.conference.service.IReportService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ReportService implements IReportService {
@@ -26,31 +28,90 @@ public class ReportService implements IReportService {
 
     @Override
     public Integer calculateReportsNumber() throws DBException {
-        return reportDao.calculateReportsNumber();
+        Integer result = 0;
+        try {
+            daoFactory.beginTransaction();
+            reportDao = daoFactory.getReportDao();
+            result = reportDao.calculateReportsNumber();
+            daoFactory.commitTransaction();
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     @Override
     public List<Reports> findAllReportsInDB() throws DBException {
-        return reportDao.findAllReportsInDB();
+        List<Reports> reports = new ArrayList<>();
+        try {
+            daoFactory.open();
+            reportDao = daoFactory.getReportDao();
+            reports = new ArrayList<>();
+            reports = reportDao.findAllReportsInDB();
+            daoFactory.close();
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+        return reports;
     }
 
     @Override
     public List<Reports> findReport(Integer first, Integer offset) throws DBException {
-        return reportDao.findReport(first, offset);
+        List<Reports> reports = new ArrayList<>();
+        try {
+            daoFactory.open();
+            reportDao = daoFactory.getReportDao();
+            reports = new ArrayList<>();
+            reports = reportDao.findReport(first, offset);
+            daoFactory.close();
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+        return reports;
     }
 
     @Override
-    public boolean addReportToDB(Reports reports) {
-        return reportDao.addReportToDB(reports);
+    public synchronized boolean addReportToDB(Reports reports) {
+        boolean result;
+        try {
+            daoFactory.beginTransaction();
+            reportDao = daoFactory.getReportDao();
+            result = reportDao.addReportToDB(reports);
+            daoFactory.commitTransaction();
+        } catch (DBException e) {
+            // e.printStackTrace();
+            return false;
+        }
+        return result;
     }
 
     @Override
-    public boolean updateReportInDB(Reports reports) {
-        return reportDao.updateReportInDB(reports);
+    public synchronized boolean updateReportInDB(Reports reports) {
+        boolean result;
+        try {
+            daoFactory.beginTransaction();
+            reportDao = daoFactory.getReportDao();
+            result = reportDao.updateReportInDB(reports);
+            daoFactory.commitTransaction();
+        } catch (DBException e) {
+            // e.printStackTrace();
+            return false;
+        }
+        return result;
     }
 
     @Override
-    public boolean deleteReportFromDB(Reports reports) {
-        return reportDao.deleteReportFromDB(reports);
+    public synchronized boolean deleteReportFromDB(Reports reports) {
+        boolean result;
+        try {
+            daoFactory.beginTransaction();
+            reportDao = daoFactory.getReportDao();
+            result = reportDao.deleteReportFromDB(reports);
+            daoFactory.commitTransaction();
+        } catch (DBException e) {
+            // e.printStackTrace();
+            return false;
+        }
+        return result;
     }
 }

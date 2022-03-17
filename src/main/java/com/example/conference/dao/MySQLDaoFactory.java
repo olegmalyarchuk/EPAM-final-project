@@ -1,19 +1,111 @@
 package com.example.conference.dao;
 
+import com.example.conference.config.DBManager;
 import com.example.conference.dao.implementation.*;
 import com.example.conference.exceptions.DBException;
+import com.example.conference.exceptions.Messages;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import java.sql.Connection;
+import java.sql.SQLException;
 
-public class MySQLDaoFactory extends DaoFactory{
-
+public class MySQLDaoFactory extends DaoFactory {
+    public static  DataSource dataSource;
    // public static final Logger log = Logger.getLogger(MySQLDaoFactory.class);
     private Connection connection;
 
      public MySQLDaoFactory() throws DBException {
+         try {
+             Context initContext = new InitialContext();
+             Context envContext = (Context) initContext.lookup("java:/comp/env");
+             // conferences - the name of data source
+             dataSource = (DataSource) envContext.lookup("jdbc/conferences");
+             // LOG.trace("Data source ==> " + ds);
+         } catch (NamingException ex) {
+             //  LOG.error(Messages.ERR_CANNOT_OBTAIN_DATA_SOURCE, ex);
+             throw new DBException(Messages.ERR_CANNOT_OBTAIN_DATA_SOURCE, ex);
+         }
     }
 
+    private static Connection getConnection() throws DBException {
+        try {
+            return dataSource.getConnection();
+        } catch (SQLException sqle) {
+           // log.error(sqle);
+            throw new DBException(Messages.ERR_CANNOT_OBTAIN_CONNECTION);
+        }
+    }
 
+    /** Transaction methods */
+    public void beginTransaction() throws DBException {
+        try {
+            connection = getConnection();
+            connection.setAutoCommit(false);
+        } catch (SQLException sqle) {
+            //log.error(sqle);
+            throw new DBException(Messages.ERR_BEGIN_TRANSACTION, sqle);
+        }
+    }
+
+    public void commitTransaction() throws DBException {
+        try {
+            connection.commit();
+            connection.close();
+        } catch (SQLException sqle) {
+           // log.error(sqle);
+            throw new DBException(Messages.ERR_CANNOT_COMMIT, sqle);
+        }
+    }
+
+    public void rollbackTransaction() throws DBException {
+        try {
+            connection.rollback();
+            connection.close();
+        } catch (SQLException sqle) {
+          //  log.error(sqle);
+            throw new DBException(Messages.ERR_CANNOT_ROLL_BACK, sqle);
+        }
+    }
+
+    /** Connection open and closing methods */
+    @Override
+    public void close() {
+        try {
+            connection.close();
+        } catch (SQLException sqle) {
+           // log.error(sqle);
+        }
+    }
+
+    @Override
+    public void open() throws DBException {
+        connection = getConnection();
+    }
+
+    @Deprecated
+    public static void closeConnection(Connection connection) throws DBException {
+        try {
+            connection.close();
+        } catch (SQLException sqle) {
+           // log.error(sqle);
+        } catch (NullPointerException npe) {
+           // log.error(npe);
+        }
+    }
+
+    @Override
+    void closeConnection() throws DBException {
+        try {
+            connection.close();
+        } catch (SQLException sqle) {
+            // log.error(sqle);
+        } catch (NullPointerException npe) {
+            // log.error(npe);
+        }
+    }
 
     @Override
     public IUserDao getUserDao() {
