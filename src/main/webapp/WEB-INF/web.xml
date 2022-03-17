@@ -30,4 +30,14 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
+    <listener>
+        <listener-class>com.example.conference.listener.AppContextAttributeListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>com.example.conference.listener.SessionListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>com.example.conference.listener.ServletRequestListener</listener-class>
+    </listener>
+
 </web-app>
