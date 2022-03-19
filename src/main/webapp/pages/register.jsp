@@ -11,6 +11,6 @@
     <title>Title</title>
 </head>
 <body>
-
+<h6>Register page</h6>
 </body>
 </html>

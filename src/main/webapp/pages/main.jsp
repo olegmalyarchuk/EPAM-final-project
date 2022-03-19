@@ -12,6 +12,6 @@
 
 </head>
 <body>
-
+<h6>Main page</h6>
 </body>
 </html>
