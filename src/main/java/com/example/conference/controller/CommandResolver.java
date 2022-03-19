@@ -19,8 +19,7 @@ public class CommandResolver {
 
     public ICommand getCommand(HttpServletRequest request) {
         ICommand command = commands.get(request.getParameter("command"));
-//        if (command == null)
-//            command = new CommandMissing();
+       if (command == null)  command = commands.get("main");
 
         return command;
     }

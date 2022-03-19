@@ -30,6 +30,7 @@ public class ControllerServlet extends HttpServlet {
     private void handleRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         SessionRequestContent content = new SessionRequestContent(req);
         ICommand command = commandResolver.getCommand(req);
+        System.out.println(command);
         ExecutionResult result = command.execute(content);
         if (result.isInvalidated())
             req.getSession(false).invalidate();

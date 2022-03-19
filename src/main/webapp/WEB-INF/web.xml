@@ -13,7 +13,7 @@
 
     <servlet-mapping>
         <servlet-name>controllerServlet</servlet-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 
     <resource-ref>
@@ -67,6 +67,7 @@
         <location>/WEB-INF/pages/errors/404.jsp</location>
     </error-page>
     <error-page>
+        <error-code>500</error-code>
         <location>/WEB-INF/pages/errors/500.jsp</location>
     </error-page>
 
