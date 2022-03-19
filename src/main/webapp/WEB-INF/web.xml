@@ -6,6 +6,16 @@
 
     <display-name>Conference</display-name>
 
+    <servlet>
+        <servlet-name>controllerServlet</servlet-name>
+        <servlet-class>com.example.conference.controller.ControllerServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>controllerServlet</servlet-name>
+        <url-pattern>/*</url-pattern>
+    </servlet-mapping>
+
     <resource-ref>
         <res-ref-name>jdbc/conferences</res-ref-name>
         <res-type>javax.sql.DataSource</res-type>
