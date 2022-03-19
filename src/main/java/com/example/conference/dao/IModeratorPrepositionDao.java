@@ -3,7 +3,6 @@ package com.example.conference.dao;
 import com.example.conference.entity.Moderator_preposition;
 import com.example.conference.entity.Report_preposition;
 import com.example.conference.exceptions.DBException;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 
 import java.util.List;
 
