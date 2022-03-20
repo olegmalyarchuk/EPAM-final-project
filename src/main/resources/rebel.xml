@@ -15,7 +15,7 @@
 
 	<web>
 		<link target="/">
-			<dir name="D:/EPAM/Project/Conference/src/main/webapp">
+			<dir name="D:/EPAM/Project/Conference/">
 			</dir>
 		</link>
 	</web>

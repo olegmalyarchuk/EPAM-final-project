@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet("/register")
@@ -74,7 +75,7 @@ public class RegisterServlet extends HttpServlet {
         }
         else if(!confirmpassword.equals(password)) {
             req.setAttribute("status", "invalidConfirmpassword");
-            dispatcher = req.getRequestDispatcher("/register.jsp");
+            dispatcher = req.getRequestDispatcher("register.jsp");
             dispatcher.forward(req, resp);
         }
         else if(email == null || email.equals("")) {
@@ -127,6 +128,11 @@ public class RegisterServlet extends HttpServlet {
             newUser.setUser_address(address);
 
             if (service.addUserToDB(newUser)) {
+                HttpSession session = req.getSession();
+                session.setAttribute("email", email);
+                session.setAttribute("name", newUser.getUser_name());
+                session.setAttribute("role_id", newUser.getRole_id());
+                dispatcher = req.getRequestDispatcher("/main.jsp");
                 req.setAttribute("status", "success");
                 dispatcher = req.getRequestDispatcher("register.jsp");
                 dispatcher.forward(req, resp);

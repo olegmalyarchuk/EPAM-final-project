@@ -5,6 +5,13 @@
     <title>Registration page</title>
 </head>
 <body>
+<%
+    if(session.getAttribute("email")!=null) {
+        request.setAttribute("status", "registered");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/main.jsp");
+       dispatcher.forward(request, response);
+    }
+%>
 <h6>Registration page</h6><br>
 <input type="hidden" id="status" value="<%=request.getAttribute("status")%>">
 <div align="center">
@@ -42,56 +49,78 @@
         </table>
         <input type="submit" value="Submit"/>
     </form>
+    <a href="login.jsp">Already have an account</a>
 </div>
+
+<!--- JS -->
+<script src="vendor/jquery/jguery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link rel="stylesheet" href="alert/dist/sweatalert.css ">
 <script type="text/javascript">
     var status = document.getElementById("status").value;
     if(status=="emptyFirstname") {
-        alert("First name should not be empty");
+        swal("Error", "First name should not be empty", "error");
+        //alert("First name should not be empty");
     }
     if(status=="emptyLastname") {
-        alert("Last name should not be empty");
+        swal("Error", "Last name should not be empty", "error");
+        //alert("Last name should not be empty");
     }
     if(status=="emptyPassword") {
-        alert("Password should not be empty");
+        swal("Error", "Password should not be empty", "error");
+        //alert("Password should not be empty");
     }
     if(status=="emptyPhone") {
-        alert("Phone should not be empty");
+        swal("Error", "Phone should not be empty", "error");
+        //alert("Phone should not be empty");
     }
     if(status=="emptyEmail") {
-        alert("Email should not be empty");
+        swal("Error", "Email should not be empty", "error");
+        //alert("Email should not be empty");
     }
     if(status=="emptyAddress") {
-        alert("Location should not be empty");
+        swal("Error", "Location should not be empty", "error");
+        //alert("Location should not be empty");
     }
     if(status=="invalidConfirmpassword") {
-        alert("Password not match");
+        swal("Error", "Password not match", "error");
+        //alert("Password not match");
     }
     if(status=="invalidFirstname") {
-        alert("First name should starts with a capital letter and no more than 25 letters long")
+        swal("Error", "First name should starts with a capital letter and no more than 25 letters long", "error");
+        //alert("First name should starts with a capital letter and no more than 25 letters long")
     }
     if(status=="invalidLastname") {
-        alert("Last name should starts with a capital letter and no more than 25 letters long")
+        swal("Error", "Last name should starts with a capital letter and no more than 25 letters long", "error");
+        //alert("Last name should starts with a capital letter and no more than 25 letters long")
     }
     if(status=="invalidPassword") {
-        alert("Password must consist of at least 4 characters and not more than 16 characters")
+        swal("Error", "Password must consist of at least 4 characters and not more than 16 characters", "error");
+       // alert("Password must consist of at least 4 characters and not more than 16 characters")
     }
     if(status=="invalidPhone") {
-        alert("Phone must starts with + and has 9 digits.")
+        swal("Error", "Phone must starts with + and has 9 digits.", "error");
+      //  alert("Phone must starts with + and has 9 digits.")
     }
     if(status=="invalidEmail") {
-        alert("Email must has no less than 1 letter before '@', 2 letters after and domain is no longer than 4 characters")
+        swal("Error", "Email must has no less than 1 letter before '@', 2 letters after and domain is no longer than 4 characters", "error");
+       // alert("Email must has no less than 1 letter before '@', 2 letters after and domain is no longer than 4 characters")
     }
     if(status=="dublicateEmail") {
-        alert("Current email is already registered. Try to log in.")
+        swal("Error", "Current email is already registered. Try to log in.", "error");
+       // alert("Current email is already registered. Try to log in.")
     }
     if(status=="dublicatePhone") {
-        alert("Current phone is already registered. Try to log in.")
+        swal("Error", "Current phone is already registered. Try to log in.", "error");
+      // alert("Current phone is already registered. Try to log in.")
     }
     if(status=="success") {
-        alert("You have successfully registered.")
+        swal("Congrats", "You have successfully registered", "success");
+       // alert("You have successfully registered.")
     }
     if(status=="servererror") {
-        alert("It is technical work on the site. Please try again.")
+        swal("Error", "It is technical work on the site. Please try again.", "error");
+        //alert("It is technical work on the site. Please try again.")
     }
 </script>
 </body>
