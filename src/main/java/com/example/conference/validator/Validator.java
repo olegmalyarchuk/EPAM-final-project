@@ -18,10 +18,17 @@ public final class Validator {
 
     /**
      * Regular expression for all alphanumeric characters and predefined wild characters,
-     * must consist of at least 8 characters and not more than 15 characters.
+     * must consist of at least 4 characters and not more than 16 characters.
      */
 
-    private static final String PASSWORD_REGEX = "^([a-zA-Z0-9@*#]{8,20})$";
+    private static final String PASSWORD_REGEX = "^([a-zA-Z0-9@*#]{4,16})$";
+
+    /**
+     * Regular expression for phone,
+     * must starts with + and has 9 digits.
+     */
+
+    private static final String PHONE_REGEX = "^\\+\\d{9}$";
 
     /**
      * Regular expression for a positive integer.
@@ -43,6 +50,7 @@ public final class Validator {
      */
 
     private static final String TEXT_REGEX = "^.{0,255}$";
+
 
     /**
      * Regular expression for YYYY-MM-DD dates.
@@ -67,6 +75,13 @@ public final class Validator {
             return false;
         }
         return password.matches(PASSWORD_REGEX);
+    }
+
+    public static boolean isValidPhone(String phone) {
+        if (phone == null || phone.isBlank()) {
+            return false;
+        }
+        return phone.matches(PHONE_REGEX);
     }
 
     public static boolean isValidId(String id) {

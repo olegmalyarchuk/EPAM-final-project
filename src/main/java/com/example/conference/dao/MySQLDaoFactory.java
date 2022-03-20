@@ -1,6 +1,5 @@
 package com.example.conference.dao;
 
-import com.example.conference.config.DBManager;
 import com.example.conference.dao.implementation.*;
 import com.example.conference.exceptions.DBException;
 import com.example.conference.exceptions.Messages;
@@ -10,6 +9,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class MySQLDaoFactory extends DaoFactory {
@@ -25,16 +25,17 @@ public class MySQLDaoFactory extends DaoFactory {
              dataSource = (DataSource) envContext.lookup("jdbc/conferences");
              // LOG.trace("Data source ==> " + ds);
          } catch (NamingException ex) {
-             //  LOG.error(Messages.ERR_CANNOT_OBTAIN_DATA_SOURCE, ex);
-             throw new DBException(Messages.ERR_CANNOT_OBTAIN_DATA_SOURCE, ex);
+             ////  LOG.error(Messages.ERR_CANNOT_OBTAIN_DATA_SOURCE, ex);
+            // throw new DBException(Messages.ERR_CANNOT_OBTAIN_DATA_SOURCE, ex);
          }
     }
 
     private static Connection getConnection() throws DBException {
         try {
-            return dataSource.getConnection();
+           return dataSource.getConnection();
         } catch (SQLException sqle) {
-           // log.error(sqle);
+           sqle.printStackTrace();
+            // log.error(sqle);
             throw new DBException(Messages.ERR_CANNOT_OBTAIN_CONNECTION);
         }
     }

@@ -21,7 +21,7 @@ public class UserService implements IUserService {
             daoFactory = DaoFactory.getDaoFactory(source);
             userDao = daoFactory.getUserDao();
         } catch (DBException e) {
-            //log
+            e.printStackTrace();
         }
     }
 
@@ -32,6 +32,20 @@ public class UserService implements IUserService {
             daoFactory.beginTransaction();
             userDao = daoFactory.getUserDao();
             result = userDao.calculateUsersNumber();
+            daoFactory.commitTransaction();
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public Integer calculateRowsBy(String param, String value) {
+        Integer result = 0;
+        try {
+            daoFactory.beginTransaction();
+            userDao = daoFactory.getUserDao();
+            result = userDao.calculateRowsBy(param, value);
             daoFactory.commitTransaction();
         } catch (DBException e) {
             e.printStackTrace();
@@ -121,7 +135,7 @@ public class UserService implements IUserService {
             result = userDao.addUserToDB(user);
             daoFactory.commitTransaction();
         } catch (DBException e) {
-           // e.printStackTrace();
+            e.printStackTrace();
             return false;
         }
         return result;

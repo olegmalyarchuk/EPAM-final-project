@@ -20,6 +20,14 @@ public interface IUserDao {
      */
     Integer calculateUsersNumber() throws DBException;
 
+
+    /**
+     * Calculates row number available in DB
+     * @return count of rows in DB
+     * @throws DBException if connection is down, broken or unable to retrieve information for certain reasons
+     */
+    Integer calculateRowsBy(String param, String value) throws DBException;
+
     /**
      * Finds all users in DB
      * @return List of all users

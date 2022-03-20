@@ -22,8 +22,10 @@ public class UserDaoImpl extends GenericAbstractDao<User> implements IUserDao {
     public static final String SQL_SELECT_ALL = "SELECT * from users join user_roles on users.role_id=user_roles.role_id order by user_id;";
     public static final String SQL_SELECT_BY_ID = "SELECT * from users join user_roles on users.role_id=user_roles.role_id where user_id=?;";
     public static final String SQL_SELECT_BY_EMAIL = "SELECT * from users join user_roles on users.role_id=user_roles.role_id where user_email=?;";
+    public static final String SQL_SELECT_BY_PHONE = "SELECT * from users join user_roles on users.role_id=user_roles.role_id where user_phone=?;";
     public static final String SQL_SELECT_BY_ROLE = "SELECT * from users join user_roles on users.role_id=user_roles.role_id where user_roles.role_description=?;";
     public static final String SQL_ADD_NEW = "INSERT INTO users VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);";
+    public static final String SQL_ADD_NEW_WITHOUT_ID = "INSERT INTO users(role_id, user_name, user_surname, user_password, user_phone, user_email, user_photo_url, user_address) VALUES(?, ?, ?, ?, ?, ?, ?, ?);";
     public static final String SQL_UPDATE_BY_ID = "UPDATE users set user_id=?, role_id=?, user_name=?, user_surname=?, user_password=?, user_phone=?, user_email=?, user_photo_url=?, user_address=? where user_id=?;";
     public static final String SQL_UPDATE_BY_EMAIL = "UPDATE users set user_id=?, role_id=?, user_name=?, user_surname=?, user_password=?, user_phone=?, user_email=?, user_photo_url=?, user_address=? where user_email=?;";
     public static final String SQL_DELETE_BY_ID = "DELETE FROM users where user_id=?;";
@@ -66,6 +68,26 @@ public class UserDaoImpl extends GenericAbstractDao<User> implements IUserDao {
     @Override
     public Integer calculateUsersNumber() throws DBException {
         return calculateRowCounts(connection, "users");
+    }
+
+    @Override
+    public Integer calculateRowsBy(String param, String value) throws DBException {
+        String SQL_CNT_BY_PARAM = "SELECT COUNT(*) AS cnt FROM users where ";
+        SQL_CNT_BY_PARAM += param += " = ?";
+        int cnt = 0;
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL_CNT_BY_PARAM);
+            preparedStatement.setString(1, value);
+            System.out.println(preparedStatement);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                cnt = resultSet.getInt(1);
+            }
+            return cnt;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return cnt;
     }
 
     @Override

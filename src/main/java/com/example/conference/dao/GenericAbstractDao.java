@@ -102,6 +102,7 @@ public class GenericAbstractDao<T> {
             mapperToDB.map(item, preparedStatement);
             result = preparedStatement.executeUpdate() > 0;
         } catch (SQLException sqle) {
+            sqle.printStackTrace();
             //log.error(sqle);
             return false;
         }

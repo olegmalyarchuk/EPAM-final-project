@@ -18,14 +18,22 @@ public interface IUserService {
      * @return count of users in DB
      * @throws DBException if connection is down, broken or unable to retrieve information for certain reasons
      */
-    Integer calculateUsersNumber() throws DBException;
+    Integer calculateUsersNumber();
+
+
+    /**
+     * Calculates row number available in DB
+     * @return count of rows in DB
+     * @throws DBException if connection is down, broken or unable to retrieve information for certain reasons
+     */
+    Integer calculateRowsBy(String param, String value) throws DBException;
 
     /**
      * Finds all users in DB
      * @return List of all users
      * @throws DBException if connection is down, broken or unable to retrieve information for certain reasons
      */
-    List<User> findAllUsersInDB() throws DBException;
+    List<User> findAllUsersInDB();
 
     /**
      * Finds users in DB from
@@ -34,7 +42,7 @@ public interface IUserService {
      * @return List users
      * @throws DBException if connection is down, broken or unable to retrieve information for certain reasons
      */
-    List<User> findUsers(Integer first, Integer offset) throws DBException;
+    List<User> findUsers(Integer first, Integer offset);
 
     /**
      * Finds all users by user role
@@ -42,7 +50,7 @@ public interface IUserService {
      * @return List of
      * @throws DBException if connection is down, broken or unable to retrieve information for certain reasons
      */
-    List<User> findUserByRole(User_roles user_roles) throws DBException;
+    List<User> findUserByRole(User_roles user_roles);
 
     /**
      * Finds user by user id number
@@ -50,7 +58,7 @@ public interface IUserService {
      * @return User
      * @throws DBException if connection is down, broken or unable to retrieve information for certain reasons
      */
-    User findUserById(Integer id) throws DBException;
+    User findUserById(Integer id);
 
     /**
      * Finds User by email
@@ -58,7 +66,8 @@ public interface IUserService {
      * @return User by email
      * @throws DBException if connection is down, broken or unable to retrieve information for certain reasons
      */
-    User findUserByEmail(String email) throws DBException;
+    User findUserByEmail(String email);
+
 
     /**
      * Adds new user to DB

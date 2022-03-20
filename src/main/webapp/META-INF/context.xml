@@ -4,11 +4,11 @@
             name="jdbc/conferences"
             auth="Container"
             type="javax.sql.DataSource"
-            maxTotal="100"
+            maxActive="100"
             maxIdle="30"
-            maxWaitMillis="10000"
+            maxWait="10000"
             username="bestuser"
             password="bestuser"
-            driverClassName="org.postgresql.Driver"
-            url="jdbc:mysql://127.0.0.1:3306/?user=bestuser" />
+            driverClassName="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://127.0.0.1:3306/conference?user=bestuser;password=bestuser" />
 </Context>

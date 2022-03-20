@@ -13,6 +13,7 @@ public class CommandOpenRegisterPage implements ICommand {
         ExecutionResult result = new ExecutionResult();
         result.setPage(Configuration.getInstance().getPage("register"));
         result.setDirection(Direction.FORWARD);
+
         return result;
     }
 }
