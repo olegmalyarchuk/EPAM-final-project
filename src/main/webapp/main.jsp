@@ -50,6 +50,10 @@
     if(status=="registered") {
        swal("Error", "You are already logged in.", "error");
     }
+    if(status=="success") {
+        swal("Congrats", "You have successfully registered", "success");
+        // alert("You have successfully registered.")
+    }
 </script>
 </body>
 </html>
