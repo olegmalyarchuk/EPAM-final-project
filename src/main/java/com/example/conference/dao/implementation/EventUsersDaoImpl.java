@@ -70,7 +70,7 @@ public class EventUsersDaoImpl extends GenericAbstractDao<Event_users> implement
 
     @Override
     public boolean updateEventUsersInDB(Event_users event_users) {
-        return updateInDB(connection, event_users, SQL_UPDATE_BY_ID, 1, event_users.getId());
+        return updateInDB(connection, event_users, SQL_UPDATE_BY_ID, 5, event_users.getId());
     }
 
     @Override

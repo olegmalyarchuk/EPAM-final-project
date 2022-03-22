@@ -21,9 +21,10 @@ public class EventDaoImpl extends GenericAbstractDao<Events> implements IEventDa
     public static final String SQL_SELECT_BASE = "select * from events order by event_id;";
     public static final String SQL_SELECT_ALL = "select * from events order by event_id;";
     public static final String SQL_SELECT_BY_PLACE_UA = "select * from events where event_place_ua=?";
+    public static final String SQL_SELECT_BY_ID = "select * from events where event_id=?";
     public static final String SQL_SELECT_BY_PLACE_EN = "select * from events where event_place_en=?";
     public static final String SQL_ADD_NEW = "INSERT INTO events VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    public static final String SQL_UPDATE_BY_ID = "UPDATE events set event_id=?, event_name_ua=?, event_name_en=?, event_place_ua=?, event_place_en=?, event_description_ua=?, event_description_en=? event_date=?, event_photo_url=?, where event_id=?;";
+    public static final String SQL_UPDATE_BY_ID = "UPDATE events set event_id=?, event_name_ua=?, event_name_en=?, event_place_ua=?, event_place_en=?, event_description_ua=?, event_description_en=?, event_date=?, event_photo_url=? where event_id=?;";
     public static final String SQL_DELETE_BY_ID = "DELETE FROM events where event_id=?;";
     public static final String SQL_FIND_COUNT_REGISTERED = "select count(*) from events join event_users on events.event_id= event_users.event_id where present=0 and events.event_id=?;";
     public static final String SQL_FIND_COUNT_PRESENT = "select count(*) from events join event_users on events.event_id= event_users.event_id where present=1 and events.event_id=?;";
@@ -195,18 +196,24 @@ public class EventDaoImpl extends GenericAbstractDao<Events> implements IEventDa
     }
 
     @Override
+    public Events findEventsById(Integer id) throws DBException {
+        return findBy(connection, Events.class, SQL_SELECT_BY_ID, id);
+    }
+
+
+    @Override
     public boolean addEventsToDB(Events events) {
         return addToDB(connection, events, SQL_ADD_NEW);
     }
 
     @Override
     public boolean updateEventsInDB(Events events) {
-        return updateInDB(connection, events, SQL_UPDATE_BY_ID, 1, events.getEvent_id());
+        return updateInDB(connection, events, SQL_UPDATE_BY_ID, 10, events.getEvent_id());
     }
 
     @Override
-    public boolean deleteEventsFromDB(Events events) {
-        return deleteFromDB(connection, SQL_DELETE_BY_ID, events.getEvent_id());
+    public boolean deleteEventsByIdFromDB(Integer id) {
+        return deleteFromDB(connection, SQL_DELETE_BY_ID, id);
     }
 
 

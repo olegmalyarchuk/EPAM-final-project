@@ -145,8 +145,18 @@ public class Events implements Serializable {
     public String toString() {
         return "Events{" +
                 "event_id=" + event_id +
+                ", event_name_ua='" + event_name_ua + '\'' +
+                ", event_name_en='" + event_name_en + '\'' +
+                ", event_place_ua='" + event_place_ua + '\'' +
+                ", event_place_en='" + event_place_en + '\'' +
+                ", event_description_ua='" + event_description_ua + '\'' +
+                ", event_description_en='" + event_description_en + '\'' +
+                ", event_date=" + event_date +
+                ", event_photo_url='" + event_photo_url + '\'' +
                 ", reportsCount=" + reportsCount +
+                ", registeredCount=" + registeredCount +
                 ", presentCount=" + presentCount +
+                ", reports=" + reports +
                 '}';
     }
 }

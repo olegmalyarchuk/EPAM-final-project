@@ -38,6 +38,8 @@
     </c:otherwise>
 </c:choose>
 
+<a href="events/list">Show all events</a>
+
 <form action="logout">
     <input type="Submit" value="Logout">
 </form>
@@ -50,9 +52,11 @@
     if(status=="registered") {
        swal("Error", "You are already logged in.", "error");
     }
-    if(status=="success") {
+    if(status=="successRegister") {
         swal("Congrats", "You have successfully registered", "success");
-        // alert("You have successfully registered.")
+    }
+    if(status=="successLogin") {
+        swal("Congrats", "You have successfully login", "success");
     }
 </script>
 </body>

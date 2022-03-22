@@ -122,7 +122,7 @@ public class UserDaoImpl extends GenericAbstractDao<User> implements IUserDao {
 
     @Override
     public boolean updateUserInDB(User user) {
-        return updateInDB(connection, user, SQL_UPDATE_BY_ID, 1, user.getId());
+        return updateInDB(connection, user, SQL_UPDATE_BY_ID, 10, user.getId());
     }
 
     @Override

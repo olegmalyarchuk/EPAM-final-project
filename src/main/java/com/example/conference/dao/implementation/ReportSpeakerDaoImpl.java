@@ -67,7 +67,7 @@ public class ReportSpeakerDaoImpl extends GenericAbstractDao<Report_speakers> im
 
     @Override
     public boolean updateReportSpeakersInDB(Report_speakers report_speakers) {
-        return updateInDB(connection, report_speakers, SQL_UPDATE_BY_ID, 1, report_speakers.getId());
+        return updateInDB(connection, report_speakers, SQL_UPDATE_BY_ID, 4, report_speakers.getId());
     }
 
     @Override

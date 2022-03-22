@@ -145,6 +145,20 @@ public class EventService implements IEventService {
     }
 
     @Override
+    public Events findEventsById(Integer id) {
+        Events events = null;
+        try {
+            daoFactory.open();
+            eventDao = daoFactory.getEventDao();
+            events = eventDao.findEventsById(id);
+            daoFactory.close();
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+        return events;
+    }
+
+    @Override
     public synchronized boolean addEventsToDB(Events events)
     {
         boolean result;
@@ -177,12 +191,12 @@ public class EventService implements IEventService {
     }
 
     @Override
-    public synchronized boolean deleteEventsFromDB(Events events) {
+    public synchronized boolean deleteEventsByIdFromDB(Integer id) {
         boolean result;
         try {
             daoFactory.beginTransaction();
             eventDao = daoFactory.getEventDao();
-            result = eventDao.deleteEventsFromDB(events);
+            result = eventDao.deleteEventsByIdFromDB(id);
             daoFactory.commitTransaction();
         } catch (DBException e) {
             // e.printStackTrace();

@@ -50,6 +50,10 @@
         swal("Congrats", "You have successfully login", "success");
         // alert("You have successfully registered.")
     }
+    if(status=="logout") {
+        swal("Success", "You have successfully logged out", "success");
+        // alert("You have successfully registered.")
+    }
     if(status=="unregistered") {
         swal("Error", "You are not logged in", "error");
     }

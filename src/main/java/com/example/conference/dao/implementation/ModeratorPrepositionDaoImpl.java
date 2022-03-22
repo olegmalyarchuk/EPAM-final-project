@@ -63,7 +63,7 @@ public class ModeratorPrepositionDaoImpl extends GenericAbstractDao<Moderator_pr
 
     @Override
     public boolean updateModeratorPrepositionInDB(Moderator_preposition moderator_preposition) {
-        return updateInDB(connection, moderator_preposition, SQL_UPDATE_BY_ID, 1, moderator_preposition.getId());
+        return updateInDB(connection, moderator_preposition, SQL_UPDATE_BY_ID, 4, moderator_preposition.getId());
     }
 
     @Override

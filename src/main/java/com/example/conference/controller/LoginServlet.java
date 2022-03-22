@@ -44,6 +44,7 @@ public class LoginServlet extends HttpServlet {
                 session.setAttribute("name", u.getUser_name());
                 session.setAttribute("role_id", u.getRole_id());
                 dispatcher = req.getRequestDispatcher("/main.jsp");
+                req.setAttribute("status", "successLogin");
             } else {
                 //wrong passowrd
                 req.setAttribute("status", "wrongPass");

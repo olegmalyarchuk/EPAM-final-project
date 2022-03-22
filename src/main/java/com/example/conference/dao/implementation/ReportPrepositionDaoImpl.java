@@ -68,7 +68,7 @@ public class ReportPrepositionDaoImpl extends GenericAbstractDao<Report_preposit
 
     @Override
     public boolean updateReportPrepositionInDB(Report_preposition report_preposition) {
-        return updateInDB(connection, report_preposition, SQL_UPDATE_BY_ID, 1, report_preposition.getId());
+        return updateInDB(connection, report_preposition, SQL_UPDATE_BY_ID, 4, report_preposition.getId());
     }
 
     @Override

@@ -77,6 +77,14 @@ public interface IEventService {
     List<Events> findEventsByPlaceEn(String event_place_en) throws DBException;
 
     /**
+     * Finds Events by event_id
+     * @param event_id - Event id
+     * @return Event by event_id
+     * @throws DBException if connection is down, broken or unable to retrieve information for certain reasons
+     */
+    Events findEventsById(Integer event_id) throws DBException;
+
+    /**
      * Adds new events to DB
      * @param events - events to add in DB
      * @return true if operation success and false if fails
@@ -91,11 +99,11 @@ public interface IEventService {
     boolean updateEventsInDB(Events events);
 
     /**
-     * Deletes events from DB
-     * @param events - events to delete from DB
+     * Deletes events by id from DB
+     * @param id - event id to delete from DB
      * @return true if operation success and false if fails
      */
-    boolean deleteEventsFromDB(Events events);
+    boolean deleteEventsByIdFromDB(Integer id);
 
 
 

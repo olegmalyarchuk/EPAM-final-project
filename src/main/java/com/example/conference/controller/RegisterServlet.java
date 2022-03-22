@@ -2,10 +2,14 @@ package com.example.conference.controller;
 
 import com.example.conference.entity.User;
 import com.example.conference.exceptions.DBException;
+import com.example.conference.mail.GmailSender;
 import com.example.conference.service.IUserService;
 import com.example.conference.service.ServiceFactory;
 import com.example.conference.validator.Validator;
 
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Properties;
 
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
@@ -133,9 +138,10 @@ public class RegisterServlet extends HttpServlet {
                 session.setAttribute("name", newUser.getUser_name());
                 session.setAttribute("role_id", newUser.getRole_id());
                 dispatcher = req.getRequestDispatcher("/main.jsp");
-                req.setAttribute("status", "success");
-                dispatcher = req.getRequestDispatcher("register.jsp");
+                req.setAttribute("status", "successRegister");
+                GmailSender.sendWelcome(email, newUser.getUser_name(), newUser.getUser_surname());
                 dispatcher.forward(req, resp);
+
             } else {
                 req.setAttribute("status", "servererror");
                 dispatcher = req.getRequestDispatcher("register.jsp");

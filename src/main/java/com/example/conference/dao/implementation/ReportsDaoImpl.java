@@ -67,7 +67,7 @@ public class ReportsDaoImpl extends GenericAbstractDao<Reports> implements IRepo
 
     @Override
     public boolean updateReportInDB(Reports reports) {
-        return updateInDB(connection, reports, SQL_UPDATE_BY_ID, 1, reports.getReport_id());
+        return updateInDB(connection, reports, SQL_UPDATE_BY_ID, 4, reports.getReport_id());
     }
 
     @Override

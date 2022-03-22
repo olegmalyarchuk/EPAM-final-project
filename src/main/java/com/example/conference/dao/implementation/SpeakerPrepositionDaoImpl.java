@@ -69,7 +69,7 @@ public class SpeakerPrepositionDaoImpl extends GenericAbstractDao<Speaker_prepos
 
     @Override
     public boolean updateSpeakerPrepositionInDB(Speaker_preposition speaker_preposition) {
-        return updateInDB(connection, speaker_preposition, SQL_UPDATE_BY_ID, 1, speaker_preposition.getId());
+        return updateInDB(connection, speaker_preposition, SQL_UPDATE_BY_ID, 4, speaker_preposition.getId());
     }
 
     @Override
