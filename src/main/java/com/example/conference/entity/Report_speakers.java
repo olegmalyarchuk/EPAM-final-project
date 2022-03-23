@@ -9,6 +9,9 @@ public class Report_speakers implements Serializable {
     private int speaker_id;
     private User speaker;
 
+    public Report_speakers() {
+    }
+
     public Report_speakers(int id) {
         this.id = id;
     }

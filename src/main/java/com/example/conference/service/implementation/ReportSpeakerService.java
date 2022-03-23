@@ -5,6 +5,7 @@ import com.example.conference.dao.DataBaseSelector;
 import com.example.conference.dao.IReportSpeakerDao;
 import com.example.conference.dao.IUserDao;
 import com.example.conference.entity.Report_speakers;
+import com.example.conference.entity.Reports;
 import com.example.conference.entity.User;
 import com.example.conference.exceptions.DBException;
 import com.example.conference.service.IReportSpeakerService;
@@ -30,7 +31,7 @@ public class ReportSpeakerService implements IReportSpeakerService {
     public Integer calculateReportSpeakerNumber() throws DBException {
         Integer result = 0;
         try {
-            daoFactory = DaoFactory.getDaoFactory(source);
+             daoFactory.beginTransaction();
             reportSpeakerDao = daoFactory.getReportSpeakersDao();
             result = reportSpeakerDao.calculateReportSpeakerNumber();
             daoFactory.commitTransaction();
@@ -44,7 +45,7 @@ public class ReportSpeakerService implements IReportSpeakerService {
     public List<Report_speakers> findAllReportSpeakersInDB() throws DBException {
         List<Report_speakers> report_speakers = new ArrayList<>();
         try {
-            daoFactory = DaoFactory.getDaoFactory(source);
+           daoFactory.open();
             reportSpeakerDao = daoFactory.getReportSpeakersDao();
             report_speakers = new ArrayList<>();
             report_speakers = reportSpeakerDao.findAllReportSpeakersInDB();
@@ -59,7 +60,7 @@ public class ReportSpeakerService implements IReportSpeakerService {
     public List<Report_speakers> findReportSpeaker(Integer first, Integer offset) throws DBException {
         List<Report_speakers> report_speakers = new ArrayList<>();
         try {
-            daoFactory = DaoFactory.getDaoFactory(source);
+            daoFactory.open();
             reportSpeakerDao = daoFactory.getReportSpeakersDao();
             report_speakers = new ArrayList<>();
             report_speakers = reportSpeakerDao.findReportSpeaker(first, offset);
@@ -71,10 +72,24 @@ public class ReportSpeakerService implements IReportSpeakerService {
     }
 
     @Override
+    public Report_speakers findReportById(Integer id) {
+        Report_speakers report_speakers = null;
+        try {
+            daoFactory.open();
+            reportSpeakerDao = daoFactory.getReportSpeakersDao();
+            report_speakers = reportSpeakerDao.findReportById(id);
+            daoFactory.close();
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+        return report_speakers;
+    }
+
+    @Override
     public synchronized boolean addReportSpeakersToDB(Report_speakers report_speakers) {
         boolean result;
         try {
-            daoFactory = DaoFactory.getDaoFactory(source);
+            daoFactory.beginTransaction();
             reportSpeakerDao = daoFactory.getReportSpeakersDao();
             result = reportSpeakerDao.addReportSpeakersToDB(report_speakers);
             daoFactory.commitTransaction();
@@ -89,7 +104,7 @@ public class ReportSpeakerService implements IReportSpeakerService {
     public synchronized boolean updateReportSpeakersInDB(Report_speakers report_speakers) {
         boolean result;
         try {
-            daoFactory = DaoFactory.getDaoFactory(source);
+            daoFactory.beginTransaction();
             reportSpeakerDao = daoFactory.getReportSpeakersDao();
             result = reportSpeakerDao.updateReportSpeakersInDB(report_speakers);
             daoFactory.commitTransaction();
@@ -104,7 +119,7 @@ public class ReportSpeakerService implements IReportSpeakerService {
     public synchronized boolean deleteReportSpeakersFromDB(Report_speakers report_speakers) {
         boolean result;
         try {
-            daoFactory = DaoFactory.getDaoFactory(source);
+            daoFactory.beginTransaction();
             reportSpeakerDao = daoFactory.getReportSpeakersDao();
             result = reportSpeakerDao.deleteReportSpeakersFromDB(report_speakers);
             daoFactory.commitTransaction();
@@ -119,7 +134,7 @@ public class ReportSpeakerService implements IReportSpeakerService {
     public synchronized boolean saveWithProposalsDeletion(Report_speakers reportTopicSpeaker) {
         boolean result;
         try {
-            daoFactory = DaoFactory.getDaoFactory(source);
+            daoFactory.beginTransaction();
             reportSpeakerDao = daoFactory.getReportSpeakersDao();
             result = reportSpeakerDao.saveWithProposalsDeletion(reportTopicSpeaker);
             daoFactory.commitTransaction();

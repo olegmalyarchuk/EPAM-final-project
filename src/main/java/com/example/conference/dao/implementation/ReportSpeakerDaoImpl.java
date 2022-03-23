@@ -4,7 +4,9 @@ import com.example.conference.dao.GenericAbstractDao;
 import com.example.conference.dao.IReportSpeakerDao;
 import com.example.conference.dao.Mapper;
 import com.example.conference.entity.Report_speakers;
+import com.example.conference.entity.Reports;
 import com.example.conference.entity.Speaker_preposition;
+import com.example.conference.entity.User;
 import com.example.conference.exceptions.DBException;
 
 
@@ -20,7 +22,8 @@ public class ReportSpeakerDaoImpl extends GenericAbstractDao<Report_speakers> im
     public static final String SQL_SELECT_BASE = "select * from reports_speakers order by id;";
     public static final String SQL_SELECT_ALL = "select * from reports_speakers order by id;";
     public static final String SQL_ADD_NEW = "INSERT INTO reports_speakers VALUES(?, ?, ?)";
-    public static final String SQL_UPDATE_BY_ID = "UPDATE reports_speakers set id=?, report_id=?, speaker_id=?, where id=?;";
+    public static final String SQL_UPDATE_BY_ID = "UPDATE reports_speakers set id=?, report_id=?, speaker_id=? where id=?;";
+   public static final String SQL_FIND_BY_ID = "SELECT * FROM reports_speakers WHERE report_id=?;";
     public static final String SQL_DELETE_BY_ID = "DELETE FROM reports_speakers where id=?;";
     String speakerPrepositionDeleteQuery = "DELETE FROM speaker_preposition WHERE speaker_id=? AND report_id=?";
     String moderatorPrepositionDeleteQuery = "DELETE FROM moderator_preposition WHERE speaker_id=? AND report_id=?";
@@ -47,7 +50,7 @@ public class ReportSpeakerDaoImpl extends GenericAbstractDao<Report_speakers> im
 
     @Override
     public Integer calculateReportSpeakerNumber() throws DBException {
-        return calculateRowCounts(connection, "report_speakers");
+        return calculateRowCounts(connection, "reports_speakers");
     }
 
     @Override
@@ -58,6 +61,11 @@ public class ReportSpeakerDaoImpl extends GenericAbstractDao<Report_speakers> im
     @Override
     public List<Report_speakers> findReportSpeaker(Integer first, Integer offset) throws DBException {
         return findAllFromTo(connection, Report_speakers.class, first, offset, SQL_SELECT_BASE);
+    }
+
+    @Override
+    public Report_speakers findReportById(Integer id) throws DBException {
+        return findBy(connection, Report_speakers.class, SQL_FIND_BY_ID, id);
     }
 
     @Override

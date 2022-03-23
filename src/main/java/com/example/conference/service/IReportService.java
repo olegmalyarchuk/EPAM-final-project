@@ -1,7 +1,6 @@
 package com.example.conference.service;
 
-import com.example.conference.entity.Report_preposition;
-import com.example.conference.entity.Reports;
+import com.example.conference.entity.*;
 import com.example.conference.exceptions.DBException;
 
 import java.util.List;
@@ -34,6 +33,14 @@ public interface IReportService {
      * @throws DBException if connection is down, broken or unable to retrieve information for certain reasons
      */
     List<Reports> findReport(Integer first, Integer offset) throws DBException;
+
+    /**
+     * Finds all reports by event
+     * @param events - event
+     * @return List of reports
+     * @throws DBException if connection is down, broken or unable to retrieve information for certain reasons
+     */
+    List<Reports> findReportsByEvent(Events events) throws DBException;
 
     /**
      * Adds new reports to DB

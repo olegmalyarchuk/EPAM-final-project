@@ -3,8 +3,7 @@ package com.example.conference.dao.implementation;
 import com.example.conference.dao.GenericAbstractDao;
 import com.example.conference.dao.IReportDao;
 import com.example.conference.dao.Mapper;
-import com.example.conference.entity.Report_speakers;
-import com.example.conference.entity.Reports;
+import com.example.conference.entity.*;
 import com.example.conference.exceptions.DBException;
 
 import java.sql.Connection;
@@ -19,7 +18,9 @@ public class ReportsDaoImpl extends GenericAbstractDao<Reports> implements IRepo
     public static final String SQL_SELECT_BASE = "select * from reports order by report_id;";
     public static final String SQL_SELECT_ALL = "select * from reports order by report_id;";
     public static final String SQL_ADD_NEW = "INSERT INTO reports VALUES(?, ?, ?, ?)";
-    public static final String SQL_UPDATE_BY_ID = "UPDATE reports set report_id=?, event_id=?, report_name_ua=?, where report_name_en=?;";
+    public static final String SQL_FIND_BY_EVENT_ID = "SELECT * FROM EVENTS WHERE EVENT_ID = ?";
+    public static final String SQL_SELECT_BY_EVENT = "SELECT * from reports r join events e on r.event_id=e.event_id where r.event_id=?;";
+    public static final String SQL_UPDATE_BY_ID = "UPDATE reports set report_id=?, event_id=?, report_name_ua=? where report_id=?;";
     public static final String SQL_DELETE_BY_ID = "DELETE FROM reports where report_id=?;";
     public static final String SQL_DELETE =  "DELETE FROM reports_speakers where report_id=?";
 
@@ -58,6 +59,11 @@ public class ReportsDaoImpl extends GenericAbstractDao<Reports> implements IRepo
     @Override
     public List<Reports> findReport(Integer first, Integer offset) throws DBException {
         return findAllFromTo(connection, Reports.class, first, offset, SQL_SELECT_BASE);
+    }
+
+    @Override
+    public List<Reports> findReportsByEvent(Events events) throws DBException {
+        return findAsListBy(connection, Reports.class, SQL_SELECT_BY_EVENT, events.getEvent_id());
     }
 
     @Override

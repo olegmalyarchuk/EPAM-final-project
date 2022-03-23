@@ -1,6 +1,7 @@
 package com.example.conference.dao;
 
 import com.example.conference.entity.Report_speakers;
+import com.example.conference.entity.Reports;
 import com.example.conference.entity.Speaker_preposition;
 import com.example.conference.exceptions.DBException;
 
@@ -36,6 +37,14 @@ public interface IReportSpeakerDao {
      * @throws DBException if connection is down, broken or unable to retrieve information for certain reasons
      */
     List<Report_speakers> findReportSpeaker(Integer first, Integer offset) throws DBException;
+
+    /**
+     * Finds Report by id
+     * @param id - Report_id
+     * @return Report by id
+     * @throws DBException if connection is down, broken or unable to retrieve information for certain reasons
+     */
+    Report_speakers findReportById(Integer id) throws DBException;
 
     /**
      * Adds new report_speakers to DB

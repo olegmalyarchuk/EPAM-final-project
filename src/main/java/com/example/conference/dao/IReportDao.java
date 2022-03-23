@@ -1,7 +1,9 @@
 package com.example.conference.dao;
 
+import com.example.conference.entity.Events;
 import com.example.conference.entity.Report_preposition;
 import com.example.conference.entity.Reports;
+import com.example.conference.entity.User;
 import com.example.conference.exceptions.DBException;
 
 import java.util.List;
@@ -35,6 +37,14 @@ public interface IReportDao {
      * @throws DBException if connection is down, broken or unable to retrieve information for certain reasons
      */
     List<Reports> findReport(Integer first, Integer offset) throws DBException;
+
+    /**
+     * Finds all reports by event
+     * @param events - event
+     * @return List of reports
+     * @throws DBException if connection is down, broken or unable to retrieve information for certain reasons
+     */
+    List<Reports> findReportsByEvent(Events events) throws DBException;
 
     /**
      * Adds new reports to DB

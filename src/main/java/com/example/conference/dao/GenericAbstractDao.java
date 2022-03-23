@@ -1,5 +1,7 @@
 package com.example.conference.dao;
 
+import com.example.conference.entity.Report_speakers;
+import com.example.conference.entity.User;
 import com.example.conference.exceptions.DBException;
 import com.example.conference.exceptions.Messages;
 
@@ -69,10 +71,10 @@ public class GenericAbstractDao<T> {
             if (resultSet.next())
                 mapperFromDB.map(resultSet, item);
             else
-                throw new DBException(ERR_CANNOT_FIND_BY_KEY);
+                return null;
         } catch (SQLException sqle) {
+            return null;
            // log.error(sqle);
-            throw new DBException(Messages.ERR_CANNOT_FIND_BY_KEY, sqle);
         }
         return item;
     }
@@ -117,7 +119,6 @@ public class GenericAbstractDao<T> {
             mapperToDB.map(item, preparedStatement);
             addParameterToPreparedStatement(preparedStatement, paramNum, value);
             result = preparedStatement.executeUpdate() > 0;
-            System.out.println(result);
         } catch (SQLException sqle) {
            // log.error(sqle);
             return false;
@@ -157,9 +158,8 @@ public class GenericAbstractDao<T> {
     private T getItemInstance(Class t) {
         T item = null;
         try {
-            item = (T) t.getDeclaredConstructor().newInstance();
-        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException ie) {
-           // log.error(ie);
+            item = (T) t.newInstance();
+        } catch (InstantiationException | IllegalAccessException ie) {
         }
         return item;
     }
@@ -170,7 +170,6 @@ public class GenericAbstractDao<T> {
             preparedStatement.setString(paramNum, (String) value);
         if (value instanceof Integer) {
             preparedStatement.setInt(paramNum, (Integer) value);
-            System.out.println(preparedStatement);
         }
         if (value instanceof LocalDateTime)
             preparedStatement.setObject(paramNum, value);

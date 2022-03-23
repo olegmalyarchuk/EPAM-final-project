@@ -4,10 +4,12 @@ import com.example.conference.dao.DaoFactory;
 import com.example.conference.dao.DataBaseSelector;
 import com.example.conference.dao.IReportDao;
 import com.example.conference.dao.IUserDao;
+import com.example.conference.entity.Events;
 import com.example.conference.entity.Reports;
 import com.example.conference.entity.User;
 import com.example.conference.exceptions.DBException;
 import com.example.conference.service.IReportService;
+import org.w3c.dom.events.Event;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +65,21 @@ public class ReportService implements IReportService {
             reportDao = daoFactory.getReportDao();
             reports = new ArrayList<>();
             reports = reportDao.findReport(first, offset);
+            daoFactory.close();
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+        return reports;
+    }
+
+    @Override
+    public List<Reports> findReportsByEvent(Events events) {
+        List<Reports> reports = new ArrayList<>();
+        try {
+            daoFactory.open();
+            reportDao = daoFactory.getReportDao();
+            reports = new ArrayList<>();
+            reports = reportDao.findReportsByEvent(events);
             daoFactory.close();
         } catch (DBException e) {
             e.printStackTrace();

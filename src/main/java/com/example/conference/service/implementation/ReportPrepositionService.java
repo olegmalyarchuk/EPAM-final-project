@@ -44,7 +44,7 @@ public class ReportPrepositionService implements IReportPrepositionService {
     public List<Report_preposition> findAllReportPrepositionInDB() throws DBException {
         List<Report_preposition> report_prepositions = new ArrayList<>();
         try {
-            daoFactory = DaoFactory.getDaoFactory(source);
+            daoFactory.open();
             reportPrepositionDao = daoFactory.getReportPrepositionDao();
             report_prepositions = new ArrayList<>();
             report_prepositions = reportPrepositionDao.findAllReportPrepositionInDB();
@@ -59,7 +59,7 @@ public class ReportPrepositionService implements IReportPrepositionService {
     public List<Report_preposition> findReportPreposition(Integer first, Integer offset) throws DBException {
         List<Report_preposition> report_prepositions = new ArrayList<>();
         try {
-            daoFactory = DaoFactory.getDaoFactory(source);
+            daoFactory.open();
             reportPrepositionDao = daoFactory.getReportPrepositionDao();
             report_prepositions = new ArrayList<>();
             report_prepositions = reportPrepositionDao.findReportPreposition(first, offset);
@@ -74,7 +74,7 @@ public class ReportPrepositionService implements IReportPrepositionService {
     public synchronized boolean addReportPrepositionToDB(Report_preposition report_preposition) {
         boolean result;
         try {
-            daoFactory = DaoFactory.getDaoFactory(source);
+            daoFactory.beginTransaction();
             reportPrepositionDao = daoFactory.getReportPrepositionDao();
             result = reportPrepositionDao.addReportPrepositionToDB(report_preposition);
             daoFactory.commitTransaction();
@@ -89,7 +89,7 @@ public class ReportPrepositionService implements IReportPrepositionService {
     public synchronized boolean updateReportPrepositionInDB(Report_preposition report_preposition) {
         boolean result;
         try {
-            daoFactory = DaoFactory.getDaoFactory(source);
+            daoFactory.beginTransaction();
             reportPrepositionDao = daoFactory.getReportPrepositionDao();
             result = reportPrepositionDao.updateReportPrepositionInDB(report_preposition);
             daoFactory.commitTransaction();
@@ -104,7 +104,7 @@ public class ReportPrepositionService implements IReportPrepositionService {
     public synchronized boolean deleteReportPrepositionFromDB(Report_preposition report_preposition) {
         boolean result;
         try {
-            daoFactory = DaoFactory.getDaoFactory(source);
+            daoFactory.beginTransaction();
             reportPrepositionDao = daoFactory.getReportPrepositionDao();
             result = reportPrepositionDao.deleteReportPrepositionFromDB(report_preposition);
             daoFactory.commitTransaction();
@@ -119,7 +119,7 @@ public class ReportPrepositionService implements IReportPrepositionService {
     public synchronized boolean createReportWithPropositionDeletion(int id) {
         boolean result;
         try {
-            daoFactory = DaoFactory.getDaoFactory(source);
+            daoFactory.beginTransaction();
             reportPrepositionDao = daoFactory.getReportPrepositionDao();
             result = reportPrepositionDao.createReportWithPropositionDeletion(id);
             daoFactory.commitTransaction();

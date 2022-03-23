@@ -9,6 +9,9 @@ public class Moderator_preposition implements Serializable {
     private int report_id;
     private int speaker_id;
 
+    public Moderator_preposition() {
+    }
+
     public Moderator_preposition(int id) {
         this.id = id;
     }
