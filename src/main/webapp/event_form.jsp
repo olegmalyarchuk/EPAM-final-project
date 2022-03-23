@@ -19,6 +19,9 @@
         RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
         dispatcher.forward(request, response);
     }
+    if(!session.getAttribute("role_id").equals("1")) {
+        response.sendRedirect("listEvent");
+    }
 %>
 <header>
     <nav class="navbar navbar-expand-md navbar-dark"
@@ -27,6 +30,10 @@
         <ul class="navbar-nav">
             <li><a href="listEvent"
                    class="nav-link">Events</a></li>
+        </ul>
+        <ul class="navbar-nav">
+            <li><a href="/logout"
+                   class="nav-link">Logout</a></li>
         </ul>
     </nav>
 </header>

@@ -72,68 +72,6 @@
                 </div>
         </div>
         <br>
-<%--        <table class="table table-bordered">--%>
-<%--            <thead>--%>
-<%--            <tr>--%>
-<%--                <th>ID</th>--%>
-<%--                <th>Name UA</th>--%>
-<%--                <th>Name EN</th>--%>
-<%--                <th>Place UA</th>--%>
-<%--                <th>Place EN</th>--%>
-<%--                <th>Description UA</th>--%>
-<%--                <th>Description EN</th>--%>
-<%--                <th>Date</th>--%>
-<%--                <th>Photo</th>--%>
-<%--                <th>Actions</th>--%>
-<%--            </tr>--%>
-<%--            </thead>--%>
-<%--            <tbody>--%>
-<%--            <!-- for(Todo todo: todos) { -->--%>
-<%--            <c:forEach var="event" items="${eventsList}">--%>
-<%--                <c:choose>--%>
-<%--                   <c:when test="${(eventStatus=='finished' && event.isFinished()==true) || (eventStatus=='upcoming' && event.isFinished()==false) || eventStatus=='all' || eventStatus==null}">--%>
-<%--                        <tr>--%>
-<%--                            <td>--%>
-<%--                                <c:out value="${event.event_id}"/>--%>
-<%--                            </td>--%>
-<%--                            <td>--%>
-<%--                                <c:out value="${event.event_name_ua}"/>--%>
-<%--                            </td>--%>
-<%--                            <td>--%>
-<%--                                <c:out value="${event.event_name_en}"/>--%>
-<%--                            </td>--%>
-<%--                            <td>--%>
-<%--                                <c:out value="${event.event_place_ua}"/>--%>
-<%--                            </td>--%>
-<%--                            <td>--%>
-<%--                                <c:out value="${event.event_place_en}"/>--%>
-<%--                            </td>--%>
-<%--                            <td>--%>
-<%--                                <c:out value="${event.event_description_ua}"/>--%>
-<%--                            </td>--%>
-<%--                            <td>--%>
-<%--                                <c:out value="${event.event_description_en}"/>--%>
-<%--                            </td>--%>
-<%--                            <td>--%>
-<%--                                <c:out value="${event.event_date}"/>--%>
-<%--                            </td>--%>
-<%--                            <td>--%>
-<%--                                <c:out value="${event.event_photo_url}"/>--%>
-<%--                            </td>--%>
-<%--                            <td><a href="edit?id=<c:out value='${event.event_id}' />">Edit</a>--%>
-<%--                                &nbsp;&nbsp;&nbsp;&nbsp; <a href="delete?id=<c:out value='${event.event_id}' />">Delete</a>--%>
-<%--                               <a href="event?id=<c:out value='${event.event_id}' />">View more</a>--%>
-<%--                            </td>--%>
-<%--                        </tr>--%>
-<%--                    </c:when>--%>
-<%--                    <c:otherwise>--%>
-<%--                    </c:otherwise>--%>
-<%--                </c:choose>--%>
-<%--            </c:forEach>--%>
-<%--            <!-- } -->--%>
-<%--            </tbody>--%>
-
-<%--        </table>--%>
         <div class="card-columns">
     <c:forEach var="event" items="${eventsList}">
        <c:choose><c:when test="${(eventStatus=='finished' && event.isFinished()==true) || (eventStatus=='upcoming' && event.isFinished()==false) || eventStatus=='all' || eventStatus==null}">
@@ -143,8 +81,11 @@
                 <h5 class="card-title">${event.event_name_en}</h5>
                 <p class="card-text">${event.event_description_en}</p>
                 <a href="eventEvent?id=<c:out value='${event.event_id}' />" class="btn btn-primary">View more</a>
-                <a href="editEvent?id=<c:out value='${event.event_id}' />" class="btn btn-success">Edit</a>
-                <a href="deleteEvent?id=<c:out value='${event.event_id}' />" class="btn btn-danger">Delete</a>
+                <c:choose><c:when test="${sessionScope.role_id==1}">
+                    <a href="editEvent?id=<c:out value='${event.event_id}' />" class="btn btn-success">Edit</a>
+                    <a href="deleteEvent?id=<c:out value='${event.event_id}' />" class="btn btn-danger">Delete</a>
+                </c:when></c:choose>
+
             </div>
         </div>
        </c:when>
