@@ -43,19 +43,23 @@ public class LoginServlet extends HttpServlet {
                 session.setAttribute("email", email);
                 session.setAttribute("name", u.getUser_name());
                 session.setAttribute("role_id", u.getRole_id());
-                dispatcher = req.getRequestDispatcher("/main.jsp");
-                req.setAttribute("status", "successLogin");
+                session.setAttribute("status", "successLogin");
+              //  req.setAttribute("status", "successLogin");
+                resp.sendRedirect("listEvent");
+               // dispatcher = req.getRequestDispatcher("/listEvent");
+//                req.setAttribute("status", "successLogin");
             } else {
                 //wrong passowrd
                 req.setAttribute("status", "wrongPass");
                 dispatcher = req.getRequestDispatcher("login.jsp");
+                dispatcher.forward(req, resp);
             }
         } else {
             //user is not registered
             req.setAttribute("status", "unexistedEmail");
             dispatcher = req.getRequestDispatcher("login.jsp");
+            dispatcher.forward(req, resp);
         }
-        dispatcher.forward(req, resp);
     }
 
 }

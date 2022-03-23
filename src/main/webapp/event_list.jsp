@@ -13,13 +13,27 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </head>
 <body>
-
+<%
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");// HTTP 1.1
+    response.setHeader("Pragma", "no-cache"); // HTTP 1.0
+    response.setHeader("Expires", "0"); // Proxies
+    if(session.getAttribute("email")==null) {
+        request.setAttribute("status", "unregistered");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+        dispatcher.forward(request, response);
+    }
+%>
+<input type="hidden" id="status" value="<%=session.getAttribute("status")%>">
 <header>
     <nav class="navbar navbar-expand-md navbar-dark"
          style="background-color: #0074D9">
         <ul class="navbar-nav">
-            <li><a href="list"
+            <li><a href="listEvent"
                    class="nav-link">Events</a></li>
+        </ul>
+        <ul class="navbar-nav">
+            <li><a href="/logout"
+                   class="nav-link">Logout</a></li>
         </ul>
     </nav>
 </header>
@@ -33,28 +47,28 @@
         <hr>
         <div class="container text-center">
 
-            <a href="new" class="btn btn-success" style="background-color: #0074D9;">Add
+            <a href="newEvent" class="btn btn-success" style="background-color: #0074D9;">Add
                 New Event</a>
             <c:choose>
-                <c:when test="${eventStatus==null||eventStatus=='all'}"> <a href="list?eventStatus=all" class="btn btn-success" style="background-color: #1E93F9;">All events</a></c:when>
-                <c:otherwise> <a href="list?eventStatus=all" class="btn btn-success" style="background-color: #0074D9;">All events</a></c:otherwise>
+                <c:when test="${eventStatus==null||eventStatus=='all'}"> <a href="listEvent?eventStatus=all" class="btn btn-success" style="background-color: #1E93F9;">All events</a></c:when>
+                <c:otherwise> <a href="listEvent?eventStatus=all" class="btn btn-success" style="background-color: #0074D9;">All events</a></c:otherwise>
             </c:choose>
             <c:choose>
-                <c:when test="${eventStatus=='finished'}"> <a href="list?eventStatus=finished" class="btn btn-success" style="background-color: #1E93F9">Finished events</a></c:when>
-                <c:otherwise> <a href="list?eventStatus=finished" class="btn btn-success" style="background-color: #0074D9;">Finished events</a></c:otherwise>
+                <c:when test="${eventStatus=='finished'}"> <a href="listEvent?eventStatus=finished" class="btn btn-success" style="background-color: #1E93F9">Finished events</a></c:when>
+                <c:otherwise> <a href="listEvent?eventStatus=finished" class="btn btn-success" style="background-color: #0074D9;">Finished events</a></c:otherwise>
             </c:choose>
             <c:choose>
-                <c:when test="${eventStatus=='upcoming'}"> <a href="list?eventStatus=upcoming" class="btn btn-success" style="background-color: #1E93F9;">Upcoming events</a></c:when>
-                <c:otherwise> <a href="list?eventStatus=upcoming" class="btn btn-success" style="background-color: #0074D9;">Upcoming events</a></c:otherwise>
+                <c:when test="${eventStatus=='upcoming'}"> <a href="listEvent?eventStatus=upcoming" class="btn btn-success" style="background-color: #1E93F9;">Upcoming events</a></c:when>
+                <c:otherwise> <a href="listEvent?eventStatus=upcoming" class="btn btn-success" style="background-color: #0074D9;">Upcoming events</a></c:otherwise>
             </c:choose>
             <button class="btn btn-secondary dropdown-toggle" style="background-color: #1E93F9" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Order by
             </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="list?orderBy=date">Date</a>
-                    <a class="dropdown-item" href="list?orderBy=reports">Reports count</a>
-                    <a class="dropdown-item" href="list?orderBy=users">Users count</a>
-                    <a class="dropdown-item" href="list">Default</a>
+                    <a class="dropdown-item" href="listEvent?orderBy=date">Date</a>
+                    <a class="dropdown-item" href="listEvent?orderBy=reports">Reports count</a>
+                    <a class="dropdown-item" href="listEvent?orderBy=users">Users count</a>
+                    <a class="dropdown-item" href="listEvent">Default</a>
                 </div>
         </div>
         <br>
@@ -128,9 +142,9 @@
             <div class="card-body">
                 <h5 class="card-title">${event.event_name_en}</h5>
                 <p class="card-text">${event.event_description_en}</p>
-                <a href="event?id=<c:out value='${event.event_id}' />" class="btn btn-primary">View more</a>
-                <a href="edit?id=<c:out value='${event.event_id}' />" class="btn btn-success">Edit</a>
-                <a href="delete?id=<c:out value='${event.event_id}' />" class="btn btn-danger">Delete</a>
+                <a href="eventEvent?id=<c:out value='${event.event_id}' />" class="btn btn-primary">View more</a>
+                <a href="editEvent?id=<c:out value='${event.event_id}' />" class="btn btn-success">Edit</a>
+                <a href="deleteEvent?id=<c:out value='${event.event_id}' />" class="btn btn-danger">Delete</a>
             </div>
         </div>
        </c:when>
@@ -141,5 +155,23 @@
     </div>
 </div>
 </div>
+<!--- JS -->
+<script src="vendor/jquery/jguery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link rel="stylesheet" href="alert/dist/sweatalert.css ">
+<script type="text/javascript">
+    var status = document.getElementById("status").value;
+    if(status=="registered") {
+            swal("Error", "You are already logged in.", "error");
+    }
+    if(status=="successRegister") {
+            <% request.getSession().removeAttribute("status");%>
+            swal("Congrats", "You have successfully registered", "success");
+    }
+    if(status=="successLogin") {
+             <% request.getSession().removeAttribute("status");%>
+            swal("Congrats", "You have successfully login", "success");
+    }
+</script>
 </body>
 </html>

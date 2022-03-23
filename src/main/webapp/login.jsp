@@ -17,12 +17,13 @@
 <body>
 <%
     if(session.getAttribute("email")!=null) {
-        request.setAttribute("status", "registered");
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/main.jsp");
+        session.setAttribute("status", "registered");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/listEvent");
         dispatcher.forward(request, response);
     }
 %>
 <input type="hidden" id="status" value="<%=request.getAttribute("status")%>">
+<input type="hidden" id="statusSession" value="<%=session.getAttribute("status")%>">
 <div class="main">
     <!-- Sing in  Form -->
     <section class="sign-in">

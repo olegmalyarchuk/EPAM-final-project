@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-@WebServlet(urlPatterns = {"/events/new","/events/insert","/events/delete", "/events/edit", "/events/update", "/events/list", "/events/event"})
+@WebServlet(urlPatterns = {"/newEvent","/insertEvent","/deleteEvent", "/editEvent", "/updateEvent", "/listEvent", "/eventEvent"})
 public class EventServlet extends HttpServlet {
     public static final long serialVersionUID = 1234882438L;
     IEventService service = ServiceFactory.getInstance().getEventService();
@@ -39,25 +39,25 @@ public class EventServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getServletPath();
         switch (action) {
-            case "/events/new":
+            case "/newEvent":
                 showNewForm(req, resp);
                 break;
-            case "/events/insert":
+            case "/insertEvent":
                 insertUser(req, resp);
                 break;
-            case "/events/delete":
+            case "/deleteEvent":
                 deleteEvent(req, resp);
                 break;
-            case "/events/edit":
+            case "/editEvent":
                 showEditForm(req, resp);
                 break;
-            case "/events/update":
+            case "/updateEvent":
                updateUser(req, resp);
                break;
-            case "/events/list":
+            case "/listEvent":
                  listEvents(req, resp);
                   break;
-            case "/events/event":
+            case "/eventEvent":
                 showEvent(req, resp);
         }
     }
@@ -65,7 +65,7 @@ public class EventServlet extends HttpServlet {
     private void listEvents(HttpServletRequest request, HttpServletResponse response) {
         try {
           String status = "all";
-          status = request.getParameter("eventStatus");
+          if(request.getParameter("eventStatus") != null) status = request.getParameter("eventStatus");
           String orderBy = "default";
           if(request.getParameter("orderBy") != null) orderBy = request.getParameter("orderBy");
             List<Events> eventsList = service.findAllEventsInDB();
@@ -147,7 +147,7 @@ public class EventServlet extends HttpServlet {
             boolean isDeleted = service.deleteEventsByIdFromDB(id);
             if(isDeleted) request.setAttribute("status", "successDelete");
             else request.setAttribute("status", "errorDelete");
-            response.sendRedirect("list");
+            response.sendRedirect("listEvent");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -204,7 +204,7 @@ public class EventServlet extends HttpServlet {
             boolean isUpdated = service.updateEventsInDB(events);
             if(isUpdated) request.setAttribute("status", "successUpdate");
             else request.setAttribute("status", "errorUpdate");
-            response.sendRedirect("list");
+            response.sendRedirect("listEvent");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -237,7 +237,7 @@ public class EventServlet extends HttpServlet {
             boolean isInserted = service.addEventsToDB(events);
             if(isInserted) request.setAttribute("status", "successInsert");
             else request.setAttribute("status", "errorInsert");
-            response.sendRedirect("list");
+            response.sendRedirect("listEvent");
         } catch (IOException | DBException e) {
             e.printStackTrace();
         }

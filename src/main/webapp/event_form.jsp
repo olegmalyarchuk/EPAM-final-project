@@ -10,13 +10,22 @@
           crossorigin="anonymous">
 </head>
 <body>
-
+<%
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");// HTTP 1.1
+    response.setHeader("Pragma", "no-cache"); // HTTP 1.0
+    response.setHeader("Expires", "0"); // Proxies
+    if(session.getAttribute("email")==null) {
+        request.setAttribute("status", "unregistered");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+        dispatcher.forward(request, response);
+    }
+%>
 <header>
     <nav class="navbar navbar-expand-md navbar-dark"
          style="background-color: #0074D9">
 
         <ul class="navbar-nav">
-            <li><a href="list"
+            <li><a href="listEvent"
                    class="nav-link">Events</a></li>
         </ul>
     </nav>
@@ -26,10 +35,10 @@
     <div class="card">
         <div class="card-body">
             <c:if test="${event != null}">
-            <form action="update" method="post">
+            <form action="updateEvent" method="post">
                 </c:if>
                 <c:if test="${event == null}">
-                <form action="insert" method="post">
+                <form action="insertEvent" method="post">
                     </c:if>
 
                     <caption>
