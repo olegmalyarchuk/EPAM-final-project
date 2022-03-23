@@ -13,7 +13,7 @@
 
 <header>
     <nav class="navbar navbar-expand-md navbar-dark"
-         style="background-color: #39c2d7">
+         style="background-color: #0074D9">
 
         <ul class="navbar-nav">
             <li><a href="list"
@@ -89,7 +89,7 @@
                         </fieldset>
 
 
-                        <button type="submit" class="btn btn-success"  style="background-color: #a3c644; color: #464547">Save</button>
+                        <button type="submit" class="btn btn-success">Save</button>
                 </form>
         </div>
     </div>

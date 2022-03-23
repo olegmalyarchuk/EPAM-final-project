@@ -2,7 +2,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Registration page</title>
+    <title>Sign Up</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="resources/fonts/material-icon/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <!-- Bootstrap Font Icon CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <!-- Main css -->
+    <link rel="stylesheet" href="resources/css/style.css">
 </head>
 <body>
 <%
@@ -12,48 +22,63 @@
        dispatcher.forward(request, response);
     }
 %>
-<h6>Registration page</h6><br>
 <input type="hidden" id="status" value="<%=request.getAttribute("status")%>">
-<div align="center">
-    <h1>User Register Form</h1>
-    <form action="register" method="post">
-        <table style="width: 80%">
-            <tr>
-                <td>First name</td>
-                <td><input type="text" name="firstname" required="required" /></td>
-            </tr>
-            <tr>
-                <td>Last name</td>
-                <td><input type="text" name="lastname" required="required"/></td>
-            </tr>
-            <tr>
-                <td>Password</td>
-                <td><input type="password" name="password" required="required" /></td>
-            </tr>
-            <tr>
-                <td>Confirm password</td>
-                <td><input type="password" name="confirmpassword" required="required" /></td>
-            </tr>
-            <tr>
-                <td>Email</td>
-                <td><input type="email" name="email" required="required" /></td>
-            </tr>
-            <tr>
-                <td>Phone</td>
-                <td><input type="text" name="phone" required="required" /></td>
-            </tr>
-            <tr>
-                <td>Location</td>
-                <td><input type="text" name="address" required="required" /></td>
-            </tr>
-        </table>
-        <input type="submit" value="Submit"/>
-    </form>
-    <a href="login.jsp">Already have an account</a>
-</div>
+<div class="main">
+    <section class="signup">
+        <div class="container">
+            <div class="signup-content">
+                <div class="signup-form">
+                    <h2 class="form-title">Sign up</h2>
+                    <form action="register" method="post" class="register-form" id="register-form">
+                        <div class="form-group">
+                            <label for="firstname"><i class="bi bi-person-fill"></i></label>
+                            <input type="text" required="required" name="firstname" id="firstname" placeholder="Your Name"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastname"><i class="bi bi-person-fill"></i></label>
+                            <input type="text" required="required" name="lastname" id="lastname" placeholder="Your Surname"/>
+                        </div>
 
+                        <div class="form-group">
+                            <label for="phone"><i class="bi bi-telephone-fill"></i></label>
+                            <input type="text" required="required" name="phone" id="phone" placeholder="Phone"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="address"><i class="bi bi-house-door-fill"></i></label>
+                            <input type="text" required="required" name="address" id="address" placeholder="Location"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="email"><i class="bi bi-envelope-fill"></i></label>
+                            <input type="email" required="required"  name="email" id="email" placeholder="Your Email"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="password"><i class="bi bi-key-fill"></i></label>
+                            <input type="password" required="required"  name="password" id="password" placeholder="Password"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmpassword"><i class="bi bi-lock-fill"></i></label>
+                            <input type="password" required="required"  name="confirmpassword" id="confirmpassword" placeholder="Repeat your password"/>
+                        </div>
+                        <div class="form-group">
+                            <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
+                            <label for="agree-term" required="required"  class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
+                        </div>
+                        <div class="form-group form-button">
+                            <input type="submit" name="signup" id="signup" class="form-submit" value="Register"/>
+                        </div>
+                    </form>
+                </div>
+                <div class="signup-image">
+                    <figure><img src="resources/images/auth/signup-image.jpg" alt="sing up image"></figure>
+                    <a href="login.jsp" class="signup-image-link">I am already member</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
 <!--- JS -->
-<script src="vendor/jquery/jguery.min.js"></script>
+<script src="resources/vendor/jquery/jquery.min.js"></script>
+<script src="resources/js/main.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <link rel="stylesheet" href="alert/dist/sweatalert.css ">
 <script type="text/javascript">
