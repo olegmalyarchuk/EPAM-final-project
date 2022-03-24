@@ -47,8 +47,9 @@
         <hr>
         <div class="container text-center">
 
-            <a href="newEvent" class="btn btn-success" style="background-color: #0074D9;">Add
-                New Event</a>
+            <c:choose><c:when test="${sessionScope.role_id==1}">
+                <a href="newEvent" class="btn btn-success" style="background-color: #0074D9;">Add New Event</a>
+            </c:when></c:choose>
             <c:choose>
                 <c:when test="${eventStatus==null||eventStatus=='all'}"> <a href="listEvent?eventStatus=all" class="btn btn-success" style="background-color: #1E93F9;">All events</a></c:when>
                 <c:otherwise> <a href="listEvent?eventStatus=all" class="btn btn-success" style="background-color: #0074D9;">All events</a></c:otherwise>

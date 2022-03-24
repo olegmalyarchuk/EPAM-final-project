@@ -88,7 +88,6 @@ public class EventServlet extends HttpServlet {
                 Collections.sort(eventsList, new UsersCountComparator());
             }
             request.setAttribute("eventsList", eventsList);
-            request.setAttribute("eventStatus", status);
             RequestDispatcher dispatcher = request.getRequestDispatcher("event_list.jsp");
             dispatcher.forward(request, response);
         } catch (DBException e) {
@@ -127,7 +126,7 @@ public class EventServlet extends HttpServlet {
           }
             request.setAttribute("event", events);
             request.setAttribute("reports", reports);
-            request.setAttribute("speaker", speakers);
+            request.setAttribute("speakers", speakers);
             request.setAttribute("registered", cntRegistered);
             request.setAttribute("present", cntPresent);
             RequestDispatcher dispatcher = request.getRequestDispatcher("event.jsp");
