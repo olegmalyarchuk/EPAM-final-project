@@ -63,6 +63,7 @@
     <tr>
         <th scope="col">Report name</th>
         <th scope="col">Speaker</th>
+        <th scope="col"></th>
     </tr>
     </thead>
     <tbody>
@@ -73,14 +74,28 @@
             <c:when test="${speakers.get(pos).user_name=='null'}">
                 <td>No speaker has been appointed &nbsp&nbsp&nbsp&nbsp&nbsp
             <c:choose>
-            <c:when test="${sessionScope.role_id==2 && !event.isFinished()}">
+                <c:when test="${sessionScope.role_id==2 && !event.isFinished()}">
                 <td><a href="#" class="btn btn-success">Propose me</a></td>
                 </td>
-            </c:when>
+                </c:when>
+                 <c:when test="${sessionScope.role_id==1 && !event.isFinished()}">
+                    <td><a href="#" class="btn btn-success">Propose speaker</a>
+                        <a href="deleteReport?report_id=${report.report_id}" class="btn btn-danger">Delete</a>
+                        <a href="editReport?report_id=${report.report_id}&event_id=${event.event_id}" class="btn btn-success">Edit</a>
+                     </td>
+                 </c:when>
+                <c:otherwise><td></td></c:otherwise>
               </c:choose>
             </c:when>
             <c:otherwise>
                 <td>${speakers.get(pos).user_name} ${speakers.get(pos).user_surname}</td>
+                <c:choose>
+                    <c:when test="${sessionScope.role_id==1 && !event.isFinished()}">
+                        <td><a href="editReport?report_id=${report.report_id}&event_id=${event.event_id}" class="btn btn-success">Edit</a>
+                            <a href="deleteReport?report_id=${report.report_id}" class="btn btn-danger">Delete</a></td>
+                    </c:when>
+                    <c:otherwise><td></td></c:otherwise>
+                </c:choose>
             </c:otherwise>
         </c:choose>
         <c:set var="pos" value="${pos+1}"/>
@@ -88,20 +103,26 @@
     </c:forEach>
     </tbody>
 </table>
+
 <c:choose>
-    <c:when test="${sessionScope.role_id==1}">
-        <a href="addReport?event_id=${event.event_id}" class="btn btn-success">Add report for this event</a>
-    </c:when>
-<c:when test="${sessionScope.role_id==2}">
-<a href="proposeReport?event_id=${event.event_id}" class="btn btn-success">Propose report for this event</a>
-</c:when>
-    <c:when test="${sessionScope.role_id==3 && isRegister=='no'}">
-        <a href="registerUser?email=${sessionScope.email}&event_id=${event.event_id}" class="btn btn-success">Register</a>
-    </c:when>
-    <c:when test="${sessionScope.role_id==3 && isRegister=='yes'}">
-        <a href="excludeUser?email=${sessionScope.email}&event_id=${event.event_id}" class="btn btn-danger">Exclude me</a>
+    <c:when test="${!event.isFinished()}">
+        <c:choose>
+            <c:when test="${sessionScope.role_id==1}">
+                <a href="addReport?event_id=${event.event_id}" class="btn btn-success">Add report for this event</a>
+            </c:when>
+            <c:when test="${sessionScope.role_id==2}">
+                <a href="proposeReport?event_id=${event.event_id}" class="btn btn-success">Propose report for this event</a>
+            </c:when>
+            <c:when test="${sessionScope.role_id==3 && isRegister=='no'}">
+                <a href="registerUser?email=${sessionScope.email}&event_id=${event.event_id}" class="btn btn-success">Register</a>
+            </c:when>
+            <c:when test="${sessionScope.role_id==3 && isRegister=='yes'}">
+                <a href="excludeUser?email=${sessionScope.email}&event_id=${event.event_id}" class="btn btn-danger">Exclude me</a>
+            </c:when>
+        </c:choose>
     </c:when>
 </c:choose>
+
 <!--- JS -->
 <script src="vendor/jquery/jguery.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

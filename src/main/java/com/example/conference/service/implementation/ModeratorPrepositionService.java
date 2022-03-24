@@ -101,12 +101,12 @@ public class ModeratorPrepositionService implements IModeratorPrepositionService
     }
 
     @Override
-    public synchronized boolean deleteModeratorPrepositionFromDB(Moderator_preposition moderator_preposition) {
+    public synchronized boolean deleteModeratorPrepositionFromDB(Integer report_id) {
         boolean result;
         try {
             daoFactory.beginTransaction();
             moderatorPrepositionDao = daoFactory.getModeratorPrepositionDao();
-            result = moderatorPrepositionDao.deleteModeratorPrepositionFromDB(moderator_preposition);
+            result = moderatorPrepositionDao.deleteModeratorPrepositionFromDB(report_id);
             daoFactory.commitTransaction();
         } catch (DBException e) {
             // e.printStackTrace();

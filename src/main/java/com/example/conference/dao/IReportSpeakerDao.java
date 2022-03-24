@@ -62,10 +62,10 @@ public interface IReportSpeakerDao {
 
     /**
      * Deletes report_skeakers from DB
-     * @param report_speakers - Report_speakers to delete from DB
+     * @param report_id - Report_id to delete from DB
      * @return true if operation success and false if fails
      */
-    boolean deleteReportSpeakersFromDB(Report_speakers report_speakers);
+    boolean deleteReportSpeakersFromDB(Integer report_id);
 
     /**
      *     Saves {@link Report_speakers} to database and deletes all prepositions for assigned speaker

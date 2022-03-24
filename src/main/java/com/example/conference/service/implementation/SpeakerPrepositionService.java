@@ -133,12 +133,12 @@ public class SpeakerPrepositionService implements ISpeakerPrepositionService {
     }
 
     @Override
-    public synchronized boolean deleteSpeakerPrepositionFromDB(Speaker_preposition speaker_preposition) {
+    public synchronized boolean deleteSpeakerPrepositionFromDB(Integer report_id) {
         boolean result;
         try {
             daoFactory.beginTransaction();
             speakerPrepositionDao = daoFactory.getSpeakerPrepositionDao();
-            result = speakerPrepositionDao.deleteSpeakerPrepositionFromDB(speaker_preposition);
+            result = speakerPrepositionDao.deleteSpeakerPrepositionFromDB(report_id);
             daoFactory.commitTransaction();
         } catch (DBException e) {
             // e.printStackTrace();

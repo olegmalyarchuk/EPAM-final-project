@@ -51,10 +51,10 @@ public interface IModeratorPrepositionService {
 
     /**
      * Deletes moderator_preposition from DB
-     * @param moderator_preposition - moderator_preposition to delete from DB
+     * @param report_id - moderator_preposition to delete from DB
      * @return true if operation success and false if fails
      */
-    boolean deleteModeratorPrepositionFromDB(Moderator_preposition moderator_preposition);
+    boolean deleteModeratorPrepositionFromDB(Integer report_id);
 
     /**
      *     Deletes moderator preposition

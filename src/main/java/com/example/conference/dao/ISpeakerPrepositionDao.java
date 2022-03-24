@@ -52,10 +52,10 @@ public interface ISpeakerPrepositionDao {
 
     /**
      * Deletes speaker_preposition from DB
-     * @param speaker_preposition - Speaker_preposition to delete from DB
+     * @param report_id - Speaker_preposition to delete from DB
      * @return true if operation success and false if fails
      */
-    boolean deleteSpeakerPrepositionFromDB(Speaker_preposition speaker_preposition);
+    boolean deleteSpeakerPrepositionFromDB(Integer report_id);
 
     /**
      *      Retrieves all speakers' prepositions for concrete {@link Reports}

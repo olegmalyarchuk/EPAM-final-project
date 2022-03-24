@@ -24,7 +24,7 @@ public class ReportSpeakerDaoImpl extends GenericAbstractDao<Report_speakers> im
     public static final String SQL_ADD_NEW = "INSERT INTO reports_speakers VALUES(?, ?, ?)";
     public static final String SQL_UPDATE_BY_ID = "UPDATE reports_speakers set id=?, report_id=?, speaker_id=? where id=?;";
    public static final String SQL_FIND_BY_ID = "SELECT * FROM reports_speakers WHERE report_id=?;";
-    public static final String SQL_DELETE_BY_ID = "DELETE FROM reports_speakers where id=?;";
+    public static final String SQL_DELETE_BY_ID = "DELETE FROM reports_speakers where report_id=?;";
     String speakerPrepositionDeleteQuery = "DELETE FROM speaker_preposition WHERE speaker_id=? AND report_id=?";
     String moderatorPrepositionDeleteQuery = "DELETE FROM moderator_preposition WHERE speaker_id=? AND report_id=?";
     String insertStatement = "INSERT INTO reports_speakers(report_id, speaker_id) VALUES(?, ?);";
@@ -79,8 +79,8 @@ public class ReportSpeakerDaoImpl extends GenericAbstractDao<Report_speakers> im
     }
 
     @Override
-    public boolean deleteReportSpeakersFromDB(Report_speakers report_speakers) {
-        return deleteFromDB(connection, SQL_DELETE_BY_ID, report_speakers.getId());
+    public boolean deleteReportSpeakersFromDB(Integer report_id) {
+        return deleteFromDB(connection, SQL_DELETE_BY_ID, report_id);
     }
 
     @Override

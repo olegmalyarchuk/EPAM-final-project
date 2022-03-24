@@ -116,12 +116,12 @@ public class ReportSpeakerService implements IReportSpeakerService {
     }
 
     @Override
-    public synchronized boolean deleteReportSpeakersFromDB(Report_speakers report_speakers) {
+    public synchronized boolean deleteReportSpeakersFromDB(Integer report_id) {
         boolean result;
         try {
             daoFactory.beginTransaction();
             reportSpeakerDao = daoFactory.getReportSpeakersDao();
-            result = reportSpeakerDao.deleteReportSpeakersFromDB(report_speakers);
+            result = reportSpeakerDao.deleteReportSpeakersFromDB(report_id);
             daoFactory.commitTransaction();
         } catch (DBException e) {
             // e.printStackTrace();

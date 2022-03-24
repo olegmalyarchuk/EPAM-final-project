@@ -5,6 +5,7 @@ import com.example.conference.comparators.ReportsCountComparator;
 import com.example.conference.comparators.UsersCountComparator;
 import com.example.conference.entity.*;
 import com.example.conference.exceptions.DBException;
+import com.example.conference.mail.GmailSender;
 import com.example.conference.service.*;
 
 import javax.servlet.RequestDispatcher;
@@ -28,6 +29,8 @@ public class ReportServlet extends HttpServlet{
     IReportSpeakerService reportSpeakerService = ServiceFactory.getInstance().getReportSpeakerService();
     IReportPrepositionService reportPrepositionService = ServiceFactory.getInstance().getReportPrepositionService();
     IEventUsersService eventUsersService = ServiceFactory.getInstance().getEventUsersService();
+    ISpeakerPrepositionService speakerPrepositionService = ServiceFactory.getInstance().getSpeakerPrepositionService();
+    IModeratorPrepositionService moderatorPrepositionService = ServiceFactory.getInstance().getModeratorPrepositionService();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -56,7 +59,15 @@ public class ReportServlet extends HttpServlet{
             case "/excludeUser":
                 deleteUser(req, resp);
                 break;
-
+            case "/deleteReport":
+                delRep(req, resp);
+                break;
+            case "/editReport":
+                editRep(req, resp);
+                break;
+            case "/updateReport":
+                updateRep(req, resp);
+                break;
         }
     }
 
@@ -133,6 +144,7 @@ public class ReportServlet extends HttpServlet{
             Integer id = eventUsersService.calculateEventUsersNumber()+2;
             String email = request.getParameter("email");
             Integer event_id = Integer.valueOf(request.getParameter("event_id"));
+            Events events = service.findEventsById(event_id);
             User user = userService.findUserByEmail(email);
             Integer user_id = user.getId();
             Event_users event_users = new Event_users();
@@ -142,6 +154,7 @@ public class ReportServlet extends HttpServlet{
             event_users.setEvent_id(event_id);
             event_users.setPresent(false);
             eventUsersService.addEventUsersToDB(event_users);
+            GmailSender.sendEventWelcome(email, user.getUser_name(), user.getUser_surname(), events.getEvent_place_en(), events.getEvent_date());
             response.sendRedirect("listEvent");
         } catch (DBException e) {
             e.printStackTrace();
@@ -168,6 +181,79 @@ public class ReportServlet extends HttpServlet{
         }  catch (IOException e) {
             e.printStackTrace();
         } catch (DBException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void delRep(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            Integer report_id = Integer.valueOf(request.getParameter("report_id"));
+            Reports r = new Reports();
+            List<Reports> reports = reportService.findAllReportsInDB();
+            List<Report_speakers> report_speakers = reportSpeakerService.findAllReportSpeakersInDB();
+            List<Speaker_preposition> speakerPrepositions = speakerPrepositionService.findAllSpeakerPrepositionInDB();
+            List<Moderator_preposition> moderator_prepositions = moderatorPrepositionService.findAllModeratorPrepositionInDB();
+            for(int i = 0; i < report_speakers.size(); i++) {
+                if(report_speakers.get(i).getReport_id()==report_id) {
+                    reportSpeakerService.deleteReportSpeakersFromDB(report_id);
+                    break;
+                }
+            }
+            for(int i = 0; i < speakerPrepositions.size(); i++) {
+                if(speakerPrepositions.get(i).getReport_id()==report_id) {
+                    speakerPrepositionService.deleteSpeakerPrepositionFromDB(report_id);
+                    break;
+                }
+            }
+            for(int i = 0; i < moderator_prepositions.size(); i++) {
+                if(moderator_prepositions.get(i).getReport_id()==report_id) {
+                    moderatorPrepositionService.deleteModeratorPrepositionFromDB(report_id);
+                    break;
+                }
+            }
+            for(int i = 0; i < reports.size(); i++) {
+                if(reports.get(i).getReport_id()==report_id) {
+                    r = reports.get(i);
+                }
+            }
+            reportService.deleteReportFromDB(r);
+            response.sendRedirect("/listEvent");
+        }  catch (IOException e) {
+            e.printStackTrace();
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void editRep(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            int event_id = Integer.parseInt(request.getParameter("event_id"));
+            int report_id = Integer.parseInt(request.getParameter("report_id"));
+            request.setAttribute("event_id", event_id);
+            request.setAttribute("report_id", report_id);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("reportUpdate_form.jsp");
+            dispatcher.forward(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateRep(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            Integer report_id = Integer.valueOf(request.getParameter("report_id"));
+            Integer event_id =  Integer.valueOf(request.getParameter("event_id"));
+            String report_name_ua = request.getParameter("report_name_ua");
+            String report_name_en = request.getParameter("report_name_en");
+            Reports reports = new Reports();
+            reports.setReport_id(report_id);
+            reports.setEvent_id(event_id);
+            reports.setReport_name_ua(report_name_ua);
+            reports.setReport_name_en(report_name_en);
+            reportService.updateReportInDB(reports);
+            response.sendRedirect("listEvent");
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

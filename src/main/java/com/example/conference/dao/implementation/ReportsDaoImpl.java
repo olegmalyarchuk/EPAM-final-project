@@ -20,7 +20,7 @@ public class ReportsDaoImpl extends GenericAbstractDao<Reports> implements IRepo
     public static final String SQL_ADD_NEW = "INSERT INTO reports VALUES(?, ?, ?, ?)";
     public static final String SQL_FIND_BY_EVENT_ID = "SELECT * FROM EVENTS WHERE EVENT_ID = ?";
     public static final String SQL_SELECT_BY_EVENT = "SELECT * from reports r join events e on r.event_id=e.event_id where r.event_id=?;";
-    public static final String SQL_UPDATE_BY_ID = "UPDATE reports set report_id=?, event_id=?, report_name_ua=? where report_id=?;";
+    public static final String SQL_UPDATE_BY_ID = "UPDATE reports set report_id=?, event_id=?, report_name_ua=?, report_name_en=? where report_id=?;";
     public static final String SQL_DELETE_BY_ID = "DELETE FROM reports where report_id=?;";
     public static final String SQL_DELETE =  "DELETE FROM reports_speakers where report_id=?";
 
@@ -73,7 +73,7 @@ public class ReportsDaoImpl extends GenericAbstractDao<Reports> implements IRepo
 
     @Override
     public boolean updateReportInDB(Reports reports) {
-        return updateInDB(connection, reports, SQL_UPDATE_BY_ID, 4, reports.getReport_id());
+        return updateInDB(connection, reports, SQL_UPDATE_BY_ID, 5, reports.getReport_id());
     }
 
     @Override
