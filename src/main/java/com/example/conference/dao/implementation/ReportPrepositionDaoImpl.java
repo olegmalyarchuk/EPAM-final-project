@@ -18,7 +18,7 @@ public class ReportPrepositionDaoImpl extends GenericAbstractDao<Report_preposit
     private Connection connection;
     public static final String SQL_SELECT_BASE = "select * from report_preposition order by id;";
     public static final String SQL_SELECT_ALL = "select * from report_preposition order by id;";
-    public static final String SQL_ADD_NEW = "INSERT INTO report_preposition VALUES(?, ?, ?)";
+    public static final String SQL_ADD_NEW = "INSERT INTO report_preposition VALUES(?, ?, ?, ?, ?)";
     public static final String SQL_UPDATE_BY_ID = "UPDATE report_preposition set id=?, event_id=?, speaker_id=? where id=?;";
     public static final String SQL_DELETE_BY_ID = "DELETE FROM report_preposition where id=?;";
     public static final String SQL_INSERT_TOPIC = "INSERT INTO reports(report_name_ua, report_name_en, event_id) SELECT tp.report_name_ua, tp.report_name_en, tp.event_id FROM report_preposition tp WHERE id=?";

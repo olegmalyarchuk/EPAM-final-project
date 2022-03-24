@@ -19,7 +19,7 @@
         dispatcher.forward(request, response);
     }
 %>
-<input type="hidden" id="status" value="<%=session.getAttribute("status")%>">
+
 <header>
     <nav class="navbar navbar-expand-md navbar-dark"
          style="background-color: #0074D9">
@@ -71,9 +71,13 @@
         <td>${report.report_name_en}</td>
         <c:choose>
             <c:when test="${speakers.get(pos).user_name=='null'}">
-                <td>No speaker has been appointed yet&nbsp&nbsp&nbsp&nbsp&nbsp
-                <a href="#" class="btn btn-success">Propose me</a>
+                <td>No speaker has been appointed &nbsp&nbsp&nbsp&nbsp&nbsp
+            <c:choose>
+            <c:when test="${sessionScope.role_id==2 && !event.isFinished()}">
+                <td><a href="#" class="btn btn-success">Propose me</a></td>
                 </td>
+            </c:when>
+              </c:choose>
             </c:when>
             <c:otherwise>
                 <td>${speakers.get(pos).user_name} ${speakers.get(pos).user_surname}</td>
@@ -84,7 +88,20 @@
     </c:forEach>
     </tbody>
 </table>
-
+<c:choose>
+    <c:when test="${sessionScope.role_id==1}">
+        <a href="addReport?event_id=${event.event_id}" class="btn btn-success">Add report for this event</a>
+    </c:when>
+<c:when test="${sessionScope.role_id==2}">
+<a href="proposeReport?event_id=${event.event_id}" class="btn btn-success">Propose report for this event</a>
+</c:when>
+    <c:when test="${sessionScope.role_id==3 && isRegister=='no'}">
+        <a href="registerUser?email=${sessionScope.email}&event_id=${event.event_id}" class="btn btn-success">Register</a>
+    </c:when>
+    <c:when test="${sessionScope.role_id==3 && isRegister=='yes'}">
+        <a href="excludeUser?email=${sessionScope.email}&event_id=${event.event_id}" class="btn btn-danger">Exclude me</a>
+    </c:when>
+</c:choose>
 <!--- JS -->
 <script src="vendor/jquery/jguery.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

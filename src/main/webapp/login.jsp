@@ -54,25 +54,6 @@
         </div>
     </section>
 </div>
-
-<div align="center">
-    <h1>User Login Form</h1>
-    <form action="login" method="post">
-        <table style="width: 80%">
-            <tr>
-                <td>Email</td>
-                <td><input type="email" name="email" required="required" /></td>
-            </tr>
-            <tr>
-                <td>Password</td>
-                <td><input type="password" name="password" required="required" /></td>
-            </tr>
-        </table>
-        <input type="submit" value="Submit"/>
-    </form>
-    <a href="register.jsp">Create an account</a>
-</div>
-
 <!--- JS -->
 <script src="resources/vendor/jquery/jquery.min.js"></script>
 <script src="resources/js/main.js"></script>

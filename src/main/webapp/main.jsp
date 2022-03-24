@@ -48,7 +48,7 @@
     </c:otherwise>
 </c:choose>
 
-<a href="events/list">Show all events</a>
+<a href="listEvent">Show all events</a>
 
 <form action="logout">
     <input type="Submit" value="Logout">

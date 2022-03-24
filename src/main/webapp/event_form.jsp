@@ -19,10 +19,12 @@
         RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
         dispatcher.forward(request, response);
     }
-    if(!session.getAttribute("role_id").equals("1")) {
-        response.sendRedirect("listEvent");
-    }
 %>
+<c:choose>
+    <c:when test="${sessionScope.role_id!=1}">
+        <%response.sendRedirect("listEvent");%>
+    </c:when>
+</c:choose>
 <header>
     <nav class="navbar navbar-expand-md navbar-dark"
          style="background-color: #0074D9">

@@ -3,10 +3,7 @@ package com.example.conference.controller;
 import com.example.conference.comparators.DateComparator;
 import com.example.conference.comparators.ReportsCountComparator;
 import com.example.conference.comparators.UsersCountComparator;
-import com.example.conference.entity.Events;
-import com.example.conference.entity.Report_speakers;
-import com.example.conference.entity.Reports;
-import com.example.conference.entity.User;
+import com.example.conference.entity.*;
 import com.example.conference.exceptions.DBException;
 import com.example.conference.service.*;
 
@@ -29,6 +26,7 @@ public class EventServlet extends HttpServlet {
     IUserService userService = ServiceFactory.getInstance().getUserService();
     IReportService reportService = ServiceFactory.getInstance().getReportService();
     IReportSpeakerService reportSpeakerService = ServiceFactory.getInstance().getReportSpeakerService();
+    IEventUsersService eventUsersService = ServiceFactory.getInstance().getEventUsersService();;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -87,6 +85,7 @@ public class EventServlet extends HttpServlet {
             } else if(orderBy.equals("users")) {
                 Collections.sort(eventsList, new UsersCountComparator());
             }
+            request.setAttribute("eventStatus", status);
             request.setAttribute("eventsList", eventsList);
             RequestDispatcher dispatcher = request.getRequestDispatcher("event_list.jsp");
             dispatcher.forward(request, response);
@@ -124,11 +123,25 @@ public class EventServlet extends HttpServlet {
               }
 
           }
+          boolean isRegister = false;
+          String email = (String) request.getSession().getAttribute("email");
+          User u = userService.findUserByEmail(email);
+          int user_id = u.getId();
+          List<Event_users>  eventUsers = eventUsersService.findAllEventUsersInDB();
+          for(int i = 0; i < eventUsers.size(); i++) {
+              Event_users eu = eventUsers.get(i);
+              if(eu.getUser_id()==user_id && eu.getEvent_id()==event_id) {
+                  isRegister = true;
+                  break;
+              }
+          }
             request.setAttribute("event", events);
             request.setAttribute("reports", reports);
             request.setAttribute("speakers", speakers);
             request.setAttribute("registered", cntRegistered);
             request.setAttribute("present", cntPresent);
+            if(isRegister) request.setAttribute("isRegister", "yes");
+            else request.setAttribute("isRegister", "no");
             RequestDispatcher dispatcher = request.getRequestDispatcher("event.jsp");
             dispatcher.forward(request, response);
         } catch (DBException e) {

@@ -75,7 +75,7 @@ public class EventUsersDaoImpl extends GenericAbstractDao<Event_users> implement
 
     @Override
     public boolean deleteEventUsersFromDB(Event_users event_users) {
-        return deleteFromDB(connection, SQL_DELETE_BY_ID, event_users.getId());
+        return deleteFromDB(connection, SQL_DELETE_BY_ID, event_users.getId()-1);
     }
 
     @Override
