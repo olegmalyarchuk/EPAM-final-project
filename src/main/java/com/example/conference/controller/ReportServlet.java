@@ -126,6 +126,7 @@ public class ReportServlet extends HttpServlet{
     }
 
     private void insReport(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
             Integer report_id = Integer.valueOf(request.getParameter("report_id"));
             Integer event_id = Integer.valueOf(request.getParameter("event_id"));
             String report_name_ua = request.getParameter("report_name_ua");
@@ -136,7 +137,11 @@ public class ReportServlet extends HttpServlet{
             r.setReport_name_ua(report_name_ua);
             r.setReport_name_en(report_name_en);
             reportService.addReportToDB(r);
-            response.sendRedirect("listEvent");
+            dataforMailUpdate(event_id);
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+        response.sendRedirect("listEvent");
     }
 
     private void addUser(HttpServletRequest request, HttpServletResponse response) {
@@ -252,10 +257,40 @@ public class ReportServlet extends HttpServlet{
             reports.setReport_name_ua(report_name_ua);
             reports.setReport_name_en(report_name_en);
             reportService.updateReportInDB(reports);
+            dataforMailUpdate(event_id);
             response.sendRedirect("listEvent");
-        } catch (IOException e) {
+        } catch (IOException | DBException e) {
             e.printStackTrace();
         }
+    }
+
+    private void dataforMailUpdate(int event_id) throws DBException {
+        int id = event_id;
+        List<User> userList = new ArrayList<>();
+        List<Report_speakers> rs = reportSpeakerService.findAllReportSpeakersInDB();
+        List<Event_users> ev = eventUsersService.findAllEventUsersInDB();
+        for(int i = 0; i < ev.size(); i++) {
+            if(ev.get(i).getEvent_id()==id) {
+                Integer user_id = ev.get(i).getUser_id();
+                User u = userService.findUserById(user_id);
+                userList.add(u);
+            }
+        }
+        for(int i = 0; i < rs.size(); i++) {
+            Report_speakers report_speakers = rs.get(i);
+            Integer speaker_id = report_speakers.getSpeaker_id();
+            Integer report_id = report_speakers.getReport_id();
+            List<Reports> reports = reportService.findAllReportsInDB();
+            for(int j = 0; j < reports.size(); j++) {
+                if(reports.get(j).getEvent_id()==id) {
+                    User u = userService.findUserById(speaker_id);
+                    userList.add(u);
+                    break;
+                }
+            }
+        }
+        String event_name = service.findEventsById(id).getEvent_name_en();
+        GmailSender.sendEventChange(userList, event_name);
     }
 
 }
