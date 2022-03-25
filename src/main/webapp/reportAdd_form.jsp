@@ -28,10 +28,13 @@
 <header>
     <nav class="navbar navbar-expand-md navbar-dark"
          style="background-color: #0074D9">
-
         <ul class="navbar-nav">
             <li><a href="listEvent"
                    class="nav-link">Events</a></li>
+        </ul>
+        <ul class="navbar-nav">
+            <li><a href="profile.jsp"
+                   class="nav-link">Profile</a></li>
         </ul>
         <ul class="navbar-nav">
             <li><a href="/logout"

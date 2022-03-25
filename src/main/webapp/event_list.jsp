@@ -32,6 +32,10 @@
                    class="nav-link">Events</a></li>
         </ul>
         <ul class="navbar-nav">
+            <li><a href="profile.jsp"
+                   class="nav-link">Profile</a></li>
+        </ul>
+        <ul class="navbar-nav">
             <li><a href="/logout"
                    class="nav-link">Logout</a></li>
         </ul>
