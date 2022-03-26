@@ -33,7 +33,7 @@
                    class="nav-link">Events</a></li>
         </ul>
         <ul class="navbar-nav">
-            <li><a href="profile.jsp"
+            <li><a href="showProfile"
                    class="nav-link">Profile</a></li>
         </ul>
         <ul class="navbar-nav">

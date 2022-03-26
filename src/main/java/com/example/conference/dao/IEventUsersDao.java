@@ -2,6 +2,8 @@ package com.example.conference.dao;
 
 import com.example.conference.entity.Event_users;
 import com.example.conference.entity.Moderator_preposition;
+import com.example.conference.entity.User;
+import com.example.conference.entity.User_roles;
 import com.example.conference.exceptions.DBException;
 
 import java.util.List;
@@ -34,6 +36,7 @@ public interface IEventUsersDao {
      * @throws DBException if connection is down, broken or unable to retrieve information for certain reasons
      */
     List<Event_users> findEventUsers(Integer first, Integer offset) throws DBException;
+
 
     /**
      * Adds new event_users to DB

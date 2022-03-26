@@ -78,6 +78,7 @@ public class EventUsersDaoImpl extends GenericAbstractDao<Event_users> implement
         return deleteFromDB(connection, SQL_DELETE_BY_ID, event_users.getId()-1);
     }
 
+
     @Override
     public Event_users findByUserIdAndEventId(int user_id, int event_id) {
         try {

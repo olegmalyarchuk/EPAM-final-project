@@ -20,6 +20,7 @@
         dispatcher.forward(request, response);
     }
 %>
+<input type="hidden" id="editStatus" value="<%=request.getAttribute("editStatus")%>">
 <header>
     <nav class="navbar navbar-expand-md navbar-dark"
          style="background-color: #0074D9">
@@ -28,7 +29,7 @@
                    class="nav-link">Events</a></li>
         </ul>
         <ul class="navbar-nav">
-            <li><a href="profile.jsp"
+            <li><a href="showProfile"
                    class="nav-link">Profile</a></li>
         </ul>
         <ul class="navbar-nav">
@@ -45,7 +46,11 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-column align-items-center text-center">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
+                            <c:choose>
+                                <c:when test="${sessionScope.role_id==1}"> <img src="resources/images/avatars/moderator.jpg" alt="Moderator" class="rounded-circle p-1 bg-primary" width="110"></c:when>
+                                <c:when test="${sessionScope.role_id==2}"> <img src="resources/images/avatars/speaker.jpg" alt="Speaker" class="rounded-circle p-1 bg-primary" width="110"></c:when>
+                                <c:otherwise> <img src="resources/images/avatars/user.jpg" alt="User" class="rounded-circle p-1 bg-primary" width="110"></c:otherwise>
+                            </c:choose>
                             <div class="mt-3">
                                 <h4>John Doe</h4>
                                 <c:choose>
@@ -56,12 +61,13 @@
                             </div>
                         </div>
 
+                        <form action="editInfo" method="post">
                         <div class="row mb-3">
                             <div class="col-sm-3">
                                 <h6 class="mb-0">Name</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                <input type="text" class="form-control" value="John">
+                                <input type="text" name="name" class="form-control"  value="<c:out value='${name}' />" required="required">
                             </div>
                         </div>
 
@@ -70,7 +76,7 @@
                                 <h6 class="mb-0">Surname</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                <input type="text" class="form-control" value="Doe">
+                                <input type="text" name="surname" class="form-control"  value="<c:out value='${surname}' />" required="required">
                             </div>
                         </div>
 
@@ -79,7 +85,7 @@
                                 <h6 class="mb-0">Password</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                <input type="password" class="form-control" value="password">
+                                <input type="password" name="password" class="form-control"  value="">
                             </div>
                         </div>
 
@@ -88,7 +94,7 @@
                                 <h6 class="mb-0">Phone</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                <input type="text" class="form-control" value="+123456789">
+                                <input type="text" name="phone" class="form-control"  value="<c:out value='${phone}' />" required="required">
                             </div>
                         </div>
 
@@ -97,7 +103,7 @@
                                 <h6 class="mb-0">Email</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                <input type="email" class="form-control" value="user@example.com">
+                                <input type="email" name="email" class="form-control"  value="<c:out value='${email}' />" required="required">
                             </div>
                         </div>
 
@@ -106,16 +112,18 @@
                                 <h6 class="mb-0">Location</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                <input type="text" class="form-control" value="Lviv">
+                                <input type="text" name="location" class="form-control"  value="<c:out value='${location}' />" required="required">
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-sm-3"></div>
                             <div class="col-sm-9 text-secondary">
-                                <input type="button" class="btn btn-primary px-4" value="Save Changes">
+<%--                                <input type="button" class="btn btn-primary px-4" value="Save Changes">--%>
+                                    <button type="submit" class="btn btn-primary px-4">Save</button>
                             </div>
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -129,9 +137,9 @@
                 <div class="container text-center"><h3 class="text-center">Active prepositions</h3></div>
                 <hr>
                 <div class="container text-center">
-                    <a href="listEvent?eventStatus=all" class="btn btn-success" style="background-color: #1E93F9;">From me</a>
-                    <a href="listEvent?eventStatus=all" class="btn btn-success" style="background-color: #1E93F9;">From speaker</a>
-                    <a href="listEvent?eventStatus=all" class="btn btn-success" style="background-color: #1E93F9;">Reports for event</a>
+                    <a href="#" class="btn btn-success" style="background-color: #1E93F9;">From me</a>
+                    <a href="#" class="btn btn-success" style="background-color: #1E93F9;">From speaker</a>
+                    <a href="#" class="btn btn-success" style="background-color: #1E93F9;">Reports for event</a>
                 </div>
                 <br>
                 <br>
@@ -328,9 +336,18 @@
                 <div class="container text-center"><h3 class="text-center">My Events</h3></div>
                 <hr>
                 <div class="container text-center">
-                    <a href="#" class="btn btn-success" style="background-color: #1E93F9;">All events</a>
-                    <a href="#" class="btn btn-success" style="background-color: #1E93F9;">Finished events</a>
-                    <a href="#" class="btn btn-success" style="background-color: #1E93F9;">Upcoming events</a>
+                    <c:choose>
+                        <c:when test="${eventStatus==null||eventStatus=='all'}"> <a href="showProfile?eventStatus=all" class="btn btn-success" style="background-color: #1E93F9;">All events</a></c:when>
+                        <c:otherwise> <a href="showProfile?eventStatus=all" class="btn btn-success" style="background-color: #0074D9;">All events</a></c:otherwise>
+                    </c:choose>
+                    <c:choose>
+                        <c:when test="${eventStatus=='finished'}"> <a href="showProfile?eventStatus=finished" class="btn btn-success" style="background-color: #1E93F9">Finished events</a></c:when>
+                        <c:otherwise> <a href="showProfile?eventStatus=finished" class="btn btn-success" style="background-color: #0074D9;">Finished events</a></c:otherwise>
+                    </c:choose>
+                    <c:choose>
+                        <c:when test="${eventStatus=='upcoming'}"> <a href="showProfile?eventStatus=upcoming" class="btn btn-success" style="background-color: #1E93F9;">Upcoming events</a></c:when>
+                        <c:otherwise> <a href="showProfile?eventStatus=upcoming" class="btn btn-success" style="background-color: #0074D9;">Upcoming events</a></c:otherwise>
+                    </c:choose>
                 </div>
                 <br>
                 <br>
@@ -341,27 +358,22 @@
                         <th scope="col">Name</th>
                         <th scope="col">Place</th>
                         <th scope="col">Date</th>
+                        <th scope="col">Status</th>
                     </tr>
                     </thead>
                     <tbody>
+                    <c:set var="cntRows" value="${events.size()}"/>
+                    <c:set var="pos" value="${0}"/>
+                    <c:forEach var="event" items="${events}">
                     <tr>
-                        <th scope="row">1</th>
-                        <td>Collections</td>
-                        <td>Ekoland</td>
-                        <td>2022-05-10 18:00:00</td>
+                        <th scope="row"></th>
+                        <td>${event.event_id}</td>
+                        <td>${event.event_name_en}</td>
+                        <td>${event.event_date}</td>
+                        <td>${presense.get(pos)}</td>
+                        <c:set var="pos" value="${pos+1}"/>
                     </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Testing and Logging</td>
-                        <td>Malevich</td>
-                        <td>2022-02-10 18:00:00</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Filters and Sessions</td>
-                        <td>Art Hotel</td>
-                        <td>2022-02-28 18:00:00</td>
-                    </tr>
+                    </c:forEach>
                     </tbody>
                 </table>
             </div>
@@ -399,6 +411,71 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <link rel="stylesheet" href="alert/dist/sweatalert.css ">
 <script type="text/javascript">
+    var editStatus = document.getElementById("editStatus").value;
+    if(editStatus=="emptyFirstname") {
+        swal("Error", "First name should not be empty", "error");
+        //alert("First name should not be empty");
+    }
+    if(editStatus=="emptyLastname") {
+        swal("Error", "Last name should not be empty", "error");
+        //alert("Last name should not be empty");
+    }
+    if(editStatus=="emptyPassword") {
+        swal("Error", "Password should not be empty", "error");
+        //alert("Password should not be empty");
+    }
+    if(editStatus=="emptyPhone") {
+        swal("Error", "Phone should not be empty", "error");
+        //alert("Phone should not be empty");
+    }
+    if(editStatus=="emptyEmail") {
+        swal("Error", "Email should not be empty", "error");
+        //alert("Email should not be empty");
+    }
+    if(editStatus=="emptyAddress") {
+        swal("Error", "Location should not be empty", "error");
+        //alert("Location should not be empty");
+    }
+    if(editStatus=="invalidConfirmpassword") {
+        swal("Error", "Password not match", "error");
+        //alert("Password not match");
+    }
+    if(editStatus=="invalidFirstname") {
+        swal("Error", "First name should starts with a capital letter and no more than 25 letters long", "error");
+        //alert("First name should starts with a capital letter and no more than 25 letters long")
+    }
+    if(editStatus=="invalidLastname") {
+        swal("Error", "Last name should starts with a capital letter and no more than 25 letters long", "error");
+        //alert("Last name should starts with a capital letter and no more than 25 letters long")
+    }
+    if(editStatus=="invalidPassword") {
+        swal("Error", "Password must consist of at least 4 characters and not more than 16 characters", "error");
+        // alert("Password must consist of at least 4 characters and not more than 16 characters")
+    }
+    if(editStatus=="invalidPhone") {
+        swal("Error", "Phone must starts with + and has 9 digits.", "error");
+        //  alert("Phone must starts with + and has 9 digits.")
+    }
+    if(editStatus=="invalidEmail") {
+        swal("Error", "Email must has no less than 1 letter before '@', 2 letters after and domain is no longer than 4 characters", "error");
+        // alert("Email must has no less than 1 letter before '@', 2 letters after and domain is no longer than 4 characters")
+    }
+    if(editStatus=="dublicateEmail") {
+        swal("Error", "Current email is already registered. Try to log in.", "error");
+        // alert("Current email is already registered. Try to log in.")
+    }
+    if(editStatus=="dublicatePhone") {
+        swal("Error", "Current phone is already registered. Try to log in.", "error");
+        // alert("Current phone is already registered. Try to log in.")
+    }
+    if(editStatus=="success") {
+        swal("Congrats", "You have successfully updated information", "success");
+        // alert("You have successfully registered.")
+    }
+    if(editStatus=="servererror") {
+        swal("Error", "It is technical work on the site. Please try again.", "error");
+        //alert("It is technical work on the site. Please try again.")
+    }
 </script>
 </body>
 </html>
