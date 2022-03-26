@@ -59,7 +59,19 @@ public class ModeratorPrepositionDaoImpl extends GenericAbstractDao<Moderator_pr
 
     @Override
     public boolean addModeratorPrepositionToDB(Moderator_preposition moderator_preposition) {
-        return addToDB(connection, moderator_preposition, SQL_ADD_NEW);
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL_ADD_NEW);
+            preparedStatement.setInt(1, moderator_preposition.getId());
+            preparedStatement.setInt(2, moderator_preposition.getReport_id());
+            preparedStatement.setInt(3, moderator_preposition.getSpeaker_id());
+            preparedStatement.executeUpdate();
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        //return addToDB(connection, moderator_preposition, SQL_ADD_NEW);
     }
 
     @Override

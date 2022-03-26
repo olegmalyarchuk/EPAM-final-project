@@ -84,7 +84,7 @@
                 </td>
                 </c:when>
                  <c:when test="${sessionScope.role_id==1 && !event.isFinished()}">
-                    <td><a href="#" class="btn btn-success">Propose speaker</a>
+                    <td><a href="proposeSpeaker?report_id=${report.report_id}" class="btn btn-success">Propose speaker</a>
                         <a href="deleteReport?report_id=${report.report_id}" class="btn btn-danger">Delete</a>
                         <a href="editReport?report_id=${report.report_id}&event_id=${event.event_id}" class="btn btn-success">Edit</a>
                      </td>

@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-@WebServlet(urlPatterns = {"/newEvent","/insertEvent","/deleteEvent", "/editEvent", "/updateEvent", "/listEvent", "/eventEvent", "/proposeMe", "/editPresence", "/setPresence"})
+@WebServlet(urlPatterns = {"/newEvent","/insertEvent","/deleteEvent", "/editEvent", "/updateEvent", "/listEvent", "/eventEvent", "/proposeMe", "/editPresence", "/setPresence", "/setPreposition", "/proposeSpeaker"})
 public class EventServlet extends HttpServlet {
     public static final long serialVersionUID = 1234882438L;
     IEventService service = ServiceFactory.getInstance().getEventService();
@@ -29,6 +29,7 @@ public class EventServlet extends HttpServlet {
     IReportSpeakerService reportSpeakerService = ServiceFactory.getInstance().getReportSpeakerService();
     IEventUsersService eventUsersService = ServiceFactory.getInstance().getEventUsersService();;
     ISpeakerPrepositionService speakerPrepositionService = ServiceFactory.getInstance().getSpeakerPrepositionService();
+    IModeratorPrepositionService moderatorPrepositionService = ServiceFactory.getInstance().getModeratorPrepositionService();;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -68,6 +69,12 @@ public class EventServlet extends HttpServlet {
                 break;
             case "/setPresence":
                 setPresent(req, resp);
+                break;
+            case "/proposeSpeaker":
+                showProposeForm(req, resp);
+                break;
+            case "/setPreposition":
+                setPreps(req, resp);
                 break;
         }
     }
@@ -357,6 +364,45 @@ public class EventServlet extends HttpServlet {
         eventUsersService.updateUserPresenceByUserIdAndMeetingId(ev);
         try {
             response.sendRedirect("editPresence?event_id="+event_id);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showProposeForm(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            Integer report_id = Integer.valueOf(request.getParameter("report_id"));
+            List<User> users = userService.findAllUsersInDB();
+            List<User> speakers = new ArrayList<>();
+            for(int i = 0; i < users.size(); i++) {
+                if(users.get(i).getRole_id()==2) {
+                    speakers.add(users.get(i));
+                }
+            }
+            request.setAttribute("speakers", speakers);
+            request.setAttribute("report_id", report_id);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("moderatorPrepositionForm.jsp");
+            dispatcher.forward(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setPreps(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            Integer id = moderatorPrepositionService.calculateModeratorPrepositionNumber()+2;
+            Integer report_id = Integer.valueOf(request.getParameter("report_id"));
+            Integer speaker_id = Integer.valueOf(request.getParameter("speaker_id"));
+            Moderator_preposition mp = new Moderator_preposition();
+            mp.setId(id);
+            mp.setReport_id(report_id);
+            mp.setSpeaker_id(speaker_id);
+            moderatorPrepositionService.addModeratorPrepositionToDB(mp);
+            response.sendRedirect("proposeSpeaker?report_id="+report_id);
+        } catch (DBException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
