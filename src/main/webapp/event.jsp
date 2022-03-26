@@ -56,6 +56,7 @@
     <c:when test="${event.isFinished()}">
         <hr>
         <p class="fw-normal fs-5">Registered users: ${registered}&nbsp&nbsp&nbspPresent: ${present}</p>
+        <a href="editPresence?event_id=${event.event_id}" class="btn btn-success">Edit presense</a>
     </c:when>
     <c:otherwise>
         <hr>

@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-@WebServlet(urlPatterns = {"/newEvent","/insertEvent","/deleteEvent", "/editEvent", "/updateEvent", "/listEvent", "/eventEvent", "/proposeMe"})
+@WebServlet(urlPatterns = {"/newEvent","/insertEvent","/deleteEvent", "/editEvent", "/updateEvent", "/listEvent", "/eventEvent", "/proposeMe", "/editPresence", "/setPresence"})
 public class EventServlet extends HttpServlet {
     public static final long serialVersionUID = 1234882438L;
     IEventService service = ServiceFactory.getInstance().getEventService();
@@ -62,6 +62,12 @@ public class EventServlet extends HttpServlet {
                 break;
             case "/proposeMe":
                 addPreposition(req, resp);
+                break;
+            case "/editPresence":
+                showEditPresense(req, resp);
+                break;
+            case "/setPresence":
+                setPresent(req, resp);
                 break;
         }
     }
@@ -313,6 +319,47 @@ public class EventServlet extends HttpServlet {
             e.printStackTrace();
         }
 
+    }
+
+    private void showEditPresense(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            Integer event_id = Integer.valueOf(request.getParameter("event_id"));
+            List<Event_users> ev = eventUsersService.findAllEventUsersInDB();
+            List<Event_users> event_users = new ArrayList<>();
+            for(int i = 0; i < ev.size(); i++) {
+                if(ev.get(i).getEvent_id()==event_id) {
+                   event_users.add(ev.get(i));
+                }
+            }
+            request.setAttribute("event_users", event_users);
+            request.setAttribute("event_id", event_id);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("editPresence.jsp");
+            dispatcher.forward(request, response);
+        } catch (DBException e) {
+            e.printStackTrace();
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setPresent(HttpServletRequest request, HttpServletResponse response) {
+        Integer event_id = Integer.valueOf(request.getParameter("event_id"));
+        Integer user_id = Integer.valueOf(request.getParameter("user_id"));
+        String presense = request.getParameter("presence");
+        boolean isPresent = false;
+        if(presense.equals("yes")) isPresent = true;
+        Event_users ev = new Event_users();
+        ev.setUser_id(user_id);
+        ev.setEvent_id(event_id);
+        ev.setPresent(isPresent);
+        eventUsersService.updateUserPresenceByUserIdAndMeetingId(ev);
+        try {
+            response.sendRedirect("editPresence?event_id="+event_id);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
