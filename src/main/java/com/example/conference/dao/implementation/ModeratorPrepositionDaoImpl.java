@@ -21,6 +21,7 @@ public class ModeratorPrepositionDaoImpl extends GenericAbstractDao<Moderator_pr
     public static final String SQL_ADD_NEW = "INSERT INTO moderator_preposition VALUES(?, ?, ?)";
     public static final String SQL_UPDATE_BY_ID = "UPDATE moderator_preposition set id=?, speaker_id=?, report_id=? where id=?;";
     public static final String SQL_DELETE_BY_ID = "DELETE FROM moderator_preposition where report_id=?;";
+    public static final String SQL_DELETE_BY_ID_NOT_REPORT = "DELETE FROM moderator_preposition where id=?;";
     public static final String SQL_DELETE = "DELETE FROM moderator_preposition where speaker_id=? and report_id=?;";
 
     private Mapper<Moderator_preposition, PreparedStatement> mapperToDB = (Moderator_preposition moderator_preposition, PreparedStatement preparedStatement) -> {

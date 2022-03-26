@@ -79,7 +79,7 @@
                 <td>No speaker has been appointed &nbsp&nbsp&nbsp&nbsp&nbsp
             <c:choose>
                 <c:when test="${sessionScope.role_id==2 && !event.isFinished()}">
-                <td><a href="#" class="btn btn-success">Propose me</a></td>
+                <td><a href="proposeMe?report_id=${report.report_id}&speaker_id=${sessionScope.user_id}" class="btn btn-success">Propose me</a></td>
                 </td>
                 </c:when>
                  <c:when test="${sessionScope.role_id==1 && !event.isFinished()}">

@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-@WebServlet(urlPatterns = {"/newEvent","/insertEvent","/deleteEvent", "/editEvent", "/updateEvent", "/listEvent", "/eventEvent"})
+@WebServlet(urlPatterns = {"/newEvent","/insertEvent","/deleteEvent", "/editEvent", "/updateEvent", "/listEvent", "/eventEvent", "/proposeMe"})
 public class EventServlet extends HttpServlet {
     public static final long serialVersionUID = 1234882438L;
     IEventService service = ServiceFactory.getInstance().getEventService();
@@ -28,6 +28,7 @@ public class EventServlet extends HttpServlet {
     IReportService reportService = ServiceFactory.getInstance().getReportService();
     IReportSpeakerService reportSpeakerService = ServiceFactory.getInstance().getReportSpeakerService();
     IEventUsersService eventUsersService = ServiceFactory.getInstance().getEventUsersService();;
+    ISpeakerPrepositionService speakerPrepositionService = ServiceFactory.getInstance().getSpeakerPrepositionService();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -58,6 +59,10 @@ public class EventServlet extends HttpServlet {
                   break;
             case "/eventEvent":
                 showEvent(req, resp);
+                break;
+            case "/proposeMe":
+                addPreposition(req, resp);
+                break;
         }
     }
 
@@ -289,6 +294,25 @@ public class EventServlet extends HttpServlet {
         }
         String event_name = service.findEventsById(id).getEvent_name_en();
         GmailSender.sendEventChange(userList, event_name);
+    }
+
+    private void addPreposition(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            Integer id = speakerPrepositionService.calculateSpeakerPrepositionNumber()+1;
+            Integer report_id = Integer.valueOf(request.getParameter("report_id"));
+            Integer speaker_id = Integer.valueOf(request.getParameter("speaker_id"));
+            Speaker_preposition sp = new Speaker_preposition();
+            sp.setId(id);
+            sp.setReport_id(report_id);
+            sp.setSpeaker_id(speaker_id);
+            speakerPrepositionService.addSpeakerPrepositionToDB(sp);
+            response.sendRedirect("listEvent");
+        } catch (DBException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }

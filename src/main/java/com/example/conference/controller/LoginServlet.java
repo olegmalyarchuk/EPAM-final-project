@@ -44,6 +44,7 @@ public class LoginServlet extends HttpServlet {
                 session.setAttribute("name", u.getUser_name());
                 session.setAttribute("role_id", u.getRole_id());
                 session.setAttribute("status", "successLogin");
+                session.setAttribute("user_id", u.getId());
               //  req.setAttribute("status", "successLogin");
                 resp.sendRedirect("listEvent");
                // dispatcher = req.getRequestDispatcher("/listEvent");

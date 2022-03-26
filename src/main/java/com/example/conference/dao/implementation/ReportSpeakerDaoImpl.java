@@ -88,17 +88,26 @@ public class ReportSpeakerDaoImpl extends GenericAbstractDao<Report_speakers> im
         try {
             connection.setAutoCommit(false);
             PreparedStatement insertSt = connection.prepareStatement(insertStatement);
+            insertSt.setInt(1, reportTopicSpeaker.getReport_id());
+            insertSt.setInt(2, reportTopicSpeaker.getSpeaker_id());
+            System.out.println(insertSt);
             insertSt.executeUpdate();
+
+            System.out.println("insert");
 
             PreparedStatement speakerPreposition = connection.prepareStatement(speakerPrepositionDeleteQuery);
             speakerPreposition.setInt(1, reportTopicSpeaker.getSpeaker_id());
             speakerPreposition.setInt(2, reportTopicSpeaker.getReport_id());
             speakerPreposition.executeUpdate();
 
+            System.out.println("delete 1");
+
             PreparedStatement moderatorPreposition = connection.prepareStatement(moderatorPrepositionDeleteQuery);
             moderatorPreposition.setInt(1, reportTopicSpeaker.getSpeaker_id());
             moderatorPreposition.setInt(2, reportTopicSpeaker.getReport_id());
             moderatorPreposition.executeUpdate();
+
+            System.out.println("delete 2");
 
             connection.commit();
             return true;

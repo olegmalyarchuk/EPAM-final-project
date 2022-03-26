@@ -248,9 +248,18 @@
                 <div class="container text-center"><h3 class="text-center">Events with my performance</h3></div>
                 <hr>
                 <div class="container text-center">
-                    <a href="#" class="btn btn-success" style="background-color: #1E93F9;">All events</a>
-                    <a href="#" class="btn btn-success" style="background-color: #1E93F9;">Finished events</a>
-                    <a href="#" class="btn btn-success" style="background-color: #1E93F9;">Upcoming events</a>
+                    <c:choose>
+                        <c:when test="${eventStatus==null||eventStatus=='all'}"> <a href="showProfile?eventStatus=all" class="btn btn-success" style="background-color: #1E93F9;">All events</a></c:when>
+                        <c:otherwise> <a href="showProfile?eventStatus=all" class="btn btn-success" style="background-color: #0074D9;">All events</a></c:otherwise>
+                    </c:choose>
+                    <c:choose>
+                        <c:when test="${eventStatus=='finished'}"> <a href="showProfile?eventStatus=finished" class="btn btn-success" style="background-color: #1E93F9">Finished events</a></c:when>
+                        <c:otherwise> <a href="showProfile?eventStatus=finished" class="btn btn-success" style="background-color: #0074D9;">Finished events</a></c:otherwise>
+                    </c:choose>
+                    <c:choose>
+                        <c:when test="${eventStatus=='upcoming'}"> <a href="showProfile?eventStatus=upcoming" class="btn btn-success" style="background-color: #1E93F9;">Upcoming events</a></c:when>
+                        <c:otherwise> <a href="showProfile?eventStatus=upcoming" class="btn btn-success" style="background-color: #0074D9;">Upcoming events</a></c:otherwise>
+                    </c:choose>
                 </div>
                 <br>
                 <br>
@@ -264,24 +273,14 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Collections</td>
-                        <td>Ekoland</td>
-                        <td>2022-05-10 18:00:00</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Testing and Logging</td>
-                        <td>Malevich</td>
-                        <td>2022-02-10 18:00:00</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Filters and Sessions</td>
-                        <td>Art Hotel</td>
-                        <td>2022-02-28 18:00:00</td>
-                    </tr>
+                    <c:forEach var="event" items="${events}">
+                        <tr>
+                            <td>${event.event_id}</td>
+                            <td>${event.event_name_en}</td>
+                            <td>${event.event_place_en}</td>
+                            <td>${event.event_date}</td>
+                        </tr>
+                    </c:forEach>
                     </tbody>
                 </table>
             </div>
@@ -290,9 +289,18 @@
                 <div class="container text-center"><h3 class="text-center">Active prepositions</h3></div>
                 <hr>
                 <div class="container text-center">
-                    <a href="#" class="btn btn-success" style="background-color: #1E93F9;">From moderator</a>
-                    <a href="#" class="btn btn-success" style="background-color: #1E93F9;">For report</a>
-                    <a href="#" class="btn btn-success" style="background-color: #1E93F9;">Reports for event</a>
+                    <c:choose>
+                        <c:when test="${prepositionStatus==null||prepositionStatus=='fromModerator'}"> <a href="showProfile?prepositionStatus=fromModerator" class="btn btn-success" style="background-color: #1E93F9;">From moderator</a></c:when>
+                        <c:otherwise> <a href="showProfile?prepositionStatus=fromModerator" class="btn btn-success" style="background-color: #0074D9;">From moderator</a></c:otherwise>
+                    </c:choose>
+                    <c:choose>
+                        <c:when test="${prepositionStatus=='fromSpeaker'}"> <a href="showProfile?prepositionStatus=fromSpeaker" class="btn btn-success" style="background-color: #1E93F9">For report</a></c:when>
+                        <c:otherwise> <a href="showProfile?prepositionStatus=fromSpeaker" class="btn btn-success" style="background-color: #0074D9;">For report</a></c:otherwise>
+                    </c:choose>
+                    <c:choose>
+                        <c:when test="${prepositionStatus=='forEvent'}"> <a href="showProfile?prepositionStatus=forEvent" class="btn btn-success" style="background-color: #1E93F9;">Reports for event</a></c:when>
+                        <c:otherwise> <a href="showProfile?prepositionStatus=forEvent" class="btn btn-success" style="background-color: #0074D9;">Reports for event</a></c:otherwise>
+                    </c:choose>
                 </div>
                 <br>
                 <br>
@@ -306,25 +314,27 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Collections</td>
-                        <td>Deep dive into collection</td>
-                        <td><a href="#" class="btn btn-success">Accept</a>
-                            <a href="#" class="btn btn-danger">Reject</a></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Testing and Logging</td>
-                        <td>What is it</td>
-                        <td><a href="#" class="btn btn-danger">Reject</a></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Filters and Sessions</td>
-                        <td>Master-class of filters</td>
-                        <td><a href="#" class="btn btn-danger">Reject</a></td>
-                    </tr>
+                    <c:set var="pos" value="${0}"/>
+                    <c:forEach var="prepositions" items="${propEvents}">
+                        <tr>
+                            <td>${prepositions.event_id}</td>
+                            <td>${prepositions.event_name_en}</td>
+                            <td>${propReports.get(pos).report_name_en}</td>
+                            <c:choose>
+                                <c:when test="${prepositionStatus==null||prepositionStatus=='fromModerator'}">
+                                    <td><a href="acceptSpeakerFromModerator?report_id=${propReports.get(pos).report_id}&speaker_id=${speaker_id}" class="btn btn-success">Accept</a>
+                                        <a href="rejectSpeakerFromModerator?report_id=${propReports.get(pos).report_id}&speaker_id=${speaker_id}" class="btn btn-danger">Reject</a></td>
+                                </c:when>
+                                <c:when test="${prepositionStatus=='fromSpeaker'}">
+                                    <td><a href="rejectSpeakerForReport?id=${speakerPreps.get(pos).getId()}" class="btn btn-danger">Reject</a></td>
+                                </c:when>
+                                <c:when test="${prepositionStatus=='forEvent'}">
+                                    <td><a href="rejectSpeakerReports?id=${propReports.get(pos).getId()}&speaker_id=${speaker_id}" class="btn btn-danger">Reject</a></td>
+                                </c:when>
+                            </c:choose>
+                            <c:set var="pos" value="${pos+1}"/>
+                        </tr>
+                    </c:forEach>
                     </tbody>
                 </table>
             </div>
