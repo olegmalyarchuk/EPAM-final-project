@@ -22,6 +22,7 @@ public class SpeakerPrepositionDaoImpl extends GenericAbstractDao<Speaker_prepos
     public static final String SQL_ADD_NEW = "INSERT INTO speaker_preposition VALUES(?, ?, ?)";
     public static final String SQL_UPDATE_BY_ID = "UPDATE speaker_preposition set id=?, speaker_id=?, report_id=? where id=?;";
     public static final String SQL_DELETE_BY_ID = "DELETE FROM speaker_preposition where id=?;";
+    public static final String SQL_DELETE_BY_REPORT_ID = "DELETE FROM speaker_preposition where report_id=?;";
     public static final String SQL_FIND_BY_REPORT_ID = "SELECT * FROM speaker_preposition LEFT JOIN users u ON speaker_preposition.speaker_id=u.user_id WHERE speaker_preposition.report_id=?";
     public static final String SQL_FIND_REPORT_ID = "SELECT sp.report_id FROM speaker_preposition sp WHERE speaker_id=? AND EXISTS (SELECT NULL FROM reports rt WHERE rt.event_id=? AND rt.report_id=sp.report_id);";
     public static final String SQL_FIND_SPEAKER_BY_SPEAKER_PREPOSITION = "select u.* from users u join speaker_preposition sp on u.user_id=sp.speaker_id where sp.speaker_id=?;";
@@ -85,8 +86,13 @@ public class SpeakerPrepositionDaoImpl extends GenericAbstractDao<Speaker_prepos
     }
 
     @Override
-    public boolean deleteSpeakerPrepositionFromDB(Integer report_id) {
-        return deleteFromDB(connection, SQL_DELETE_BY_ID, report_id);
+    public boolean deleteSpeakerPrepositionFromDB(Integer id) {
+        return deleteFromDB(connection, SQL_DELETE_BY_ID, id);
+    }
+
+    @Override
+    public boolean deleteSpeakerPrepositionByReportIdFromDB(Integer report_id) {
+        return deleteFromDB(connection, SQL_DELETE_BY_REPORT_ID, report_id);
     }
 
     @Override

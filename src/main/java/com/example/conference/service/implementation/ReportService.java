@@ -88,6 +88,20 @@ public class ReportService implements IReportService {
     }
 
     @Override
+    public Reports findReportsByReportId(Integer report_id) {
+        Reports reports = null;
+        try {
+            daoFactory.open();
+            reportDao = daoFactory.getReportDao();
+            reports = reportDao.findReportsByReportId(report_id);
+            daoFactory.close();
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+        return reports;
+    }
+
+    @Override
     public synchronized boolean addReportToDB(Reports reports) {
         boolean result;
         try {

@@ -19,6 +19,7 @@ public class ReportsDaoImpl extends GenericAbstractDao<Reports> implements IRepo
     public static final String SQL_SELECT_ALL = "select * from reports order by report_id;";
     public static final String SQL_ADD_NEW = "INSERT INTO reports VALUES(?, ?, ?, ?)";
     public static final String SQL_FIND_BY_EVENT_ID = "SELECT * FROM EVENTS WHERE EVENT_ID = ?";
+    public static final String SQL_FIND_BY_REPORT_ID = "SELECT * FROM reports WHERE REPORT_ID = ?";
     public static final String SQL_SELECT_BY_EVENT = "SELECT * from reports r join events e on r.event_id=e.event_id where r.event_id=?;";
     public static final String SQL_UPDATE_BY_ID = "UPDATE reports set report_id=?, event_id=?, report_name_ua=?, report_name_en=? where report_id=?;";
     public static final String SQL_DELETE_BY_ID = "DELETE FROM reports where report_id=?;";
@@ -64,6 +65,11 @@ public class ReportsDaoImpl extends GenericAbstractDao<Reports> implements IRepo
     @Override
     public List<Reports> findReportsByEvent(Events events) throws DBException {
         return findAsListBy(connection, Reports.class, SQL_SELECT_BY_EVENT, events.getEvent_id());
+    }
+
+    @Override
+    public Reports findReportsByReportId(Integer report_id) throws DBException {
+        return findBy(connection, Reports.class, SQL_FIND_BY_REPORT_ID, report_id);
     }
 
     @Override

@@ -25,8 +25,8 @@ public class ReportSpeakerDaoImpl extends GenericAbstractDao<Report_speakers> im
     public static final String SQL_UPDATE_BY_ID = "UPDATE reports_speakers set id=?, report_id=?, speaker_id=? where id=?;";
    public static final String SQL_FIND_BY_ID = "SELECT * FROM reports_speakers WHERE report_id=?;";
     public static final String SQL_DELETE_BY_ID = "DELETE FROM reports_speakers where report_id=?;";
-    String speakerPrepositionDeleteQuery = "DELETE FROM speaker_preposition WHERE speaker_id=? AND report_id=?";
-    String moderatorPrepositionDeleteQuery = "DELETE FROM moderator_preposition WHERE speaker_id=? AND report_id=?";
+    String speakerPrepositionDeleteQuery = "DELETE FROM speaker_preposition WHERE report_id=?";
+    String moderatorPrepositionDeleteQuery = "DELETE FROM moderator_preposition WHERE report_id=?";
     String insertStatement = "INSERT INTO reports_speakers(report_id, speaker_id) VALUES(?, ?);";
 
     private Mapper<Report_speakers, PreparedStatement> mapperToDB = (Report_speakers reports_speakers, PreparedStatement preparedStatement) -> {
@@ -70,7 +70,19 @@ public class ReportSpeakerDaoImpl extends GenericAbstractDao<Report_speakers> im
 
     @Override
     public boolean addReportSpeakersToDB(Report_speakers report_speakers) {
-        return addToDB(connection, report_speakers, SQL_ADD_NEW);
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL_ADD_NEW);
+            preparedStatement.setInt(1, report_speakers.getId());
+            preparedStatement.setInt(2, report_speakers.getReport_id());
+            preparedStatement.setInt(3, report_speakers.getSpeaker_id());
+            preparedStatement.executeUpdate();
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        // return addToDB(connection, report_speakers, SQL_ADD_NEW);
     }
 
     @Override
@@ -93,21 +105,18 @@ public class ReportSpeakerDaoImpl extends GenericAbstractDao<Report_speakers> im
             System.out.println(insertSt);
             insertSt.executeUpdate();
 
-            System.out.println("insert");
-
             PreparedStatement speakerPreposition = connection.prepareStatement(speakerPrepositionDeleteQuery);
-            speakerPreposition.setInt(1, reportTopicSpeaker.getSpeaker_id());
-            speakerPreposition.setInt(2, reportTopicSpeaker.getReport_id());
+//            speakerPreposition.setInt(1, reportTopicSpeaker.getSpeaker_id());
+            speakerPreposition.setInt(1, reportTopicSpeaker.getReport_id());
+            System.out.println(speakerPreposition);
             speakerPreposition.executeUpdate();
 
-            System.out.println("delete 1");
 
             PreparedStatement moderatorPreposition = connection.prepareStatement(moderatorPrepositionDeleteQuery);
-            moderatorPreposition.setInt(1, reportTopicSpeaker.getSpeaker_id());
-            moderatorPreposition.setInt(2, reportTopicSpeaker.getReport_id());
+//            moderatorPreposition.setInt(1, reportTopicSpeaker.getSpeaker_id());
+            moderatorPreposition.setInt(1, reportTopicSpeaker.getReport_id());
             moderatorPreposition.executeUpdate();
 
-            System.out.println("delete 2");
 
             connection.commit();
             return true;

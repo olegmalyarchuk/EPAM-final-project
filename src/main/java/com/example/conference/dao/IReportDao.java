@@ -47,6 +47,14 @@ public interface IReportDao {
     List<Reports> findReportsByEvent(Events events) throws DBException;
 
     /**
+     * Finds report by report_id
+     * @param report_id - report_id
+     * @return Reports
+     * @throws DBException if connection is down, broken or unable to retrieve information for certain reasons
+     */
+    Reports findReportsByReportId(Integer report_id) throws DBException;
+
+    /**
      * Adds new reports to DB
      * @param reports - reports to add in DB
      * @return true if operation success and false if fails
