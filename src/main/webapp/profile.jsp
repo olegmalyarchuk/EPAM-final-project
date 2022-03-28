@@ -1,9 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="customtag" prefix="custom" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.lang}" />
+<fmt:setBundle basename="messages" />
 <html>
 <head>
-    <title>Profile</title>
+    <title><fmt:message key="profile.title" /></title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
@@ -27,15 +30,24 @@
          style="background-color: #0074D9">
         <ul class="navbar-nav">
             <li><a href="listEvent"
-                   class="nav-link">Events</a></li>
+                   class="nav-link"><fmt:message key="header.events" /></a></li>
         </ul>
         <ul class="navbar-nav">
             <li><a href="showProfile"
-                   class="nav-link">Profile</a></li>
+                   class="nav-link"> <fmt:message key="header.profile" /></a></li>
         </ul>
         <ul class="navbar-nav">
             <li><a href="/logout"
-                   class="nav-link">Logout</a></li>
+                   class="nav-link"><fmt:message key="header.logout" /></a></li>
+
+        </ul>
+        <ul class="nav justify-content-end">
+            <li><a href="lang?lang=ua"
+                   class="nav-link"><img src="/resources/images/lang/ukr.png" width="24" /></a></li>
+        </ul>
+        <ul class="nav justify-content-end">
+            <li><a href="lang?lang=en"
+                   class="nav-link"><img src="/resources/images/lang/eng.png" width="24" /></a></li>
         </ul>
     </nav>
 </header>
@@ -55,9 +67,9 @@
                             <div class="mt-3">
                                 <h4>John Doe</h4>
                                 <c:choose>
-                                    <c:when test="${sessionScope.role_id==1}"><p class="text-secondary mb-1">Moderator</p></c:when>
-                                    <c:when test="${sessionScope.role_id==2}"><p class="text-secondary mb-1">Speaker</p></c:when>
-                                    <c:otherwise><p class="text-secondary mb-1">User</p></c:otherwise>
+                                    <c:when test="${sessionScope.role_id==1}"><p class="text-secondary mb-1"><fmt:message key="profile.moderator" /></p></c:when>
+                                    <c:when test="${sessionScope.role_id==2}"><p class="text-secondary mb-1"><fmt:message key="profile.speaker" /></p></c:when>
+                                    <c:otherwise><p class="text-secondary mb-1"><fmt:message key="profile.user" /></p></c:otherwise>
                                 </c:choose>
                             </div>
                         </div>
@@ -65,7 +77,7 @@
                         <form action="editInfo" method="post">
                         <div class="row mb-3">
                             <div class="col-sm-3">
-                                <h6 class="mb-0">Name</h6>
+                                <h6 class="mb-0"><fmt:message key="profile.name" /></h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
                                 <input type="text" name="name" class="form-control"  value="<c:out value='${name}' />" required="required">
@@ -74,7 +86,7 @@
 
                         <div class="row mb-3">
                             <div class="col-sm-3">
-                                <h6 class="mb-0">Surname</h6>
+                                <h6 class="mb-0"><fmt:message key="profile.surname" /></h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
                                 <input type="text" name="surname" class="form-control"  value="<c:out value='${surname}' />" required="required">
@@ -83,7 +95,7 @@
 
                         <div class="row mb-3">
                             <div class="col-sm-3">
-                                <h6 class="mb-0">Password</h6>
+                                <h6 class="mb-0"><fmt:message key="profile.password" /></h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
                                 <input type="password" name="password" class="form-control"  value="">
@@ -92,7 +104,7 @@
 
                         <div class="row mb-3">
                             <div class="col-sm-3">
-                                <h6 class="mb-0">Phone</h6>
+                                <h6 class="mb-0"><fmt:message key="profile.phone" /></h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
                                 <input type="text" name="phone" class="form-control"  value="<c:out value='${phone}' />" required="required">
@@ -101,7 +113,7 @@
 
                         <div class="row mb-3">
                             <div class="col-sm-3">
-                                <h6 class="mb-0">Email</h6>
+                                <h6 class="mb-0"><fmt:message key="profile.email" /></h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
                                 <input type="email" name="email" class="form-control"  value="<c:out value='${email}' />" required="required">
@@ -110,7 +122,7 @@
 
                         <div class="row mb-3">
                             <div class="col-sm-3">
-                                <h6 class="mb-0">Location</h6>
+                                <h6 class="mb-0"><fmt:message key="profile.location" /></h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
                                 <input type="text" name="location" class="form-control"  value="<c:out value='${location}' />" required="required">
@@ -121,7 +133,7 @@
                             <div class="col-sm-3"></div>
                             <div class="col-sm-9 text-secondary">
 <%--                                <input type="button" class="btn btn-primary px-4" value="Save Changes">--%>
-                                    <button type="submit" class="btn btn-primary px-4">Save</button>
+                                    <button type="submit" class="btn btn-primary px-4"><fmt:message key="button.save" /></button>
                             </div>
                         </div>
                         </form>
@@ -135,20 +147,20 @@
         <c:when test="${sessionScope.role_id==1}">
 
             <div class="row align-items-center justify-content-center">
-                <div class="container text-center"><h3 class="text-center">Active prepositions</h3></div>
+                <div class="container text-center"><h3 class="text-center"><fmt:message key="profile.activepreps" /></h3></div>
                 <hr>
                 <div class="container text-center">
                     <c:choose>
-                        <c:when test="${prepositionStatus==null||prepositionStatus=='fromModerator'}"> <a href="showProfile?prepositionStatus=fromModerator" class="btn btn-success" style="background-color: #1E93F9;">From moderator</a></c:when>
-                        <c:otherwise> <a href="showProfile?prepositionStatus=fromModerator" class="btn btn-success" style="background-color: #0074D9;">From moderator</a></c:otherwise>
+                        <c:when test="${prepositionStatus==null||prepositionStatus=='fromModerator'}"> <a href="showProfile?prepositionStatus=fromModerator" class="btn btn-success" style="background-color: #1E93F9;"><fmt:message key="profile.frommoderator" /></a></c:when>
+                        <c:otherwise> <a href="showProfile?prepositionStatus=fromModerator" class="btn btn-success" style="background-color: #0074D9;"><fmt:message key="profile.frommoderator" /></a></c:otherwise>
                     </c:choose>
                     <c:choose>
-                        <c:when test="${prepositionStatus=='fromSpeaker'}"> <a href="showProfile?prepositionStatus=fromSpeaker" class="btn btn-success" style="background-color: #1E93F9">From speaker</a></c:when>
-                        <c:otherwise> <a href="showProfile?prepositionStatus=fromSpeaker" class="btn btn-success" style="background-color: #0074D9;">From speaker</a></c:otherwise>
+                        <c:when test="${prepositionStatus=='fromSpeaker'}"> <a href="showProfile?prepositionStatus=fromSpeaker" class="btn btn-success" style="background-color: #1E93F9"><fmt:message key="profile.fromspeaker" /></a></c:when>
+                        <c:otherwise> <a href="showProfile?prepositionStatus=fromSpeaker" class="btn btn-success" style="background-color: #0074D9;"><fmt:message key="profile.fromspeaker" /></a></c:otherwise>
                     </c:choose>
                     <c:choose>
-                        <c:when test="${prepositionStatus=='forEvent'}"> <a href="showProfile?prepositionStatus=forEvent" class="btn btn-success" style="background-color: #1E93F9;">Reports for event</a></c:when>
-                        <c:otherwise> <a href="showProfile?prepositionStatus=forEvent" class="btn btn-success" style="background-color: #0074D9;">Reports for event</a></c:otherwise>
+                        <c:when test="${prepositionStatus=='forEvent'}"> <a href="showProfile?prepositionStatus=forEvent" class="btn btn-success" style="background-color: #1E93F9;"><fmt:message key="profile.reportsforevent" /></a></c:when>
+                        <c:otherwise> <a href="showProfile?prepositionStatus=forEvent" class="btn btn-success" style="background-color: #0074D9;"><fmt:message key="profile.reportsforevent" /></a></c:otherwise>
                     </c:choose>
                 </div>
                 <br>
@@ -156,11 +168,11 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Event</th>
-                        <th scope="col">Report</th>
-                        <th scope="col">Speaker_id</th>
-                        <th scope="col">Status</th>
+                        <th scope="col"><fmt:message key="profile.id" /></th>
+                        <th scope="col"><fmt:message key="profile.event" /></th>
+                        <th scope="col"><fmt:message key="profile.report" /></th>
+                        <th scope="col"><fmt:message key="profile.speaker_id" /></th>
+                        <th scope="col"><fmt:message key="profile.status" /></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -168,20 +180,28 @@
                     <c:forEach var="prep" items="${Preps}">
                         <tr>
                             <td>${prep.id}</td>
-                            <td>${propEvents.get(pos).event_name_en}</td>
-                            <td>${propReports.get(pos).report_name_en}</td>
+                            <c:choose>
+                                <c:when test="${sessionScope.lang.equals('en')}">
+                                    <td>${propEvents.get(pos).event_name_en}</td>
+                                    <td>${propReports.get(pos).report_name_en}</td>
+                                </c:when>
+                                <c:otherwise>
+                                    <td>${propEvents.get(pos).event_name_ua}</td>
+                                    <td>${propReports.get(pos).report_name_ua}</td>
+                                </c:otherwise>
+                            </c:choose>
                             <td>${prep.speaker_id}</td>
                             <c:choose>
                                 <c:when test="${prepositionStatus==null||prepositionStatus=='fromModerator'}">
-                                    <td><a href="rejectSpeakerFromModerator?report_id=${propReports.get(pos).getReport_id()}&speaker_id=${prep.speaker_id}" class="btn btn-danger">Reject</a></td>
+                                    <td><a href="rejectSpeakerFromModerator?report_id=${propReports.get(pos).getReport_id()}&speaker_id=${prep.speaker_id}" class="btn btn-danger"><fmt:message key="profile.reject" /></a></td>
                                 </c:when>
                                 <c:when test="${prepositionStatus=='fromSpeaker'}">
-                                    <td><a href="acceptSpeakerForReport?report_id=${propReports.get(pos).getReport_id()}&speaker_id=${prep.speaker_id}" class="btn btn-success">Accept</a>
-                                        <a href="rejectSpeakerForReport?id=${prep.id}" class="btn btn-danger">Reject</a></td>
+                                    <td><a href="acceptSpeakerForReport?report_id=${propReports.get(pos).getReport_id()}&speaker_id=${prep.speaker_id}" class="btn btn-success"><fmt:message key="profile.accept" /></a>
+                                        <a href="rejectSpeakerForReport?id=${prep.id}" class="btn btn-danger"><fmt:message key="profile.reject" /></a></td>
                                 </c:when>
                                 <c:when test="${prepositionStatus=='forEvent'}">
-                                    <td><a href="acceptSpeakerReports?id=${prep.id}" class="btn btn-success">Accept</a>
-                                        <a href="rejectSpeakerReports?id=${prep.id}" class="btn btn-danger">Reject</a></td>
+                                    <td><a href="acceptSpeakerReports?id=${prep.id}" class="btn btn-success"><fmt:message key="profile.accept" /></a>
+                                        <a href="rejectSpeakerReports?id=${prep.id}" class="btn btn-danger"><fmt:message key="profile.reject" /></a></td>
                                 </c:when>
 
                             </c:choose>
@@ -193,20 +213,20 @@
             </div>
             <hr>
             <div class="row align-items-center justify-content-center">
-                <div class="container text-center"><h3 class="text-center">Users</h3></div>
+                <div class="container text-center"><h3 class="text-center"><fmt:message key="profile.users" /></h3></div>
                 <hr>
                 <div class="container text-center">
                     <c:choose>
-                        <c:when test="${userStatus==null||userStatus=='all'}"> <a href="showProfile?userStatus=all" class="btn btn-success" style="background-color: #1E93F9;">All users</a></c:when>
-                        <c:otherwise> <a href="showProfile?userStatus=all" class="btn btn-success" style="background-color: #0074D9;">All users</a></c:otherwise>
+                        <c:when test="${userStatus==null||userStatus=='all'}"> <a href="showProfile?userStatus=all" class="btn btn-success" style="background-color: #1E93F9;"><fmt:message key="profile.allusers" /></a></c:when>
+                        <c:otherwise> <a href="showProfile?userStatus=all" class="btn btn-success" style="background-color: #0074D9;"><fmt:message key="profile.allusers" /></a></c:otherwise>
                     </c:choose>
                     <c:choose>
-                        <c:when test="${userStatus=='users'}"> <a href="showProfile?userStatus=users" class="btn btn-success" style="background-color: #1E93F9">Users</a></c:when>
-                        <c:otherwise> <a href="showProfile?userStatus=users" class="btn btn-success" style="background-color: #0074D9;">Users</a></c:otherwise>
+                        <c:when test="${userStatus=='users'}"> <a href="showProfile?userStatus=users" class="btn btn-success" style="background-color: #1E93F9"><fmt:message key="profile.users" /></a></c:when>
+                        <c:otherwise> <a href="showProfile?userStatus=users" class="btn btn-success" style="background-color: #0074D9;"><fmt:message key="profile.users" /></a></c:otherwise>
                     </c:choose>
                     <c:choose>
-                        <c:when test="${userStatus=='speakers'}"> <a href="showProfile?userStatus=speakers" class="btn btn-success" style="background-color: #1E93F9;">Speakers</a></c:when>
-                        <c:otherwise> <a href="showProfile?userStatus=speakers" class="btn btn-success" style="background-color: #0074D9;">Speaker</a></c:otherwise>
+                        <c:when test="${userStatus=='speakers'}"> <a href="showProfile?userStatus=speakers" class="btn btn-success" style="background-color: #1E93F9;"><fmt:message key="profile.speakers" /></a></c:when>
+                        <c:otherwise> <a href="showProfile?userStatus=speakers" class="btn btn-success" style="background-color: #0074D9;"><fmt:message key="profile.speakers" /></a></c:otherwise>
                     </c:choose>
                 </div>
                 <br>
@@ -214,14 +234,14 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col">User_id</th>
-                        <th scope="col">Role_id</th>
-                        <th scope="col">User_name</th>
-                        <th scope="col">User_surname</th>
-                        <th scope="col">User_email</th>
-                        <th scope="col">User_phone</th>
-                        <th scope="col">User_address</th>
-                        <th scope="col">Action</th>
+                        <th scope="col"><fmt:message key="profile.userid" /></th>
+                        <th scope="col"><fmt:message key="profile.roleid" /></th>
+                        <th scope="col"><fmt:message key="profile.username" /></th>
+                        <th scope="col"><fmt:message key="profile.usersurname" /></th>
+                        <th scope="col"><fmt:message key="profile.email" /></th>
+                        <th scope="col"><fmt:message key="profile.phone" /></th>
+                        <th scope="col"><fmt:message key="profile.location" /></th>
+                        <th scope="col"><fmt:message key="profile.action" /></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -234,8 +254,8 @@
                             <td>${user.user_email}</td>
                             <td>${user.user_phone}</td>
                             <td>${user.user_address}</td>
-                            <td><a href="editUser?user_id=${user.id}" class="btn btn-success">Edit</a>
-                                <a href="deleteUser?user_id=${user.id}" class="btn btn-danger">Delete</a></td>
+                            <td><a href="editUser?user_id=${user.id}" class="btn btn-success"><fmt:message key="button.edit" /></a>
+                                <a href="deleteUser?user_id=${user.id}" class="btn btn-danger"><fmt:message key="button.delete" /></a></td>
                             <c:set var="pos" value="${pos+1}"/>
                         </tr>
                     </c:forEach>
@@ -247,20 +267,20 @@
         <c:when test="${sessionScope.role_id==2}"><p class="text-secondary mb-1">
 
             <div class="row align-items-center justify-content-center">
-                <div class="container text-center"><h3 class="text-center">Events with my performance</h3></div>
+                <div class="container text-center"><h3 class="text-center"><fmt:message key="profile.eventwithmyperf" /></h3></div>
                 <hr>
                 <div class="container text-center">
                     <c:choose>
-                        <c:when test="${eventStatus==null||eventStatus=='all'}"> <a href="showProfile?eventStatus=all" class="btn btn-success" style="background-color: #1E93F9;">All events</a></c:when>
-                        <c:otherwise> <a href="showProfile?eventStatus=all" class="btn btn-success" style="background-color: #0074D9;">All events</a></c:otherwise>
+                        <c:when test="${eventStatus==null||eventStatus=='all'}"> <a href="showProfile?eventStatus=all" class="btn btn-success" style="background-color: #1E93F9;"><fmt:message key="profile.allevents" /></a></c:when>
+                        <c:otherwise> <a href="showProfile?eventStatus=all" class="btn btn-success" style="background-color: #0074D9;"><fmt:message key="profile.allevents" /></a></c:otherwise>
                     </c:choose>
                     <c:choose>
-                        <c:when test="${eventStatus=='finished'}"> <a href="showProfile?eventStatus=finished" class="btn btn-success" style="background-color: #1E93F9">Finished events</a></c:when>
-                        <c:otherwise> <a href="showProfile?eventStatus=finished" class="btn btn-success" style="background-color: #0074D9;">Finished events</a></c:otherwise>
+                        <c:when test="${eventStatus=='finished'}"> <a href="showProfile?eventStatus=finished" class="btn btn-success" style="background-color: #1E93F9"><fmt:message key="profile.finishedevents" /></a></c:when>
+                        <c:otherwise> <a href="showProfile?eventStatus=finished" class="btn btn-success" style="background-color: #0074D9;"><fmt:message key="profile.finishedevents" /></a></c:otherwise>
                     </c:choose>
                     <c:choose>
-                        <c:when test="${eventStatus=='upcoming'}"> <a href="showProfile?eventStatus=upcoming" class="btn btn-success" style="background-color: #1E93F9;">Upcoming events</a></c:when>
-                        <c:otherwise> <a href="showProfile?eventStatus=upcoming" class="btn btn-success" style="background-color: #0074D9;">Upcoming events</a></c:otherwise>
+                        <c:when test="${eventStatus=='upcoming'}"> <a href="showProfile?eventStatus=upcoming" class="btn btn-success" style="background-color: #1E93F9;"><fmt:message key="profile.upcoming" /></a></c:when>
+                        <c:otherwise> <a href="showProfile?eventStatus=upcoming" class="btn btn-success" style="background-color: #0074D9;"><fmt:message key="profile.upcoming" /></a></c:otherwise>
                     </c:choose>
                 </div>
                 <br>
@@ -268,18 +288,26 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Place</th>
-                        <th scope="col">Date</th>
+                        <th scope="col"><fmt:message key="profile.id" /></th>
+                        <th scope="col"><fmt:message key="profile.name" /></th>
+                        <th scope="col"><fmt:message key="profile.place" /></th>
+                        <th scope="col"><fmt:message key="profile.date" /></th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach var="event" items="${events}">
                         <tr>
                             <td>${event.event_id}</td>
-                            <td>${event.event_name_en}</td>
-                            <td>${event.event_place_en}</td>
+                            <c:choose>
+                                <c:when test="${sessionScope.lang.equals('en')}">
+                                    <td>${event.event_name_en}</td>
+                                    <td>${event.event_place_en}</td>
+                                </c:when>
+                                <c:otherwise>
+                                    <td>${event.event_name_ua}</td>
+                                    <td>${event.event_place_ua}</td>
+                                </c:otherwise>
+                            </c:choose>
                             <td> <custom:dateFormatter date="${event.event_date}" format="dd-MM-yyyy HH:mm" /></td>
 <%--                            <td>${event.event_date}</td>--%>
                         </tr>
@@ -289,20 +317,20 @@
             </div>
             <hr>
             <div class="row align-items-center justify-content-center">
-                <div class="container text-center"><h3 class="text-center">Active prepositions</h3></div>
+                <div class="container text-center"><h3 class="text-center"><fmt:message key="profile.activepreps" /></h3></div>
                 <hr>
                 <div class="container text-center">
                     <c:choose>
-                        <c:when test="${prepositionStatus==null||prepositionStatus=='fromModerator'}"> <a href="showProfile?prepositionStatus=fromModerator" class="btn btn-success" style="background-color: #1E93F9;">From moderator</a></c:when>
-                        <c:otherwise> <a href="showProfile?prepositionStatus=fromModerator" class="btn btn-success" style="background-color: #0074D9;">From moderator</a></c:otherwise>
+                        <c:when test="${prepositionStatus==null||prepositionStatus=='fromModerator'}"> <a href="showProfile?prepositionStatus=fromModerator" class="btn btn-success" style="background-color: #1E93F9;"><fmt:message key="profile.frommoderator" /></a></c:when>
+                        <c:otherwise> <a href="showProfile?prepositionStatus=fromModerator" class="btn btn-success" style="background-color: #0074D9;"><fmt:message key="profile.frommoderator" /></a></c:otherwise>
                     </c:choose>
                     <c:choose>
-                        <c:when test="${prepositionStatus=='fromSpeaker'}"> <a href="showProfile?prepositionStatus=fromSpeaker" class="btn btn-success" style="background-color: #1E93F9">For report</a></c:when>
-                        <c:otherwise> <a href="showProfile?prepositionStatus=fromSpeaker" class="btn btn-success" style="background-color: #0074D9;">For report</a></c:otherwise>
+                        <c:when test="${prepositionStatus=='fromSpeaker'}"> <a href="showProfile?prepositionStatus=fromSpeaker" class="btn btn-success" style="background-color: #1E93F9"><fmt:message key="profile.forreport" /></a></c:when>
+                        <c:otherwise> <a href="showProfile?prepositionStatus=fromSpeaker" class="btn btn-success" style="background-color: #0074D9;"><fmt:message key="profile.forreport" /></a></c:otherwise>
                     </c:choose>
                     <c:choose>
-                        <c:when test="${prepositionStatus=='forEvent'}"> <a href="showProfile?prepositionStatus=forEvent" class="btn btn-success" style="background-color: #1E93F9;">Reports for event</a></c:when>
-                        <c:otherwise> <a href="showProfile?prepositionStatus=forEvent" class="btn btn-success" style="background-color: #0074D9;">Reports for event</a></c:otherwise>
+                        <c:when test="${prepositionStatus=='forEvent'}"> <a href="showProfile?prepositionStatus=forEvent" class="btn btn-success" style="background-color: #1E93F9;"><fmt:message key="profile.reportsforevent" /></a></c:when>
+                        <c:otherwise> <a href="showProfile?prepositionStatus=forEvent" class="btn btn-success" style="background-color: #0074D9;"><fmt:message key="profile.reportsforevent" /></a></c:otherwise>
                     </c:choose>
                 </div>
                 <br>
@@ -310,10 +338,10 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Event</th>
-                        <th scope="col">Report</th>
-                        <th scope="col">Status</th>
+                        <th scope="col"><fmt:message key="profile.id" /></th>
+                        <th scope="col"><fmt:message key="profile.event" /></th>
+                        <th scope="col"><fmt:message key="profile.report" /></th>
+                        <th scope="col"><fmt:message key="profile.status" /></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -321,18 +349,26 @@
                     <c:forEach var="prepositions" items="${propEvents}">
                         <tr>
                             <td>${prepositions.event_id}</td>
-                            <td>${prepositions.event_name_en}</td>
-                            <td>${propReports.get(pos).report_name_en}</td>
+                            <c:choose>
+                                <c:when test="${sessionScope.lang.equals('en')}">
+                                    <td>${prepositions.event_name_en}</td>
+                                    <td>${propReports.get(pos).report_name_en}</td>
+                                </c:when>
+                                <c:otherwise>
+                                    <td>${prepositions.event_name_ua}</td>
+                                    <td>${propReports.get(pos).report_name_ua}</td>
+                                </c:otherwise>
+                            </c:choose>
                             <c:choose>
                                 <c:when test="${prepositionStatus==null||prepositionStatus=='fromModerator'}">
-                                    <td><a href="acceptSpeakerForReport?report_id=${propReports.get(pos).getReport_id()}&speaker_id=${moderatorPreps.get(pos).speaker_id}" class="btn btn-success">Accept</a>
-                                        <a href="rejectSpeakerFromModerator?report_id=${propReports.get(pos).report_id}&speaker_id=${speaker_id}" class="btn btn-danger">Reject</a></td>
+                                    <td><a href="acceptSpeakerForReport?report_id=${propReports.get(pos).getReport_id()}&speaker_id=${moderatorPreps.get(pos).speaker_id}" class="btn btn-success"><fmt:message key="profile.accept" /></a>
+                                        <a href="rejectSpeakerFromModerator?report_id=${propReports.get(pos).report_id}&speaker_id=${speaker_id}" class="btn btn-danger"><fmt:message key="profile.reject" /></a></td>
                                 </c:when>
                                 <c:when test="${prepositionStatus=='fromSpeaker'}">
-                                    <td><a href="rejectSpeakerForReport?id=${speakerPreps.get(pos).getId()}" class="btn btn-danger">Reject</a></td>
+                                    <td><a href="rejectSpeakerForReport?id=${speakerPreps.get(pos).getId()}" class="btn btn-danger"><fmt:message key="profile.reject" /></a></td>
                                 </c:when>
                                 <c:when test="${prepositionStatus=='forEvent'}">
-                                    <td><a href="rejectSpeakerReports?id=${propReports.get(pos).getId()}&speaker_id=${speaker_id}" class="btn btn-danger">Reject</a></td>
+                                    <td><a href="rejectSpeakerReports?id=${propReports.get(pos).getId()}&speaker_id=${speaker_id}" class="btn btn-danger"><fmt:message key="profile.reject" /></a></td>
                                 </c:when>
                             </c:choose>
                             <c:set var="pos" value="${pos+1}"/>
@@ -346,20 +382,20 @@
         <c:otherwise><p class="text-secondary mb-1">
 
             <div class="row align-items-center justify-content-center">
-                <div class="container text-center"><h3 class="text-center">My Events</h3></div>
+                <div class="container text-center"><h3 class="text-center"><fmt:message key="profile.myevents" /></h3></div>
                 <hr>
                 <div class="container text-center">
                     <c:choose>
-                        <c:when test="${eventStatus==null||eventStatus=='all'}"> <a href="showProfile?eventStatus=all" class="btn btn-success" style="background-color: #1E93F9;">All events</a></c:when>
-                        <c:otherwise> <a href="showProfile?eventStatus=all" class="btn btn-success" style="background-color: #0074D9;">All events</a></c:otherwise>
+                        <c:when test="${eventStatus==null||eventStatus=='all'}"> <a href="showProfile?eventStatus=all" class="btn btn-success" style="background-color: #1E93F9;"><fmt:message key="profile.allevents" /></a></c:when>
+                        <c:otherwise> <a href="showProfile?eventStatus=all" class="btn btn-success" style="background-color: #0074D9;"><fmt:message key="profile.allevents" /></a></c:otherwise>
                     </c:choose>
                     <c:choose>
-                        <c:when test="${eventStatus=='finished'}"> <a href="showProfile?eventStatus=finished" class="btn btn-success" style="background-color: #1E93F9">Finished events</a></c:when>
-                        <c:otherwise> <a href="showProfile?eventStatus=finished" class="btn btn-success" style="background-color: #0074D9;">Finished events</a></c:otherwise>
+                        <c:when test="${eventStatus=='finished'}"> <a href="showProfile?eventStatus=finished" class="btn btn-success" style="background-color: #1E93F9"><fmt:message key="profile.finishedevents" /></a></c:when>
+                        <c:otherwise> <a href="showProfile?eventStatus=finished" class="btn btn-success" style="background-color: #0074D9;"><fmt:message key="profile.finishedevents" /></a></c:otherwise>
                     </c:choose>
                     <c:choose>
-                        <c:when test="${eventStatus=='upcoming'}"> <a href="showProfile?eventStatus=upcoming" class="btn btn-success" style="background-color: #1E93F9;">Upcoming events</a></c:when>
-                        <c:otherwise> <a href="showProfile?eventStatus=upcoming" class="btn btn-success" style="background-color: #0074D9;">Upcoming events</a></c:otherwise>
+                        <c:when test="${eventStatus=='upcoming'}"> <a href="showProfile?eventStatus=upcoming" class="btn btn-success" style="background-color: #1E93F9;"><fmt:message key="profile.upcoming" /></a></c:when>
+                        <c:otherwise> <a href="showProfile?eventStatus=upcoming" class="btn btn-success" style="background-color: #0074D9;"><fmt:message key="profile.upcoming" /></a></c:otherwise>
                     </c:choose>
                 </div>
                 <br>
@@ -367,11 +403,11 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Place</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Status</th>
+                        <th scope="col"><fmt:message key="profile.id" /></th>
+                        <th scope="col"><fmt:message key="profile.name" /></th>
+                        <th scope="col"><fmt:message key="profile.place" /></th>
+                        <th scope="col"><fmt:message key="profile.date" /></th>
+                        <th scope="col"><fmt:message key="profile.status" /></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -380,8 +416,16 @@
                     <c:forEach var="event" items="${events}">
                     <tr>
                         <td>${event.event_id}</td>
-                        <td>${event.event_name_en}</td>
-                        <td>${event.event_place_en}</td>
+                        <c:choose>
+                            <c:when test="${sessionScope.lang.equals('en')}">
+                                <td>${event.event_name_en}</td>
+                                <td>${event.event_place_en}</td>
+                            </c:when>
+                            <c:otherwise>
+                                <td>${event.event_name_ua}</td>
+                                <td>${event.event_place_ua}</td>
+                            </c:otherwise>
+                        </c:choose>
                         <td> <custom:dateFormatter date="${event.event_date}" format="dd-MM-yyyy HH:mm" /></td>
                         <td>${presense.get(pos)}</td>
                         <c:set var="pos" value="${pos+1}"/>

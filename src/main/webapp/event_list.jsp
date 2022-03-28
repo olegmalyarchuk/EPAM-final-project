@@ -1,9 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.lang}" />
+<fmt:setBundle basename="messages" />
 <html>
 <head>
-    <title>Event list</title>
+    <title><fmt:message key="eventlist.title" /></title>
     <link rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
@@ -29,15 +32,24 @@
          style="background-color: #0074D9">
         <ul class="navbar-nav">
             <li><a href="listEvent"
-                   class="nav-link">Events</a></li>
+                   class="nav-link"><fmt:message key="header.events" /></a></li>
         </ul>
         <ul class="navbar-nav">
             <li><a href="showProfile"
-                   class="nav-link">Profile</a></li>
+                   class="nav-link"> <fmt:message key="header.profile" /></a></li>
         </ul>
         <ul class="navbar-nav">
             <li><a href="/logout"
-                   class="nav-link">Logout</a></li>
+                   class="nav-link"><fmt:message key="header.logout" /></a></li>
+
+        </ul>
+        <ul class="nav justify-content-end">
+            <li><a href="lang?lang=ua"
+                   class="nav-link"><img src="/resources/images/lang/ukr.png" width="24" /></a></li>
+        </ul>
+        <ul class="nav justify-content-end">
+            <li><a href="lang?lang=en"
+                   class="nav-link"><img src="/resources/images/lang/eng.png" width="24" /></a></li>
         </ul>
     </nav>
 </header>
@@ -47,33 +59,33 @@
     <!-- <div class="alert alert-success" *ngIf='message'>{{message}}</div> -->
 
     <div class="container">
-        <h3 class="text-center">List of Events</h3>
+        <h3 class="text-center"><fmt:message key="eventlist.listofevent" /></h3>
         <hr>
         <div class="container text-center">
 
             <c:choose><c:when test="${sessionScope.role_id==1}">
-                <a href="newEvent" class="btn btn-success" style="background-color: #0074D9;">Add New Event</a>
+                <a href="newEvent" class="btn btn-success" style="background-color: #0074D9;"><fmt:message key="eventlist.addnewevent" /></a>
             </c:when></c:choose>
             <c:choose>
-                <c:when test="${eventStatus==null||eventStatus=='all'}"> <a href="listEvent?eventStatus=all" class="btn btn-success" style="background-color: #1E93F9;">All events</a></c:when>
-                <c:otherwise> <a href="listEvent?eventStatus=all" class="btn btn-success" style="background-color: #0074D9;">All events</a></c:otherwise>
+                <c:when test="${eventStatus==null||eventStatus=='all'}"> <a href="listEvent?eventStatus=all" class="btn btn-success" style="background-color: #1E93F9;"><fmt:message key="eventlist.allevents" /></a></c:when>
+                <c:otherwise> <a href="listEvent?eventStatus=all" class="btn btn-success" style="background-color: #0074D9;"><fmt:message key="eventlist.allevents" /></a></c:otherwise>
             </c:choose>
             <c:choose>
-                <c:when test="${eventStatus=='finished'}"> <a href="listEvent?eventStatus=finished" class="btn btn-success" style="background-color: #1E93F9">Finished events</a></c:when>
-                <c:otherwise> <a href="listEvent?eventStatus=finished" class="btn btn-success" style="background-color: #0074D9;">Finished events</a></c:otherwise>
+                <c:when test="${eventStatus=='finished'}"> <a href="listEvent?eventStatus=finished" class="btn btn-success" style="background-color: #1E93F9"><fmt:message key="eventlist.finishedevents" /></a></c:when>
+                <c:otherwise> <a href="listEvent?eventStatus=finished" class="btn btn-success" style="background-color: #0074D9;"><fmt:message key="eventlist.finishedevents" /></a></c:otherwise>
             </c:choose>
             <c:choose>
-                <c:when test="${eventStatus=='upcoming'}"> <a href="listEvent?eventStatus=upcoming" class="btn btn-success" style="background-color: #1E93F9;">Upcoming events</a></c:when>
-                <c:otherwise> <a href="listEvent?eventStatus=upcoming" class="btn btn-success" style="background-color: #0074D9;">Upcoming events</a></c:otherwise>
+                <c:when test="${eventStatus=='upcoming'}"> <a href="listEvent?eventStatus=upcoming" class="btn btn-success" style="background-color: #1E93F9;"><fmt:message key="eventlist.upcomingevents" /></a></c:when>
+                <c:otherwise> <a href="listEvent?eventStatus=upcoming" class="btn btn-success" style="background-color: #0074D9;"><fmt:message key="eventlist.upcomingevents" /></a></c:otherwise>
             </c:choose>
             <button class="btn btn-secondary dropdown-toggle" style="background-color: #1E93F9" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Order by
+                <fmt:message key="eventlist.orderby" />
             </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="listEvent?orderBy=date">Date</a>
-                    <a class="dropdown-item" href="listEvent?orderBy=reports">Reports count</a>
-                    <a class="dropdown-item" href="listEvent?orderBy=users">Users count</a>
-                    <a class="dropdown-item" href="listEvent">Default</a>
+                    <a class="dropdown-item" href="listEvent?orderBy=date"><fmt:message key="eventlist.date" /></a>
+                    <a class="dropdown-item" href="listEvent?orderBy=reports"><fmt:message key="eventlist.reportscount" /></a>
+                    <a class="dropdown-item" href="listEvent?orderBy=users"><fmt:message key="eventlist.userscount" /></a>
+                    <a class="dropdown-item" href="listEvent"><fmt:message key="eventlist.default" /></a>
                 </div>
         </div>
         <br>
@@ -83,12 +95,20 @@
         <div class="card" style="width: 18rem;">
             <img class="card-img-top" src="/resources/images/events/${event.event_photo_url}" alt="Card image cap">
             <div class="card-body">
-                <h5 class="card-title">${event.event_name_en}</h5>
-                <p class="card-text">${event.event_description_en}</p>
-                <a href="eventEvent?id=<c:out value='${event.event_id}' />" class="btn btn-primary">View more</a>
+                <c:choose>
+                    <c:when test="${sessionScope.lang.equals('en')}">
+                        <h5 class="card-title">${event.event_name_en}</h5>
+                        <p class="card-text">${event.event_description_en}</p>
+                    </c:when>
+                    <c:otherwise>
+                        <h5 class="card-title">${event.event_name_ua}</h5>
+                        <p class="card-text">${event.event_description_ua}</p>
+                    </c:otherwise>
+                </c:choose>
+                <a href="eventEvent?id=<c:out value='${event.event_id}' />" class="btn btn-primary"><fmt:message key="eventlist.viewmore" /></a>
                 <c:choose><c:when test="${sessionScope.role_id==1}">
-                    <a href="editEvent?id=<c:out value='${event.event_id}' />" class="btn btn-success">Edit</a>
-                    <a href="deleteEvent?id=<c:out value='${event.event_id}' />" class="btn btn-danger">Delete</a>
+                    <a href="editEvent?id=<c:out value='${event.event_id}' />" class="btn btn-success"><fmt:message key="button.edit" /></a>
+                    <a href="deleteEvent?id=<c:out value='${event.event_id}' />" class="btn btn-danger"><fmt:message key="button.delete" /></a>
                 </c:when></c:choose>
 
             </div>

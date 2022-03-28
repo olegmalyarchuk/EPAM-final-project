@@ -137,7 +137,9 @@ public class ReportServlet extends HttpServlet{
             r.setReport_name_ua(report_name_ua);
             r.setReport_name_en(report_name_en);
             reportService.addReportToDB(r);
-            dataforMailUpdate(event_id);
+            String lang = "en";
+            if(request.getSession().getAttribute("lang").equals("ua")) lang="ua";
+            dataforMailUpdate(event_id, lang);
         } catch (DBException e) {
             e.printStackTrace();
         }
@@ -159,7 +161,10 @@ public class ReportServlet extends HttpServlet{
             event_users.setEvent_id(event_id);
             event_users.setPresent(false);
             eventUsersService.addEventUsersToDB(event_users);
-            GmailSender.sendEventWelcome(email, user.getUser_name(), user.getUser_surname(), events.getEvent_place_en(), events.getEvent_date());
+            String lang = "en";
+            if(request.getSession().getAttribute("lang").equals("ua")) lang = "ua;";
+            if(lang.equals("ua"))  GmailSender.sendEventWelcome(email, user.getUser_name(), user.getUser_surname(), events.getEvent_place_ua(), events.getEvent_date(), lang);
+            else GmailSender.sendEventWelcome(email, user.getUser_name(), user.getUser_surname(), events.getEvent_place_en(), events.getEvent_date(), lang);
             response.sendRedirect("listEvent");
         } catch (DBException e) {
             e.printStackTrace();
@@ -257,14 +262,16 @@ public class ReportServlet extends HttpServlet{
             reports.setReport_name_ua(report_name_ua);
             reports.setReport_name_en(report_name_en);
             reportService.updateReportInDB(reports);
-            dataforMailUpdate(event_id);
+            String lang = "en";
+            if(request.getSession().getAttribute("lang").equals("ua")) lang = "ua";
+            dataforMailUpdate(event_id, lang);
             response.sendRedirect("listEvent");
         } catch (IOException | DBException e) {
             e.printStackTrace();
         }
     }
 
-    private void dataforMailUpdate(int event_id) throws DBException {
+    private void dataforMailUpdate(int event_id, String lang) throws DBException {
         int id = event_id;
         List<User> userList = new ArrayList<>();
         List<Report_speakers> rs = reportSpeakerService.findAllReportSpeakersInDB();
@@ -290,7 +297,7 @@ public class ReportServlet extends HttpServlet{
             }
         }
         String event_name = service.findEventsById(id).getEvent_name_en();
-        GmailSender.sendEventChange(userList, event_name);
+        GmailSender.sendEventChange(userList, event_name, lang);
     }
 
 }

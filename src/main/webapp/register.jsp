@@ -1,8 +1,10 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.lang}" />
+<fmt:setBundle basename="messages" />
 <html>
 <head>
-    <title>Sign Up</title>
+    <title><fmt:message key="register.title"/></title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -29,49 +31,49 @@
         <div class="container">
             <div class="signup-content">
                 <div class="signup-form">
-                    <h2 class="form-title">Sign up</h2>
+                    <h2 class="form-title"><fmt:message key="register.signup"/></h2>
                     <form action="register" method="post" class="register-form" id="register-form">
                         <div class="form-group">
                             <label for="firstname"><i class="bi bi-person-fill"></i></label>
-                            <input type="text" required="required" name="firstname" id="firstname" placeholder="Your Name"/>
+                            <input type="text" required="required" name="firstname" id="firstname" placeholder="<fmt:message key="register.yourname"/>"/>
                         </div>
                         <div class="form-group">
                             <label for="lastname"><i class="bi bi-person-fill"></i></label>
-                            <input type="text" required="required" name="lastname" id="lastname" placeholder="Your Surname"/>
+                            <input type="text" required="required" name="lastname" id="lastname" placeholder="<fmt:message key="register.yoursurname"/>"/>
                         </div>
 
                         <div class="form-group">
                             <label for="phone"><i class="bi bi-telephone-fill"></i></label>
-                            <input type="text" required="required" name="phone" id="phone" placeholder="Phone"/>
+                            <input type="text" required="required" name="phone" id="phone" placeholder="<fmt:message key="register.phone"/>"/>
                         </div>
                         <div class="form-group">
                             <label for="address"><i class="bi bi-house-door-fill"></i></label>
-                            <input type="text" required="required" name="address" id="address" placeholder="Location"/>
+                            <input type="text" required="required" name="address" id="address" placeholder="<fmt:message key="register.location"/>"/>
                         </div>
                         <div class="form-group">
                             <label for="email"><i class="bi bi-envelope-fill"></i></label>
-                            <input type="email" required="required"  name="email" id="email" placeholder="Your Email"/>
+                            <input type="email" required="required"  name="email" id="email" placeholder="<fmt:message key="register.youremail"/>"/>
                         </div>
                         <div class="form-group">
                             <label for="password"><i class="bi bi-key-fill"></i></label>
-                            <input type="password" required="required"  name="password" id="password" placeholder="Password"/>
+                            <input type="password" required="required"  name="password" id="password" placeholder="<fmt:message key="register.password"/>"/>
                         </div>
                         <div class="form-group">
                             <label for="confirmpassword"><i class="bi bi-lock-fill"></i></label>
-                            <input type="password" required="required"  name="confirmpassword" id="confirmpassword" placeholder="Repeat your password"/>
+                            <input type="password" required="required"  name="confirmpassword" id="confirmpassword" placeholder="<fmt:message key="register.repeatpassword"/>"/>
                         </div>
                         <div class="form-group">
                             <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
-                            <label for="agree-term" required="required"  class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
+                            <label for="agree-term" required="required"  class="label-agree-term"><span><span></span></span><fmt:message key="register.termbefore"/><a href="#" class="term-service"><fmt:message key="register.termafter"/></a></label>
                         </div>
                         <div class="form-group form-button">
-                            <input type="submit" name="signup" id="signup" class="form-submit" value="Register"/>
+                            <input type="submit" name="signup" id="signup" class="form-submit" value="<fmt:message key="register.register"/>"/>
                         </div>
                     </form>
                 </div>
                 <div class="signup-image">
                     <figure><img src="resources/images/auth/signup-image.jpg" alt="sing up image"></figure>
-                    <a href="login.jsp" class="signup-image-link">I am already member</a>
+                    <a href="login.jsp" class="signup-image-link"><fmt:message key="register.alreadymember"/></a>
                 </div>
             </div>
         </div>

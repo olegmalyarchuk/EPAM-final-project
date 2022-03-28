@@ -1,8 +1,10 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.lang}" />
+<fmt:setBundle basename="messages" />
 <html>
 <head>
-    <title>Sign in</title>
+    <title><fmt:message key="login.title" /></title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -31,22 +33,22 @@
             <div class="signin-content">
                 <div class="signin-image">
                     <figure><img src="resources/images/auth/signin-image.jpg" alt="sing up image"></figure>
-                    <a href="register.jsp" class="signup-image-link">Create an account</a>
+                    <a href="register.jsp" class="signup-image-link"><fmt:message key="login.createaccount" /></a>
                 </div>
 
                 <div class="signin-form">
-                    <h2 class="form-title">Sign up</h2>
+                    <h2 class="form-title"><fmt:message key="login.sighup" /></h2>
                     <form action="login" method="post" class="register-form" id="login-form">
                         <div class="form-group">
                             <label for="email"><i class="bi bi-envelope-fill"></i></label>
-                            <input type="email" name="email" required="required" id="email" placeholder="Your email"/>
+                            <input type="email" name="email" required="required" id="email" placeholder="<fmt:message key="login.youremail" />"/>
                         </div>
                         <div class="form-group">
                             <label for="password"><i class="bi bi-key-fill"></i></label>
-                            <input type="password" name="password" required="required" id="password" placeholder="Password"/>
+                            <input type="password" name="password" required="required" id="password" placeholder="<fmt:message key="login.password" />"/>
                         </div>
                         <div class="form-group form-button">
-                            <input type="submit" name="signin" id="signin" class="form-submit" value="Log in"/>
+                            <input type="submit" name="signin" id="signin" class="form-submit" value="<fmt:message key="login.login" />"/>
                         </div>
                     </form>
                 </div>

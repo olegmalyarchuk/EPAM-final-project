@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-@WebServlet(urlPatterns = {"/newEvent","/insertEvent","/deleteEvent", "/editEvent", "/updateEvent", "/listEvent", "/eventEvent", "/proposeMe", "/editPresence", "/setPresence", "/setPreposition", "/proposeSpeaker"})
+@WebServlet(urlPatterns = {"/newEvent","/insertEvent","/deleteEvent", "/editEvent", "/updateEvent", "/listEvent", "/eventEvent", "/proposeMe", "/editPresence", "/setPresence", "/setPreposition", "/proposeSpeaker", "/lang"})
 public class EventServlet extends HttpServlet {
     public static final long serialVersionUID = 1234882438L;
     IEventService service = ServiceFactory.getInstance().getEventService();
@@ -76,6 +76,8 @@ public class EventServlet extends HttpServlet {
             case "/setPreposition":
                 setPreps(req, resp);
                 break;
+            case "/lang":
+                changeLang(req, resp);
         }
     }
 
@@ -178,7 +180,9 @@ public class EventServlet extends HttpServlet {
             boolean isDeleted = service.deleteEventsByIdFromDB(id);
             if(isDeleted) request.setAttribute("status", "successDelete");
             else request.setAttribute("status", "errorDelete");
-            dataforMailUpdate(id);
+            String lang = "en";
+            if(request.getSession().getAttribute("lang").equals("ua")) lang = "en";
+            dataforMailUpdate(id, lang);
             response.sendRedirect("listEvent");
         } catch (IOException e) {
             e.printStackTrace();
@@ -238,7 +242,9 @@ public class EventServlet extends HttpServlet {
             boolean isUpdated = service.updateEventsInDB(events);
             if(isUpdated) request.setAttribute("status", "successUpdate");
             else request.setAttribute("status", "errorUpdate");
-            dataforMailUpdate(event_id);
+            String lang = "en";
+            if(request.getSession().getAttribute("lang").equals("ua")) lang = "ua";
+            dataforMailUpdate(event_id, lang);
             response.sendRedirect("listEvent");
         } catch (IOException | DBException e) {
             e.printStackTrace();
@@ -272,7 +278,9 @@ public class EventServlet extends HttpServlet {
             boolean isInserted = service.addEventsToDB(events);
             if(isInserted) request.setAttribute("status", "successInsert");
             else request.setAttribute("status", "errorInsert");
-            dataforMailUpdate(event_id);
+            String lang = "en";
+            if(request.getSession().getAttribute("lang").equals("ua")) lang = "ua";
+            dataforMailUpdate(event_id, lang);
             response.sendRedirect("listEvent");
         } catch (IOException | DBException e) {
             e.printStackTrace();
@@ -280,7 +288,7 @@ public class EventServlet extends HttpServlet {
 
     }
 
-    private void dataforMailUpdate(int event_id) throws DBException {
+    private void dataforMailUpdate(int event_id, String lang) throws DBException {
         int id = event_id;
         List<User> userList = new ArrayList<>();
         List<Report_speakers> rs = reportSpeakerService.findAllReportSpeakersInDB();
@@ -306,7 +314,8 @@ public class EventServlet extends HttpServlet {
             }
         }
         String event_name = service.findEventsById(id).getEvent_name_en();
-        GmailSender.sendEventChange(userList, event_name);
+      if(lang.equals("ua")) service.findEventsById(id).getEvent_name_ua();
+        GmailSender.sendEventChange(userList, event_name, lang);
     }
 
     private void addPreposition(HttpServletRequest request, HttpServletResponse response) {
@@ -434,6 +443,17 @@ public class EventServlet extends HttpServlet {
             response.sendRedirect("proposeSpeaker?report_id="+report_id);
         } catch (DBException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void changeLang(HttpServletRequest request, HttpServletResponse response) {
+        String lang = "en";
+        if(request.getParameter("lang").equals("ua")) lang = "ua";
+        request.getSession().setAttribute("lang", lang);
+        try {
+            response.sendRedirect("/listEvent");
         } catch (IOException e) {
             e.printStackTrace();
         }

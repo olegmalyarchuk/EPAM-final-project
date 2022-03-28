@@ -1,9 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.lang}" />
+<fmt:setBundle basename="messages" />
 <html>
 <head>
-    <title>Event form</title>
+    <title><fmt:message key="editUserForm.title" /></title>
     <link rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
@@ -31,15 +34,24 @@
          style="background-color: #0074D9">
         <ul class="navbar-nav">
             <li><a href="listEvent"
-                   class="nav-link">Events</a></li>
+                   class="nav-link"><fmt:message key="header.events" /></a></li>
         </ul>
         <ul class="navbar-nav">
             <li><a href="showProfile"
-                   class="nav-link">Profile</a></li>
+                   class="nav-link"> <fmt:message key="header.profile" /></a></li>
         </ul>
         <ul class="navbar-nav">
             <li><a href="/logout"
-                   class="nav-link">Logout</a></li>
+                   class="nav-link"><fmt:message key="header.logout" /></a></li>
+
+        </ul>
+        <ul class="nav justify-content-end">
+            <li><a href="lang?lang=ua"
+                   class="nav-link"><img src="/resources/images/lang/ukr.png" width="24" /></a></li>
+        </ul>
+        <ul class="nav justify-content-end">
+            <li><a href="lang?lang=en"
+                   class="nav-link"><img src="/resources/images/lang/eng.png" width="24" /></a></li>
         </ul>
     </nav>
 </header>
@@ -49,54 +61,54 @@
         <div class="card-body">
             <form action="updateUser" method="post">
                     <caption>
-                        <h2>Edit User</h2>
+                        <h2><fmt:message key="editUserForm.edituser" /></h2>
                     </caption>
 
                         <input type="hidden" name="password" value="<c:out value='${user.user_password}' />" />
 
                     <fieldset class="form-group">
-                        <label>User ID</label> <input type="text"
+                        <label><fmt:message key="editUserForm.userid" /></label> <input type="text"
                                                             value="<c:out value='${user.id}' />" class="form-control"
                                                             name="user_id" required="required">
                     </fieldset>
 
                     <fieldset class="form-group">
-                        <label>Role ID</label> <input type="text"
+                        <label><fmt:message key="editUserForm.roleid" /></label> <input type="text"
                                                             value="<c:out value='${user.role_id}' />" class="form-control"
                                                             name="role_id" required="required">
                     </fieldset>
                     <fieldset class="form-group">
-                        <label>User_name</label> <input type="text"
+                        <label><fmt:message key="editUserForm.username" /></label> <input type="text"
                                                              value="<c:out value='${user.user_name}' />" class="form-control"
                                                              name="user_name" required="required">
                     </fieldset>
                     <fieldset class="form-group">
-                        <label>User_surname</label> <input type="text"
+                        <label><fmt:message key="editUserForm.usersurname" /></label> <input type="text"
                                                              value="<c:out value='${user.user_surname}' />" class="form-control"
                                                              name="user_surname" required="required">
                     </fieldset>
                     <fieldset class="form-group">
-                        <label>User_phone</label> <input type="text"
+                        <label><fmt:message key="editUserForm.userphone" /></label> <input type="text"
                                                                   value="<c:out value='${user.user_phone}' />" class="form-control"
                                                                   name="user_phone" required="required">
                     </fieldset>
                     <fieldset class="form-group">
-                        <label>User_email</label> <input type="email"
+                        <label><fmt:message key="editUserForm.useremail" /></label> <input type="email"
                                                                    value="<c:out value='${user.user_email}' />" class="form-control"
                                                                    name="user_email" required="required">
                     </fieldset>
-                    <label>User_photo_url</label> <input type="text"
+                    <label><fmt:message key="editUserForm.userphotourl" /></label> <input type="text"
                                                      value="<c:out value='${user.user_photo_url}' />" class="form-control"
                                                      name="user_photo_url" required="required">
                     </fieldset>
                     <fieldset class="form-group">
-                        <label>User_address</label> <input type="text"
+                        <label><fmt:message key="editUserForm.useraddress" /></label> <input type="text"
                                                               value="<c:out value='${user.user_address}' />" class="form-control"
                                                               name="user_address" required="required">
                     </fieldset>
 
 
-                    <button type="submit" class="btn btn-success">Save</button>
+                    <button type="submit" class="btn btn-success"><fmt:message key="button.save" /></button>
                 </form>
         </div>
     </div>

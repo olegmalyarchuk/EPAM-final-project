@@ -138,9 +138,12 @@ public class RegisterServlet extends HttpServlet {
                 session.setAttribute("name", newUser.getUser_name());
                 session.setAttribute("role_id", newUser.getRole_id());
                 session.setAttribute("status", "successRegister");
+                session.setAttribute("lang", "en");
                 dispatcher = req.getRequestDispatcher("/listEvent");
                 req.setAttribute("status", "successRegister");
-                GmailSender.sendWelcome(email, newUser.getUser_name(), newUser.getUser_surname());
+                String lang = "en";
+                if(req.getSession().getAttribute("lang").equals("ua")) lang = "ua";
+                GmailSender.sendWelcome(email, newUser.getUser_name(), newUser.getUser_surname(), lang);
                 resp.sendRedirect("/listEvent");
                 //dispatcher.forward(req, resp);
 
