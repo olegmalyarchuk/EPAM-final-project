@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <!-- Main css -->
     <link rel="stylesheet" href="resources/css/style.css">
+    <link rel="shortcut icon" href="/resources/images/logo.png" type="image/png">
 
 </head>
 <body>
@@ -34,6 +35,7 @@
     }
 %>
 <input type="hidden" id="status" value="<%=request.getAttribute("status")%>">
+<input type="hidden" id="lang" value="${sessionScope.lang}">
 <h1>Main page</h1>
 <h2>Hello, <c:out value="${sessionScope.name}"/></h2>
 <c:choose>

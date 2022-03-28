@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <!-- Main css -->
     <link rel="stylesheet" href="resources/css/style.css">
+    <link rel="shortcut icon" href="/resources/images/logo.png" type="image/png">
 </head>
 <body>
 <%
@@ -26,6 +27,7 @@
 %>
 <input type="hidden" id="status" value="<%=request.getAttribute("status")%>">
 <input type="hidden" id="statusSession" value="<%=session.getAttribute("status")%>">
+<input type="hidden" id="lang" value="${sessionScope.lang}">
 <div class="main">
     <!-- Sing in  Form -->
     <section class="sign-in">
@@ -63,28 +65,55 @@
 <link rel="stylesheet" href="alert/dist/sweatalert.css ">
 <script type="text/javascript">
     var status = document.getElementById("status").value;
-    if(status=="wrongPass") {
-        swal("Error", "The password is wrong.", "error");
-        // alert("You have successfully registered.")
-    }
-    if(status=="unexistedEmail") {
-        swal("Error", "Email is not registered yet.", "error");
-        // alert("You have successfully registered.")
-    }
-    if(status=="success") {
-        swal("Congrats", "You have successfully login", "success");
-        // alert("You have successfully registered.")
-    }
-    if(status=="logout") {
-        swal("Success", "You have successfully logged out", "success");
-        // alert("You have successfully registered.")
-    }
-    if(status=="unregistered") {
-        swal("Error", "You are not logged in", "error");
-    }
-    if(status=="servererror") {
-        swal("Error", "It is technical work on the site. Please try again.", "error");
-        //alert("It is technical work on the site. Please try again.")
+    var lang = document.getElementById("lang").value;
+    if(lang=="en") {
+        if (status == "wrongPass") {
+            swal("Error", "The password is wrong.", "error");
+            // alert("You have successfully registered.")
+        }
+        if (status == "unexistedEmail") {
+            swal("Error", "Email is not registered yet.", "error");
+            // alert("You have successfully registered.")
+        }
+        if (status == "success") {
+            swal("Congrats", "You have successfully login", "success");
+            // alert("You have successfully registered.")
+        }
+        if (status == "logout") {
+            swal("Success", "You have successfully logged out", "success");
+            // alert("You have successfully registered.")
+        }
+        if (status == "unregistered") {
+            swal("Error", "You are not logged in", "error");
+        }
+        if (status == "servererror") {
+            swal("Error", "It is technical work on the site. Please try again.", "error");
+            //alert("It is technical work on the site. Please try again.")
+        }
+    } else {
+        if (status == "wrongPass") {
+            swal("Помилка", "Пароль невірний", "error");
+            // alert("You have successfully registered.")
+        }
+        if (status == "unexistedEmail") {
+            swal("Помилка", "Емейл ще не зареєстрований", "error");
+            // alert("You have successfully registered.")
+        }
+        if (status == "success") {
+            swal("Успіх", "Ви успішно увійшли", "success");
+            // alert("You have successfully registered.")
+        }
+        if (status == "logout") {
+            swal("Успіх", "Ви успішно вийшли", "success");
+            // alert("You have successfully registered.")
+        }
+        if (status == "unregistered") {
+            swal("Помилка", "Ви не увійшли", "error");
+        }
+        if (status == "servererror") {
+            swal("Помилка", "На сайті технічні роботи, спробуйте пізніше", "error");
+            //alert("It is technical work on the site. Please try again.")
+        }
     }
 </script>
 </body>
