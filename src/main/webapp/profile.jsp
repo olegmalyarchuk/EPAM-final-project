@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="customtag" prefix="custom" %>
 <html>
 <head>
     <title>Profile</title>
@@ -279,7 +280,8 @@
                             <td>${event.event_id}</td>
                             <td>${event.event_name_en}</td>
                             <td>${event.event_place_en}</td>
-                            <td>${event.event_date}</td>
+                            <td> <custom:dateFormatter date="${event.event_date}" format="dd-MM-yyyy HH:mm" /></td>
+<%--                            <td>${event.event_date}</td>--%>
                         </tr>
                     </c:forEach>
                     </tbody>
@@ -380,7 +382,7 @@
                         <td>${event.event_id}</td>
                         <td>${event.event_name_en}</td>
                         <td>${event.event_place_en}</td>
-                        <td>${event.event_date}</td>
+                        <td> <custom:dateFormatter date="${event.event_date}" format="dd-MM-yyyy HH:mm" /></td>
                         <td>${presense.get(pos)}</td>
                         <c:set var="pos" value="${pos+1}"/>
                     </tr>
@@ -391,6 +393,7 @@
 
         </p></c:otherwise>
     </c:choose>
+    <custom:copyright/>
 </div>
 
 <style type="text/css">

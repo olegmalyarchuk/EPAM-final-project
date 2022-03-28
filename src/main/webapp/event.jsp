@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="customtag" prefix="custom" %>
 <html>
 <head>
     <title>Event</title>
@@ -49,7 +50,7 @@
 <p class="fw-bold fs-6">Where ?</p>
 <p class="fw-normal fs-5">${event.event_place_en}</p>
 <p class="fw-bold fs-6">When ?</p>
-<p class="fw-normal fs-5">${event.event_date}</p>
+<p class="fw-normal fs-5"><custom:dateFormatter date="${event.event_date}" format="dd-MM-yyyy HH:mm" /></p>
 <c:set var="cntRows" value="${reports.size()}"/>
 <c:set var="pos" value="${0}"/>
 <c:choose>

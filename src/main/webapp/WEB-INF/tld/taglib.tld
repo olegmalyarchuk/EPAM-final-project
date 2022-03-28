@@ -2,17 +2,27 @@
 <taglib version="2.1" xmlns="http://java.sun.com/xml/ns/javaee"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd">
+
     <tlib-version>1.0</tlib-version>
     <short-name>custom</short-name>
-    <uri>/WEB-INF/tld/taglib</uri>
+    <uri>customtag</uri>
     <tag>
         <name>copyright</name>
         <tag-class>com.example.conference.tags.CopyrightTag</tag-class>
         <body-content>empty</body-content>
     </tag>
     <tag>
-        <name>dataformatter</name>
+        <name>dateFormatter</name>
         <tag-class>com.example.conference.tags.DataFormatterTag</tag-class>
         <body-content>empty</body-content>
+        <attribute>
+            <name>date</name>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>format</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
     </tag>
 </taglib>
