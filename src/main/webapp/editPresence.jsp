@@ -55,7 +55,13 @@
     <c:forEach var="event_user" items="${event_users}">
         <tr>
             <td>${event_user.user_id}</td>
-            <td>${event_user.present}</td>
+            <td>
+                <c:choose>
+                    <c:when test="${event_user.present==true}">Present</c:when>
+                    <c:otherwise>Registered</c:otherwise>
+                </c:choose>
+
+            </td>
             <td>
                 <a href="setPresence?user_id=${event_user.user_id}&event_id=${event_id}&presence=yes" class="btn btn-success">Present</a>
                 <a href="setPresence?user_id=${event_user.user_id}&event_id=${event_id}&presence=no" class="btn btn-success">Registered</a>
@@ -63,5 +69,28 @@
     </c:forEach>
     </tbody>
 </table>
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+     <c:choose>
+         <c:when test="${prevDisabled}">
+         <li class="page-item disabled">
+             <a class="page-link" href="#" tabindex="-1">Previous</a>
+         </li>
+       </c:when>
+         <c:otherwise> <li class="page-item"><a class="page-link" href="editPresence?page=${page-1}&event_id=${event_id}">Previous</a></li></c:otherwise>
+     </c:choose>
+        <li class="page-item"><a class="page-link" href="editPresence?page=1&event_id=${event_id}">1</a></li>
+        <li class="page-item"><a class="page-link" href="editPresence?page=2&event_id=${event_id}">2</a></li>
+        <li class="page-item"><a class="page-link" href="editPresence?page=3&event_id=${event_id}">3</a></li>
+        <c:choose>
+            <c:when test="${nextDisabled}">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Next</a>
+                </li>
+            </c:when>
+            <c:otherwise> <li class="page-item"><a class="page-link" href="editPresence?page=${page+1}&event_id=${event_id}">Next</a></li></c:otherwise>
+        </c:choose>
+    </ul>
+</nav>
 </body>
 </html>
