@@ -5,6 +5,7 @@ import com.example.conference.exceptions.DBException;
 import com.example.conference.service.IUserService;
 import com.example.conference.service.ServiceFactory;
 import com.example.conference.validator.Validator;
+import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,8 +16,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ *
+ *Servlet for login action
+ *
+ */
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
+    private static final Logger log = Logger.getLogger(LoginServlet.class);
     public static final long serialVersionUID = 123488252L;
     IUserService service = ServiceFactory.getInstance().getUserService();
 
@@ -31,7 +38,7 @@ public class LoginServlet extends HttpServlet {
         try {
             isRegistered = service.calculateRowsBy("user_email", email);
         } catch (DBException e) {
-            //e.printStackTrace();
+            log.error(e);
         }
         if(isRegistered!=0) {
             //registered
@@ -51,6 +58,7 @@ public class LoginServlet extends HttpServlet {
                 resp.sendRedirect("listEvent");
                // dispatcher = req.getRequestDispatcher("/listEvent");
 //                req.setAttribute("status", "successLogin");
+                log.info("logged in");
             } else {
                 //wrong passowrd
                 req.setAttribute("status", "wrongPass");

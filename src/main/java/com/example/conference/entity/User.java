@@ -108,6 +108,53 @@ public class User implements Serializable {
         this.role_id = user_roles.getRole_id();
     }
 
+    public static class Builder {
+        private User newUser;
+
+        public Builder() {
+            newUser = new User();
+        }
+        public Builder withId(Integer id) {
+            newUser.id = id;
+            return this;
+        }
+        public Builder withRoleId(Integer roleId) {
+            newUser.role_id = roleId;
+            return this;
+        }
+        public Builder withName(String name) {
+            newUser.user_name = name;
+            return this;
+        }
+        public Builder withSurname(String surname) {
+            newUser.user_surname = surname;
+            return this;
+        }
+        public Builder withPassword(String password) {
+            newUser.user_password = password;
+            return this;
+        }
+        public Builder withEmail(String email) {
+            newUser.user_email = email;
+            return this;
+        }
+        public Builder withPhone(String phone) {
+            newUser.user_phone = phone;
+            return this;
+        }
+        public Builder withAddress(String address) {
+            newUser.user_address = address;
+            return this;
+        }
+        public Builder withPhoto(String photo) {
+            newUser.user_photo_url = photo;
+            return this;
+        }
+        public User build() {
+            return newUser;
+        }
+    }
+
     @Override
     public String toString() {
         return "User{" +

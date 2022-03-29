@@ -8,11 +8,13 @@ import com.example.conference.entity.Speaker_preposition;
 import com.example.conference.entity.User;
 import com.example.conference.exceptions.DBException;
 import com.example.conference.service.ISpeakerPrepositionService;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SpeakerPrepositionService implements ISpeakerPrepositionService {
+    private static final Logger log = Logger.getLogger(SpeakerPrepositionService.class);
     public static final DataBaseSelector source = DataBaseSelector.MY_SQL;
     private static DaoFactory daoFactory;
     public static ISpeakerPrepositionDao speakerPrepositionDao;
@@ -22,7 +24,7 @@ public class SpeakerPrepositionService implements ISpeakerPrepositionService {
             daoFactory = DaoFactory.getDaoFactory(source);
             speakerPrepositionDao = daoFactory.getSpeakerPrepositionDao();
         } catch (DBException e) {
-            //log
+            log.error(e);
         }
     }
 
@@ -35,7 +37,7 @@ public class SpeakerPrepositionService implements ISpeakerPrepositionService {
             result = speakerPrepositionDao.calculateSpeakerPrepositionNumber();
             daoFactory.commitTransaction();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return result;
     }
@@ -50,7 +52,7 @@ public class SpeakerPrepositionService implements ISpeakerPrepositionService {
             speakerPrepositions = speakerPrepositionDao.findAllSpeakerPrepositionInDB();
             daoFactory.close();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return speakerPrepositions;
     }
@@ -65,7 +67,7 @@ public class SpeakerPrepositionService implements ISpeakerPrepositionService {
             speakerPrepositions = speakerPrepositionDao.findUSpeakerPreposition(first, offset);
             daoFactory.close();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return speakerPrepositions;
     }
@@ -81,7 +83,7 @@ public class SpeakerPrepositionService implements ISpeakerPrepositionService {
             speakerPrepositions = speakerPrepositionDao.findAllByReportIdWithSpeaker(report_id);
             daoFactory.close();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return speakerPrepositions;
     }
@@ -96,7 +98,7 @@ public class SpeakerPrepositionService implements ISpeakerPrepositionService {
             ids = speakerPrepositionDao.findAllSpeakerProposedReportIdsForEvent(event_id, speaker_id);
             daoFactory.close();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return ids;
     }
@@ -110,7 +112,7 @@ public class SpeakerPrepositionService implements ISpeakerPrepositionService {
             result = speakerPrepositionDao.addSpeakerPrepositionToDB(speaker_preposition);
             daoFactory.commitTransaction();
         } catch (DBException e) {
-            // e.printStackTrace();
+            log.error(e);
             return false;
         }
         return result;
@@ -126,7 +128,7 @@ public class SpeakerPrepositionService implements ISpeakerPrepositionService {
             result = speakerPrepositionDao.updateSpeakerPrepositionInDB(speaker_preposition);
             daoFactory.commitTransaction();
         } catch (DBException e) {
-            // e.printStackTrace();
+            log.error(e);
             return false;
         }
         return result;
@@ -141,7 +143,7 @@ public class SpeakerPrepositionService implements ISpeakerPrepositionService {
             result = speakerPrepositionDao.deleteSpeakerPrepositionFromDB(id);
             daoFactory.commitTransaction();
         } catch (DBException e) {
-            // e.printStackTrace();
+            log.error(e);
             return false;
         }
         return result;
@@ -156,7 +158,7 @@ public class SpeakerPrepositionService implements ISpeakerPrepositionService {
             result = speakerPrepositionDao.deleteSpeakerPrepositionFromDB(role_id);
             daoFactory.commitTransaction();
         } catch (DBException e) {
-            // e.printStackTrace();
+            log.error(e);
             return false;
         }
         return result;

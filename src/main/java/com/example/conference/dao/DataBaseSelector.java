@@ -1,5 +1,10 @@
 package com.example.conference.dao;
 
+/**
+ *
+ *Selector database for DaoFactory
+ *
+ */
 public enum DataBaseSelector {
     MY_SQL {
         @Override

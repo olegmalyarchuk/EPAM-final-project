@@ -1,5 +1,7 @@
 package com.example.conference.controller;
 
+import org.apache.log4j.Logger;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,8 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ *
+ *Servlet for logout action
+ *
+ */
 @WebServlet("/logout")
 public class LogoutServlet extends HttpServlet {
+    private static final Logger log = Logger.getLogger(LogoutServlet.class);
     public static final long serialVersionUID = 123488652L;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -22,6 +30,7 @@ public class LogoutServlet extends HttpServlet {
         session.invalidate();
         dispatcher = req.getRequestDispatcher("/login.jsp");
         req.setAttribute("status", "logout");
+        log.info("logged out");
         dispatcher.forward(req, resp);
     }
 }

@@ -8,11 +8,13 @@ import com.example.conference.entity.Report_preposition;
 import com.example.conference.entity.User;
 import com.example.conference.exceptions.DBException;
 import com.example.conference.service.IReportPrepositionService;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ReportPrepositionService implements IReportPrepositionService {
+    private static final Logger log = Logger.getLogger(ReportPrepositionService.class);
     public static final DataBaseSelector source = DataBaseSelector.MY_SQL;
     private static DaoFactory daoFactory;
     public static IReportPrepositionDao reportPrepositionDao;
@@ -22,7 +24,7 @@ public class ReportPrepositionService implements IReportPrepositionService {
             daoFactory = DaoFactory.getDaoFactory(source);
             reportPrepositionDao = daoFactory.getReportPrepositionDao();
         } catch (DBException e) {
-            //log
+            log.error(e);
         }
     }
 
@@ -35,7 +37,7 @@ public class ReportPrepositionService implements IReportPrepositionService {
             result = reportPrepositionDao.calculateReportPrepositionNumber();
             daoFactory.commitTransaction();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return result;
     }
@@ -50,7 +52,7 @@ public class ReportPrepositionService implements IReportPrepositionService {
             report_prepositions = reportPrepositionDao.findAllReportPrepositionInDB();
             daoFactory.close();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return report_prepositions;
     }
@@ -65,7 +67,7 @@ public class ReportPrepositionService implements IReportPrepositionService {
             report_prepositions = reportPrepositionDao.findReportPreposition(first, offset);
             daoFactory.close();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return report_prepositions;
     }
@@ -79,7 +81,7 @@ public class ReportPrepositionService implements IReportPrepositionService {
             result = reportPrepositionDao.addReportPrepositionToDB(report_preposition);
             daoFactory.commitTransaction();
         } catch (DBException e) {
-            // e.printStackTrace();
+            log.error(e);
             return false;
         }
         return result;
@@ -94,7 +96,7 @@ public class ReportPrepositionService implements IReportPrepositionService {
             result = reportPrepositionDao.updateReportPrepositionInDB(report_preposition);
             daoFactory.commitTransaction();
         } catch (DBException e) {
-            // e.printStackTrace();
+            log.error(e);
             return false;
         }
         return result;
@@ -109,7 +111,7 @@ public class ReportPrepositionService implements IReportPrepositionService {
             result = reportPrepositionDao.deleteReportPrepositionFromDB(report_preposition);
             daoFactory.commitTransaction();
         } catch (DBException e) {
-            // e.printStackTrace();
+            log.error(e);
             return false;
         }
         return result;
@@ -124,7 +126,7 @@ public class ReportPrepositionService implements IReportPrepositionService {
             result = reportPrepositionDao.createReportWithPropositionDeletion(id);
             daoFactory.commitTransaction();
         } catch (DBException e) {
-            // e.printStackTrace();
+            log.error(e);
             return false;
         }
         return result;

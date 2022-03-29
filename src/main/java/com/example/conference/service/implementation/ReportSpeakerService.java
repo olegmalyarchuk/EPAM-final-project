@@ -9,11 +9,13 @@ import com.example.conference.entity.Reports;
 import com.example.conference.entity.User;
 import com.example.conference.exceptions.DBException;
 import com.example.conference.service.IReportSpeakerService;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ReportSpeakerService implements IReportSpeakerService {
+    private static final Logger log = Logger.getLogger(ReportSpeakerService.class);
     public static final DataBaseSelector source = DataBaseSelector.MY_SQL;
     private static DaoFactory daoFactory;
     public static IReportSpeakerDao reportSpeakerDao;
@@ -23,7 +25,7 @@ public class ReportSpeakerService implements IReportSpeakerService {
             daoFactory = DaoFactory.getDaoFactory(source);
             reportSpeakerDao = daoFactory.getReportSpeakersDao();
         } catch (DBException e) {
-            //log
+            log.error(e);
         }
     }
 
@@ -36,7 +38,7 @@ public class ReportSpeakerService implements IReportSpeakerService {
             result = reportSpeakerDao.calculateReportSpeakerNumber();
             daoFactory.commitTransaction();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return result;
     }
@@ -51,7 +53,7 @@ public class ReportSpeakerService implements IReportSpeakerService {
             report_speakers = reportSpeakerDao.findAllReportSpeakersInDB();
             daoFactory.close();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return report_speakers;
     }
@@ -66,7 +68,7 @@ public class ReportSpeakerService implements IReportSpeakerService {
             report_speakers = reportSpeakerDao.findReportSpeaker(first, offset);
             daoFactory.close();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return report_speakers;
     }
@@ -80,7 +82,7 @@ public class ReportSpeakerService implements IReportSpeakerService {
             report_speakers = reportSpeakerDao.findReportById(id);
             daoFactory.close();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return report_speakers;
     }
@@ -94,7 +96,7 @@ public class ReportSpeakerService implements IReportSpeakerService {
             result = reportSpeakerDao.addReportSpeakersToDB(report_speakers);
             daoFactory.commitTransaction();
         } catch (DBException e) {
-            // e.printStackTrace();
+            log.error(e);
             return false;
         }
         return result;
@@ -109,7 +111,7 @@ public class ReportSpeakerService implements IReportSpeakerService {
             result = reportSpeakerDao.updateReportSpeakersInDB(report_speakers);
             daoFactory.commitTransaction();
         } catch (DBException e) {
-            // e.printStackTrace();
+            log.error(e);
             return false;
         }
         return result;
@@ -124,7 +126,7 @@ public class ReportSpeakerService implements IReportSpeakerService {
             result = reportSpeakerDao.deleteReportSpeakersFromDB(report_id);
             daoFactory.commitTransaction();
         } catch (DBException e) {
-            // e.printStackTrace();
+            log.error(e);
             return false;
         }
         return result;
@@ -139,7 +141,7 @@ public class ReportSpeakerService implements IReportSpeakerService {
             result = reportSpeakerDao.saveWithProposalsDeletion(reportTopicSpeaker);
             daoFactory.commitTransaction();
         } catch (DBException e) {
-            // e.printStackTrace();
+            log.error(e);
             return false;
         }
         return result;

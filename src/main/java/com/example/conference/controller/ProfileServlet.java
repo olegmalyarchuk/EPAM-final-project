@@ -8,6 +8,7 @@ import com.example.conference.exceptions.DBException;
 import com.example.conference.mail.GmailSender;
 import com.example.conference.service.*;
 import com.example.conference.validator.Validator;
+import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -22,8 +23,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ *
+ *Servlet for all action in profile
+ *
+ */
+
 @WebServlet(urlPatterns = {"/showProfile", "/editInfo", "/deleteUser", "/editUser", "/updateUser", "/rejectSpeakerFromModerator", "/acceptSpeakerFromModerator", "/rejectSpeakerForReport", "/rejectSpeakerReports", "/acceptSpeakerForReport", "/acceptSpeakerReports"})
 public class ProfileServlet extends HttpServlet {
+    private static final Logger log = Logger.getLogger(ProfileServlet.class);
     public static final long serialVersionUID = 123278492438L;
     IEventService service = ServiceFactory.getInstance().getEventService();
     IUserService userService = ServiceFactory.getInstance().getUserService();
@@ -155,7 +163,7 @@ public class ProfileServlet extends HttpServlet {
                     request.setAttribute("propReports", speakerReports);
                     request.setAttribute("Preps", allSpeakerPreps);
                 } catch (DBException e) {
-                    e.printStackTrace();
+                    log.error(e);
                 }
             } else if(prepositionStatus.equals("forEvent")) {
                     try {
@@ -173,7 +181,7 @@ public class ProfileServlet extends HttpServlet {
                         request.setAttribute("propReports", forReports);
                         request.setAttribute("Preps", allReportPreps);
                     } catch (DBException e) {
-                        e.printStackTrace();
+                        log.error(e);
                     }
             }
 
@@ -274,7 +282,7 @@ public class ProfileServlet extends HttpServlet {
                     request.setAttribute("propReports", speakerReports);
                    request.setAttribute("speakerPreps", speakerPreps);
                 } catch (DBException e) {
-                    e.printStackTrace();
+                    log.error(e);
                 }
             } else if(prepositionStatus.equals("forEvent")) {
                 try {
@@ -330,7 +338,7 @@ public class ProfileServlet extends HttpServlet {
                 request.setAttribute("events", events);
                 request.setAttribute("presense", presense);
             } catch (DBException e) {
-                e.printStackTrace();
+                log.error(e);
             }
 
 
@@ -340,9 +348,9 @@ public class ProfileServlet extends HttpServlet {
         try {
             dispatcher.forward(request, response);
         } catch (ServletException e) {
-            e.printStackTrace();
+            log.error(e);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 
@@ -383,7 +391,7 @@ public class ProfileServlet extends HttpServlet {
                 }
             }
         } catch (DBException e) {
-            //e.printStackTrace();
+            log.error(e);
         }
 
         //empty
@@ -481,7 +489,7 @@ public class ProfileServlet extends HttpServlet {
         try {
             response.sendRedirect("showProfile");
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 
@@ -495,7 +503,7 @@ public class ProfileServlet extends HttpServlet {
         try {
             response.sendRedirect("showProfile");
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 
@@ -506,7 +514,7 @@ public class ProfileServlet extends HttpServlet {
         try {
             response.sendRedirect("showProfile");
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 
@@ -519,7 +527,7 @@ public class ProfileServlet extends HttpServlet {
         try {
             response.sendRedirect("showProfile");
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 
@@ -532,9 +540,9 @@ public class ProfileServlet extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("editUserForm.jsp");
             dispatcher.forward(request, response);
         } catch (ServletException e) {
-            e.printStackTrace();
+            log.error(e);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 
@@ -569,7 +577,7 @@ public class ProfileServlet extends HttpServlet {
                 }
             }
         } catch (DBException e) {
-            //e.printStackTrace();
+            log.error(e);
         }
 
 
@@ -660,7 +668,7 @@ public class ProfileServlet extends HttpServlet {
             userService.deleteUserFromDB(u);
             response.sendRedirect("showProfile");
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 
@@ -676,7 +684,7 @@ public class ProfileServlet extends HttpServlet {
         try {
             response.sendRedirect("showProfile");
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 
@@ -728,12 +736,12 @@ public class ProfileServlet extends HttpServlet {
             report_speakers.setSpeaker_id(speaker_id);
             reportSpeakerService.addReportSpeakersToDB(report_speakers);
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         try {
             response.sendRedirect("showProfile");
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 

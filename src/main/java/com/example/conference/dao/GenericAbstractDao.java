@@ -4,6 +4,7 @@ import com.example.conference.entity.Report_speakers;
 import com.example.conference.entity.User;
 import com.example.conference.exceptions.DBException;
 import com.example.conference.exceptions.Messages;
+import org.apache.log4j.Logger;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
@@ -13,21 +14,29 @@ import java.util.List;
 
 import static com.example.conference.exceptions.Messages.ERR_CANNOT_FIND_BY_KEY;
 
+/**
+ *
+ *Common actions with db
+ *
+ */
 public class GenericAbstractDao<T> {
     private Mapper<T, PreparedStatement> mapperToDB;
     private Mapper<ResultSet, T> mapperFromDB;
 
+    private static final Logger log = Logger.getLogger(GenericAbstractDao.class);
+
     protected GenericAbstractDao() {
     }
-
+    /**Converts data into sql query**/
     protected void setMapperToDB(Mapper<T, PreparedStatement> mapperToDB) {
         this.mapperToDB = mapperToDB;
     }
-
+    /**Converts sql query result into data**/
     protected void setMapperFromDB(Mapper<ResultSet, T> mapperFromDB) {
         this.mapperFromDB = mapperFromDB;
     }
 
+    /**Find all query in db**/
     protected List<T> findAll(Connection connection, Class t, String SQL_getAll) throws DBException {
         List<T> items = new LinkedList<>();
         try {
@@ -39,11 +48,12 @@ public class GenericAbstractDao<T> {
                 items.add(item);
             }
         } catch (SQLException sqle) {
+            log.error(sqle);
             throw new DBException(Messages.ERR_CANNOT_FIND_BY_KEY, sqle);
         }
         return items;
     }
-
+    /**Find all with limit query in db**/
     protected List<T> findAllFromTo(Connection connection, Class t, Integer first, Integer offset, String SQL_getAll_base)
             throws DBException {
         List<T> items = new LinkedList<>();
@@ -56,11 +66,13 @@ public class GenericAbstractDao<T> {
                 items.add(item);
             }
         } catch (SQLException sqle) {
+            log.error(sqle);
             throw new DBException(Messages.ERR_CANNOT_FIND_BY_KEY, sqle);
         }
         return items;
     }
 
+    /**Find by query in db**/
     protected <V> T findBy(Connection connection, Class t, String SQL_selectByParameter, V value)
             throws DBException {
         T item = getItemInstance(t);
@@ -73,12 +85,13 @@ public class GenericAbstractDao<T> {
             else
                 return null;
         } catch (SQLException sqle) {
+            log.error(sqle);
             return null;
-           // log.error(sqle);
         }
         return item;
     }
 
+    /**Find as list query in db**/
     protected <V> List<T> findAsListBy(Connection connection, Class t, String SQL_selectByParameter, V value)
             throws DBException {
         List<T> items = new LinkedList<>();
@@ -92,12 +105,13 @@ public class GenericAbstractDao<T> {
                 items.add(item);
             }
         } catch (SQLException sqle) {
-          //  log.error(sqle);
+            log.error(sqle);
             throw new DBException(ERR_CANNOT_FIND_BY_KEY, sqle);
         }
         return items;
     }
 
+    /**Add query in db**/
     protected boolean addToDB(Connection connection, T item, String SQL_addNew) {
         boolean result;
         try {
@@ -106,12 +120,13 @@ public class GenericAbstractDao<T> {
             result = preparedStatement.executeUpdate() > 0;
         } catch (SQLException sqle) {
             sqle.printStackTrace();
-            //log.error(sqle);
+            log.error(sqle);
             return false;
         }
         return result;
     }
 
+    /**Update query in db**/
     protected <V> boolean updateInDB(Connection connection, T item, String SQL_update, Integer paramNum, V value) {
         boolean result;
         try {
@@ -120,12 +135,13 @@ public class GenericAbstractDao<T> {
             addParameterToPreparedStatement(preparedStatement, paramNum, value);
             result = preparedStatement.executeUpdate() > 0;
         } catch (SQLException sqle) {
-           // log.error(sqle);
+            log.error(sqle);
             return false;
         }
         return result;
     }
 
+    /**Delete query in db**/
     protected <V> boolean deleteFromDB(Connection connection, String SQL_delete, V value) {
         boolean result;
         try {
@@ -133,7 +149,7 @@ public class GenericAbstractDao<T> {
             addParameterToPreparedStatement(preparedStatement, 1, value);
             result = preparedStatement.executeUpdate() > 0;
         } catch (SQLException sqle) {
-           // log.error(sqle);
+            log.error(sqle);
             return false;
         }
         return result;
@@ -149,6 +165,7 @@ public class GenericAbstractDao<T> {
                 result = resultSet.getInt("ROWCOUNT");
             }
         } catch (SQLException sqle) {
+            log.error(sqle);
             throw new DBException(ERR_CANNOT_FIND_BY_KEY, sqle);
         }
         return result;
@@ -160,10 +177,12 @@ public class GenericAbstractDao<T> {
         try {
             item = (T) t.newInstance();
         } catch (InstantiationException | IllegalAccessException ie) {
+            log.error(ie);
         }
         return item;
     }
 
+    /**Add paramenet to prepared statement**/
     private <V> void addParameterToPreparedStatement(PreparedStatement preparedStatement, Integer paramNum, V value)
             throws SQLException {
         if (value instanceof String)

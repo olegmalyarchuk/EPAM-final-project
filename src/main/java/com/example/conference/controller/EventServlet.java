@@ -7,6 +7,7 @@ import com.example.conference.entity.*;
 import com.example.conference.exceptions.DBException;
 import com.example.conference.mail.GmailSender;
 import com.example.conference.service.*;
+import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,8 +21,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ *
+ *Servlet for all action with event
+ *
+ */
 @WebServlet(urlPatterns = {"/newEvent","/insertEvent","/deleteEvent", "/editEvent", "/updateEvent", "/listEvent", "/eventEvent", "/proposeMe", "/editPresence", "/setPresence", "/setPreposition", "/proposeSpeaker", "/lang"})
 public class EventServlet extends HttpServlet {
+    private static final Logger log = Logger.getLogger(EventServlet.class);
     public static final long serialVersionUID = 1234882438L;
     IEventService service = ServiceFactory.getInstance().getEventService();
     IUserService userService = ServiceFactory.getInstance().getUserService();
@@ -111,11 +118,11 @@ public class EventServlet extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("event_list.jsp");
             dispatcher.forward(request, response);
         } catch (DBException e) {
-            e.printStackTrace();
+           log.error(e);
         } catch (ServletException e) {
-            e.printStackTrace();
+            log.error(e);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 
@@ -166,11 +173,11 @@ public class EventServlet extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("event.jsp");
             dispatcher.forward(request, response);
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         } catch (ServletException e) {
-            e.printStackTrace();
+            log.error(e);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 
@@ -185,9 +192,9 @@ public class EventServlet extends HttpServlet {
             dataforMailUpdate(id, lang);
             response.sendRedirect("listEvent");
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 
@@ -196,9 +203,9 @@ public class EventServlet extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("event_form.jsp");
             dispatcher.forward(request, response);
         }  catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         } catch (ServletException e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 
@@ -210,11 +217,11 @@ public class EventServlet extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("event_form.jsp");
             dispatcher.forward(request, response);
         } catch (ServletException e) {
-            e.printStackTrace();
+            log.error(e);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 
@@ -247,10 +254,8 @@ public class EventServlet extends HttpServlet {
             dataforMailUpdate(event_id, lang);
             response.sendRedirect("listEvent");
         } catch (IOException | DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
-
-
     }
 
     private void insertUser(HttpServletRequest request, HttpServletResponse response) {
@@ -283,7 +288,7 @@ public class EventServlet extends HttpServlet {
             dataforMailUpdate(event_id, lang);
             response.sendRedirect("listEvent");
         } catch (IOException | DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
 
     }
@@ -330,9 +335,9 @@ public class EventServlet extends HttpServlet {
             speakerPrepositionService.addSpeakerPrepositionToDB(sp);
             response.sendRedirect("listEvent");
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         }
 
     }
@@ -383,11 +388,11 @@ public class EventServlet extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("editPresence.jsp");
             dispatcher.forward(request, response);
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         } catch (ServletException e) {
-            e.printStackTrace();
+            log.error(e);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 
@@ -405,7 +410,7 @@ public class EventServlet extends HttpServlet {
         try {
             response.sendRedirect("editPresence?event_id="+event_id);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 
@@ -424,9 +429,9 @@ public class EventServlet extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("moderatorPrepositionForm.jsp");
             dispatcher.forward(request, response);
         } catch (ServletException e) {
-            e.printStackTrace();
+            log.error(e);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 
@@ -442,9 +447,9 @@ public class EventServlet extends HttpServlet {
             moderatorPrepositionService.addModeratorPrepositionToDB(mp);
             response.sendRedirect("proposeSpeaker?report_id="+report_id);
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 
@@ -455,7 +460,7 @@ public class EventServlet extends HttpServlet {
         try {
             response.sendRedirect("/listEvent");
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 

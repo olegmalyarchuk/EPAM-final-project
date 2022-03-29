@@ -7,6 +7,7 @@ import com.example.conference.entity.*;
 import com.example.conference.exceptions.DBException;
 import com.example.conference.mail.GmailSender;
 import com.example.conference.service.*;
+import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,8 +21,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ *
+ *Servlet for all action with report
+ *
+ */
+
 @WebServlet(urlPatterns = {"/newReport","/deleteReport", "/editReport", "/updateReport", "/listReport", "/proposeReport", "/addReportPropose", "/addReport", "/insertReport", "/registerUser", "/excludeUser"})
 public class ReportServlet extends HttpServlet{
+    private static final Logger log = Logger.getLogger(ReportServlet.class);
     public static final long serialVersionUID = 123478392438L;
     IEventService service = ServiceFactory.getInstance().getEventService();
     IUserService userService = ServiceFactory.getInstance().getUserService();
@@ -84,11 +92,11 @@ public class ReportServlet extends HttpServlet{
             RequestDispatcher dispatcher = request.getRequestDispatcher("reportPropose_form.jsp");
             dispatcher.forward(request, response);
         }  catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         } catch (ServletException e) {
-            e.printStackTrace();
+            log.error(e);
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
     private void showAddReportForm(HttpServletRequest request, HttpServletResponse response) {
@@ -100,11 +108,11 @@ public class ReportServlet extends HttpServlet{
             RequestDispatcher dispatcher = request.getRequestDispatcher("reportAdd_form.jsp");
             dispatcher.forward(request, response);
         }  catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         } catch (ServletException e) {
-            e.printStackTrace();
+            log.error(e);
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 
@@ -141,7 +149,7 @@ public class ReportServlet extends HttpServlet{
             if(request.getSession().getAttribute("lang").equals("ua")) lang="ua";
             dataforMailUpdate(event_id, lang);
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         response.sendRedirect("listEvent");
     }
@@ -167,9 +175,9 @@ public class ReportServlet extends HttpServlet{
             else GmailSender.sendEventWelcome(email, user.getUser_name(), user.getUser_surname(), events.getEvent_place_en(), events.getEvent_date(), lang);
             response.sendRedirect("listEvent");
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 
@@ -189,9 +197,9 @@ public class ReportServlet extends HttpServlet{
             eventUsersService.deleteEventUsersFromDB(event_users);
             response.sendRedirect("/listEvent");
         }  catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 
@@ -229,9 +237,9 @@ public class ReportServlet extends HttpServlet{
             reportService.deleteReportFromDB(r);
             response.sendRedirect("/listEvent");
         }  catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 
@@ -244,9 +252,9 @@ public class ReportServlet extends HttpServlet{
             RequestDispatcher dispatcher = request.getRequestDispatcher("reportUpdate_form.jsp");
             dispatcher.forward(request, response);
         } catch (ServletException e) {
-            e.printStackTrace();
+            log.error(e);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 
@@ -267,7 +275,7 @@ public class ReportServlet extends HttpServlet{
             dataforMailUpdate(event_id, lang);
             response.sendRedirect("listEvent");
         } catch (IOException | DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 

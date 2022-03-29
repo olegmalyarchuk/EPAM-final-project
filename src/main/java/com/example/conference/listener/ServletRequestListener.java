@@ -1,5 +1,7 @@
 package com.example.conference.listener;
 
+import org.apache.log4j.Logger;
+
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletRequestEvent;
 import javax.servlet.annotation.WebListener;
@@ -11,15 +13,14 @@ import javax.servlet.annotation.WebListener;
 
 @WebListener
 public class ServletRequestListener implements javax.servlet.ServletRequestListener {
+    private static final Logger log = Logger.getLogger(ServletRequestListener.class);
     public void requestDestroyed(ServletRequestEvent servletRequestEvent) {
         ServletRequest servletRequest = servletRequestEvent.getServletRequest();
-        //log
-        //System.out.println("ServletRequest destroyed. Remote IP="+servletRequest.getRemoteAddr());
+        log.trace("ServletRequest destroyed. Remote IP="+servletRequest.getRemoteAddr());
     }
 
     public void requestInitialized(ServletRequestEvent servletRequestEvent) {
         ServletRequest servletRequest = servletRequestEvent.getServletRequest();
-        //log
-        //System.out.println("ServletRequest initialized. Remote IP="+servletRequest.getRemoteAddr());
+        log.trace("ServletRequest initialized. Remote IP="+servletRequest.getRemoteAddr());
     }
 }

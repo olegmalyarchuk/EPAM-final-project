@@ -9,11 +9,13 @@ import com.example.conference.entity.Events;
 import com.example.conference.entity.User;
 import com.example.conference.exceptions.DBException;
 import com.example.conference.service.IEventUsersService;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class EventUsersService implements IEventUsersService {
+    private static final Logger log = Logger.getLogger(EventUsersService.class);
     public static final DataBaseSelector source = DataBaseSelector.MY_SQL;
     private static DaoFactory daoFactory;
     public static IEventUsersDao eventUsersDao;
@@ -23,7 +25,7 @@ public class EventUsersService implements IEventUsersService {
             daoFactory = DaoFactory.getDaoFactory(source);
             eventUsersDao = daoFactory.getEventUsersDao();
         } catch (DBException e) {
-            //log
+            log.error(e);
         }
     }
 
@@ -36,7 +38,7 @@ public class EventUsersService implements IEventUsersService {
             result = eventUsersDao.calculateEventUsersNumber();
             daoFactory.commitTransaction();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return result;
     }
@@ -50,7 +52,7 @@ public class EventUsersService implements IEventUsersService {
             events = eventUsersDao.findByUserIdAndEventId(user_id, event_id);
             daoFactory.close();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return events;
     }
@@ -66,7 +68,7 @@ public class EventUsersService implements IEventUsersService {
             eventUsers = eventUsersDao.findAllEventUsersInDB();
             daoFactory.close();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return eventUsers;
     }
@@ -81,7 +83,7 @@ public class EventUsersService implements IEventUsersService {
             eventUsers = eventUsersDao.findEventUsers(first, offset);
             daoFactory.close();
         } catch (DBException e) {
-            e.printStackTrace();
+             log.error(e);
         }
         return eventUsers;
     }
@@ -96,7 +98,7 @@ public class EventUsersService implements IEventUsersService {
             eventUsers = eventUsersDao.findUsersWithPresenceByEventId(event_id);
             daoFactory.close();
         } catch (DBException e) {
-            e.printStackTrace();
+             log.error(e);
         }
         return eventUsers;
     }
@@ -111,7 +113,7 @@ public class EventUsersService implements IEventUsersService {
             result = eventUsersDao.addEventUsersToDB(event_users);
             daoFactory.commitTransaction();
         } catch (DBException e) {
-            // e.printStackTrace();
+              log.error(e);
             return false;
         }
         return result;
@@ -126,7 +128,7 @@ public class EventUsersService implements IEventUsersService {
             result = eventUsersDao.updateEventUsersInDB(event_users);
             daoFactory.commitTransaction();
         } catch (DBException e) {
-            // e.printStackTrace();
+              log.error(e);
             return false;
         }
         return result;
@@ -141,7 +143,7 @@ public class EventUsersService implements IEventUsersService {
             result = eventUsersDao.deleteEventUsersFromDB(event_users);
             daoFactory.commitTransaction();
         } catch (DBException e) {
-            // e.printStackTrace();
+              log.error(e);
             return false;
         }
         return result;
@@ -156,7 +158,7 @@ public class EventUsersService implements IEventUsersService {
             result = eventUsersDao.updateUserPresenceByUserIdAndMeetingId(event_users);
             daoFactory.commitTransaction();
         } catch (DBException e) {
-            // e.printStackTrace();
+              log.error(e);
             return false;
         }
         return result;

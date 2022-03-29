@@ -6,6 +6,7 @@ import com.example.conference.mail.GmailSender;
 import com.example.conference.service.IUserService;
 import com.example.conference.service.ServiceFactory;
 import com.example.conference.validator.Validator;
+import org.apache.log4j.Logger;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -20,8 +21,15 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Properties;
 
+/**
+ *
+ *Servlet for register action
+ *
+ */
+
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
+    private static final Logger log = Logger.getLogger(RegisterServlet.class);
     public static final long serialVersionUID = 12353252L;
     IUserService service = ServiceFactory.getInstance().getUserService();
 
@@ -44,7 +52,7 @@ public class RegisterServlet extends HttpServlet {
            cntEmails = service.calculateRowsBy("user_email", email);
            cntPhones = service.calculateRowsBy("user_phone", phone);
         } catch (DBException e) {
-            //e.printStackTrace();
+            log.error(e);
         }
 
         //empty

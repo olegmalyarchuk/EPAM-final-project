@@ -8,11 +8,13 @@ import com.example.conference.entity.User;
 import com.example.conference.entity.User_roles;
 import com.example.conference.exceptions.DBException;
 import com.example.conference.service.IUserRolesService;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserRolesService implements IUserRolesService {
+    private static final Logger log = Logger.getLogger(UserRolesService.class);
     public static final DataBaseSelector source = DataBaseSelector.MY_SQL;
     private static DaoFactory daoFactory;
     public static IUserRolesDao userRolesDao;
@@ -22,7 +24,7 @@ public class UserRolesService implements IUserRolesService {
             daoFactory = DaoFactory.getDaoFactory(source);
             userRolesDao = daoFactory.getUserRolesDao();
         } catch (DBException e) {
-            //log
+             log.error(e);
         }
     }
 
@@ -35,7 +37,7 @@ public class UserRolesService implements IUserRolesService {
             result = userRolesDao.calculateUserRolesNumber();
             daoFactory.commitTransaction();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return result;
     }
@@ -50,7 +52,7 @@ public class UserRolesService implements IUserRolesService {
             user_roles = userRolesDao.findAllUserRolesInDB();
             daoFactory.close();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return user_roles;
     }
@@ -65,7 +67,7 @@ public class UserRolesService implements IUserRolesService {
             user_roles = userRolesDao.findUserRoles(first, offset);
             daoFactory.close();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return user_roles;
     }
@@ -79,7 +81,7 @@ public class UserRolesService implements IUserRolesService {
             result = userRolesDao.addUserRolesToDB(user_roles);
             daoFactory.commitTransaction();
         } catch (DBException e) {
-            // e.printStackTrace();
+            log.error(e);
             return false;
         }
         return result;
@@ -95,7 +97,7 @@ public class UserRolesService implements IUserRolesService {
             result = userRolesDao.updateUserRolesInDB(user_roles);
             daoFactory.commitTransaction();
         } catch (DBException e) {
-            // e.printStackTrace();
+            log.error(e);
             return false;
         }
         return result;
@@ -110,7 +112,7 @@ public class UserRolesService implements IUserRolesService {
             result = userRolesDao.deleteUserRolesFromDB(user_roles);
             daoFactory.commitTransaction();
         } catch (DBException e) {
-            // e.printStackTrace();
+            log.error(e);
             return false;
         }
         return result;
@@ -125,7 +127,7 @@ public class UserRolesService implements IUserRolesService {
             user_roles = userRolesDao.findByDescription(role_description);
             daoFactory.close();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return user_roles;
     }

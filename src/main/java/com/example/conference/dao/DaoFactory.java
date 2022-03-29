@@ -2,10 +2,11 @@ package com.example.conference.dao;
 
 import com.example.conference.exceptions.DBException;
 import com.example.conference.exceptions.Messages;
+import org.apache.log4j.Logger;
 
 public abstract class DaoFactory {
 
-   // private static final Logger log = Logger.getLogger(DaoFactory.class);
+     private static final Logger log = Logger.getLogger(DaoFactory.class);
 
     /** DAO Factory methods */
     /**
@@ -103,16 +104,16 @@ public abstract class DaoFactory {
             case MY_SQL:
                 return new MySQLDaoFactory();
             case MS_SQL:
-                // log.error("Database " + dataBase + " not supported yet");
+                 log.error("Database " + dataBase + " not supported yet");
                 throw new DBException(Messages.ERR_DATA_BASE_NOT_SUPPORTED);
             case ORACLE:
-                // log.error("Database " + dataBase + " not supported yet");
+                 log.error("Database " + dataBase + " not supported yet");
                 throw new DBException(Messages.ERR_DATA_BASE_NOT_SUPPORTED);
             case POSTGRESS:
-                // log.error("Database " + dataBase + " not supported yet");
+                 log.error("Database " + dataBase + " not supported yet");
                 throw new DBException(Messages.ERR_DATA_BASE_NOT_SUPPORTED);
             default:
-                // log.error("Database type not set");
+                 log.error("Database type not set");
                 throw new DBException("Database type not set");
 
         }

@@ -9,12 +9,14 @@ import com.example.conference.entity.Reports;
 import com.example.conference.entity.User;
 import com.example.conference.exceptions.DBException;
 import com.example.conference.service.IReportService;
+import org.apache.log4j.Logger;
 import org.w3c.dom.events.Event;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ReportService implements IReportService {
+    private static final Logger log = Logger.getLogger(ReportService.class);
     public static final DataBaseSelector source = DataBaseSelector.MY_SQL;
     private static DaoFactory daoFactory;
     public static IReportDao reportDao;
@@ -24,7 +26,7 @@ public class ReportService implements IReportService {
             daoFactory = DaoFactory.getDaoFactory(source);
             reportDao = daoFactory.getReportDao();
         } catch (DBException e) {
-            //log
+            log.error(e);
         }
     }
 
@@ -37,7 +39,7 @@ public class ReportService implements IReportService {
             result = reportDao.calculateReportsNumber();
             daoFactory.commitTransaction();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return result;
     }
@@ -52,7 +54,7 @@ public class ReportService implements IReportService {
             reports = reportDao.findAllReportsInDB();
             daoFactory.close();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return reports;
     }
@@ -67,7 +69,7 @@ public class ReportService implements IReportService {
             reports = reportDao.findReport(first, offset);
             daoFactory.close();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return reports;
     }
@@ -82,7 +84,7 @@ public class ReportService implements IReportService {
             reports = reportDao.findReportsByEvent(events);
             daoFactory.close();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return reports;
     }
@@ -96,7 +98,7 @@ public class ReportService implements IReportService {
             reports = reportDao.findReportsByReportId(report_id);
             daoFactory.close();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return reports;
     }
@@ -110,7 +112,7 @@ public class ReportService implements IReportService {
             result = reportDao.addReportToDB(reports);
             daoFactory.commitTransaction();
         } catch (DBException e) {
-            // e.printStackTrace();
+            log.error(e);
             return false;
         }
         return result;
@@ -125,7 +127,7 @@ public class ReportService implements IReportService {
             result = reportDao.updateReportInDB(reports);
             daoFactory.commitTransaction();
         } catch (DBException e) {
-            // e.printStackTrace();
+            log.error(e);
             return false;
         }
         return result;
@@ -140,7 +142,7 @@ public class ReportService implements IReportService {
             result = reportDao.deleteReportFromDB(reports);
             daoFactory.commitTransaction();
         } catch (DBException e) {
-            // e.printStackTrace();
+            log.error(e);
             return false;
         }
         return result;

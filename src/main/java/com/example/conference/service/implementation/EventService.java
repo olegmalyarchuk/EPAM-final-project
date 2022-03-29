@@ -8,12 +8,15 @@ import com.example.conference.entity.Events;
 import com.example.conference.entity.Reports;
 import com.example.conference.entity.User;
 import com.example.conference.exceptions.DBException;
+import com.example.conference.listener.AppContextAttributeListener;
 import com.example.conference.service.IEventService;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class EventService implements IEventService {
+    private static final Logger log = Logger.getLogger(EventService.class);
     public static final DataBaseSelector source = DataBaseSelector.MY_SQL;
     private static DaoFactory daoFactory;
     public static IEventDao eventDao;
@@ -23,7 +26,7 @@ public class EventService implements IEventService {
             daoFactory = DaoFactory.getDaoFactory(source);
             eventDao = daoFactory.getEventDao();
         } catch (DBException e) {
-            //log
+            log.error(e);
         }
     }
 
@@ -36,7 +39,7 @@ public class EventService implements IEventService {
             result = eventDao.calculateEventNumber();
             daoFactory.commitTransaction();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return result;
     }
@@ -50,7 +53,7 @@ public class EventService implements IEventService {
             result = eventDao.calculateRegistered(event_id);
             daoFactory.commitTransaction();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return result;
     }
@@ -64,7 +67,7 @@ public class EventService implements IEventService {
             result = eventDao.calculatePresent(event_id);
             daoFactory.commitTransaction();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return result;
     }
@@ -79,7 +82,7 @@ public class EventService implements IEventService {
             reports = eventDao.findAllReports(event_id);
             daoFactory.close();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return reports;
     }
@@ -94,7 +97,7 @@ public class EventService implements IEventService {
             events = eventDao.findAllEventsInDB();
             daoFactory.close();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return events;
     }
@@ -109,7 +112,7 @@ public class EventService implements IEventService {
             events = eventDao.findEvents(first, offset);
             daoFactory.close();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return events;
     }
@@ -124,7 +127,7 @@ public class EventService implements IEventService {
             events = eventDao.findEventsByPlaceUa(event_place_ua);
             daoFactory.close();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return events;
     }
@@ -139,7 +142,7 @@ public class EventService implements IEventService {
             events = eventDao.findEventsByPlaceEn(event_place_en);
             daoFactory.close();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return events;
     }
@@ -153,7 +156,7 @@ public class EventService implements IEventService {
             events = eventDao.findEventsById(id);
             daoFactory.close();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return events;
     }
@@ -168,7 +171,7 @@ public class EventService implements IEventService {
             result = eventDao.addEventsToDB(events);
             daoFactory.commitTransaction();
         } catch (DBException e) {
-            // e.printStackTrace();
+            log.error(e);
             return false;
         }
         return result;
@@ -184,7 +187,7 @@ public class EventService implements IEventService {
             result = eventDao.updateEventsInDB(events);
             daoFactory.commitTransaction();
         } catch (DBException e) {
-            // e.printStackTrace();
+            log.error(e);
             return false;
         }
         return result;
@@ -199,7 +202,7 @@ public class EventService implements IEventService {
             result = eventDao.deleteEventsByIdFromDB(id);
             daoFactory.commitTransaction();
         } catch (DBException e) {
-            // e.printStackTrace();
+            log.error(e);
             return false;
         }
         return result;
@@ -214,7 +217,7 @@ public class EventService implements IEventService {
             result = eventDao.updateMeetingEditableData(events);
             daoFactory.commitTransaction();
         } catch (DBException e) {
-            // e.printStackTrace();
+            log.error(e);
             return false;
         }
         return result;

@@ -7,11 +7,13 @@ import com.example.conference.entity.User;
 import com.example.conference.entity.User_roles;
 import com.example.conference.exceptions.DBException;
 import com.example.conference.service.IUserService;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserService implements IUserService {
+    private static final Logger log = Logger.getLogger(UserService.class);
     public static final DataBaseSelector source = DataBaseSelector.MY_SQL;
     private static DaoFactory daoFactory;
     public static IUserDao userDao;
@@ -21,7 +23,7 @@ public class UserService implements IUserService {
             daoFactory = DaoFactory.getDaoFactory(source);
             userDao = daoFactory.getUserDao();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 
@@ -34,7 +36,7 @@ public class UserService implements IUserService {
             result = userDao.calculateUsersNumber();
             daoFactory.commitTransaction();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return result;
     }
@@ -48,7 +50,7 @@ public class UserService implements IUserService {
             result = userDao.calculateRowsBy(param, value);
             daoFactory.commitTransaction();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return result;
     }
@@ -63,7 +65,7 @@ public class UserService implements IUserService {
             users = userDao.findAllUsersInDB();
             daoFactory.close();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return users;
     }
@@ -78,7 +80,7 @@ public class UserService implements IUserService {
             users = userDao.findUsers(first, offset);
             daoFactory.close();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return users;
     }
@@ -93,7 +95,7 @@ public class UserService implements IUserService {
             users = userDao.findUserByRole(user_roles);
             daoFactory.close();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return users;
     }
@@ -107,7 +109,7 @@ public class UserService implements IUserService {
             user = userDao.findUserById(id);
             daoFactory.close();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return user;
     }
@@ -121,7 +123,7 @@ public class UserService implements IUserService {
             user = userDao.findUserByEmail(email);
             daoFactory.close();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return user;
     }
@@ -135,7 +137,7 @@ public class UserService implements IUserService {
             result = userDao.addUserToDB(user);
             daoFactory.commitTransaction();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
             return false;
         }
         return result;
@@ -151,7 +153,7 @@ public class UserService implements IUserService {
             result = userDao.updateUserInDB(user);
             daoFactory.commitTransaction();
         } catch (DBException e) {
-            // e.printStackTrace();
+            log.error(e);
             return false;
         }
         return result;
@@ -166,7 +168,7 @@ public class UserService implements IUserService {
             result = userDao.deleteUserFromDB(user);
             daoFactory.commitTransaction();
         } catch (DBException e) {
-            // e.printStackTrace();
+            log.error(e);
             return false;
         }
         return result;
@@ -182,7 +184,7 @@ public class UserService implements IUserService {
             users = userDao.findAvailableSpeakersForPrepositionByReport(reportId);
             daoFactory.close();
         } catch (DBException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return users;
     }
@@ -196,7 +198,7 @@ public class UserService implements IUserService {
             result = userDao.updateUserImagePath(user);
             daoFactory.commitTransaction();
         } catch (DBException e) {
-            // e.printStackTrace();
+            log.error(e);
             return false;
         }
         return result;
