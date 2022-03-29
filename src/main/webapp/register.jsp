@@ -27,7 +27,7 @@
 %>
 <input type="hidden" id="status" value="<%=request.getAttribute("status")%>">
 <input type="hidden" id="statusSession" value="<%=session.getAttribute("status")%>">
-<input type="hidden" id="lang" value="${sessionScope.lang}">
+<input type="hidden" id="lang" value="<%=request.getSession().getAttribute("lang")%>">
 <div class="main">
     <section class="signup">
         <div class="container">

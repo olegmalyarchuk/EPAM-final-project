@@ -28,7 +28,7 @@
     }
 %>
 <input type="hidden" id="status" value="<%=session.getAttribute("status")%>">
-<input type="hidden" id="lang" value="${sessionScope.lang}">
+<input type="hidden" id="lang" value="<%=request.getSession().getAttribute("lang")%>">
 <header>
     <nav class="navbar navbar-expand-md navbar-dark"
          style="background-color: #0074D9">

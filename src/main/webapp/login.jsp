@@ -27,7 +27,7 @@
 %>
 <input type="hidden" id="status" value="<%=request.getAttribute("status")%>">
 <input type="hidden" id="statusSession" value="<%=session.getAttribute("status")%>">
-<input type="hidden" id="lang" value="${sessionScope.lang}">
+<input type="hidden" id="lang" value="<%=request.getSession().getAttribute("lang")%>">
 <div class="main">
     <!-- Sing in  Form -->
     <section class="sign-in">
@@ -66,7 +66,6 @@
 <script type="text/javascript">
     var status = document.getElementById("status").value;
     var lang = document.getElementById("lang").value;
-    if(lang=="en") {
         if (status == "wrongPass") {
             swal("Error", "The password is wrong.", "error");
             // alert("You have successfully registered.")
@@ -90,31 +89,31 @@
             swal("Error", "It is technical work on the site. Please try again.", "error");
             //alert("It is technical work on the site. Please try again.")
         }
-    } else {
-        if (status == "wrongPass") {
-            swal("Помилка", "Пароль невірний", "error");
-            // alert("You have successfully registered.")
-        }
-        if (status == "unexistedEmail") {
-            swal("Помилка", "Емейл ще не зареєстрований", "error");
-            // alert("You have successfully registered.")
-        }
-        if (status == "success") {
-            swal("Успіх", "Ви успішно увійшли", "success");
-            // alert("You have successfully registered.")
-        }
-        if (status == "logout") {
-            swal("Успіх", "Ви успішно вийшли", "success");
-            // alert("You have successfully registered.")
-        }
-        if (status == "unregistered") {
-            swal("Помилка", "Ви не увійшли", "error");
-        }
-        if (status == "servererror") {
-            swal("Помилка", "На сайті технічні роботи, спробуйте пізніше", "error");
-            //alert("It is technical work on the site. Please try again.")
-        }
-    }
+    // // } else {
+    // //     if (status == "wrongPass") {
+    // //         swal("Помилка", "Пароль невірний", "error");
+    // //         // alert("You have successfully registered.")
+    // //     }
+    // //     if (status == "unexistedEmail") {
+    // //         swal("Помилка", "Емейл ще не зареєстрований", "error");
+    // //         // alert("You have successfully registered.")
+    // //     }
+    // //     if (status == "success") {
+    // //         swal("Успіх", "Ви успішно увійшли", "success");
+    // //         // alert("You have successfully registered.")
+    // //     }
+    // //     if (status == "logout") {
+    // //         swal("Успіх", "Ви успішно вийшли", "success");
+    // //         // alert("You have successfully registered.")
+    // //     }
+    // //     if (status == "unregistered") {
+    // //         swal("Помилка", "Ви не увійшли", "error");
+    // //     }
+    // //     if (status == "servererror") {
+    // //         swal("Помилка", "На сайті технічні роботи, спробуйте пізніше", "error");
+    // //         //alert("It is technical work on the site. Please try again.")
+    // //     }
+    // }
 </script>
 </body>
 </html>

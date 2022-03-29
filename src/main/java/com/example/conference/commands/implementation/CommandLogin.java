@@ -1,34 +1,25 @@
-package com.example.conference.controller;
+package com.example.conference.commands.implementation;
 
+import com.example.conference.commands.ICommand;
 import com.example.conference.entity.User;
 import com.example.conference.exceptions.DBException;
 import com.example.conference.service.IUserService;
 import com.example.conference.service.ServiceFactory;
-import com.example.conference.validator.Validator;
 import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-/**
- *
- *Servlet for login action
- *
- */
-@WebServlet("/login")
-public class LoginServlet extends HttpServlet {
-    private static final Logger log = Logger.getLogger(LoginServlet.class);
-    public static final long serialVersionUID = 123488252L;
+public class CommandLogin implements ICommand {
+    private static final Logger log = Logger.getLogger(CommandLogin.class);
     IUserService service = ServiceFactory.getInstance().getUserService();
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void execute(HttpServletRequest req, HttpServletResponse resp) {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
         HttpSession session = req.getSession();
@@ -54,23 +45,38 @@ public class LoginServlet extends HttpServlet {
                 session.setAttribute("status", "successLogin");
                 session.setAttribute("user_id", u.getId());
                 session.setAttribute("lang", "en");
-              //  req.setAttribute("status", "successLogin");
-                resp.sendRedirect("listEvent");
-               // dispatcher = req.getRequestDispatcher("/listEvent");
+                //  req.setAttribute("status", "successLogin");
+                try {
+                    resp.sendRedirect("listEvent");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                // dispatcher = req.getRequestDispatcher("/listEvent");
 //                req.setAttribute("status", "successLogin");
                 log.info("logged in");
             } else {
                 //wrong passowrd
                 req.setAttribute("status", "wrongPass");
                 dispatcher = req.getRequestDispatcher("login.jsp");
-                dispatcher.forward(req, resp);
+                try {
+                    dispatcher.forward(req, resp);
+                } catch (ServletException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         } else {
             //user is not registered
             req.setAttribute("status", "unexistedEmail");
             dispatcher = req.getRequestDispatcher("login.jsp");
-            dispatcher.forward(req, resp);
+            try {
+                dispatcher.forward(req, resp);
+            } catch (ServletException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
-
-}
+    }

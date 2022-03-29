@@ -25,7 +25,7 @@
     }
 %>
 <input type="hidden" id="editStatus" value="<%=request.getAttribute("editStatus")%>">
-<input type="hidden" id="lang" value="${sessionScope.lang}">
+<input type="hidden" id="lang" value="<%=request.getSession().getAttribute("lang")%>">
 <c:choose>
     <c:when test="${sessionScope.role_id!=1}">
         <%response.sendRedirect("listEvent");%>
