@@ -22,7 +22,7 @@ public class EventUsersDaoImpl extends GenericAbstractDao<Event_users> implement
     public static final String SQL_SELECT_ALL = "select * from event_users order by id;";
     public static final String SQL_ADD_NEW = "INSERT INTO event_users VALUES(?, ?, ?, ?)";
     public static final String SQL_UPDATE_BY_ID = "UPDATE event_users set id=?, user_id=?, event_id=?, present=? where id=?;";
-    public static final String SQL_DELETE_BY_ID = "DELETE FROM event_users where id=?;";
+    public static final String SQL_DELETE_BY_ID = "DELETE FROM event_users where id=?";
     public static final String SQL_FIND_BY_ALL = "SELECT * FROM event_users WHERE user_id=? AND event_id=?";
     public static final String SQL_UPDATE_ALL  = "UPDATE event_users set present=? where user_id=? AND event_id=?;";
     public static final String SQL_FIND_USER_WITH_ROLE = "SELECT * FROM users u LEFT JOIN event_users um on um.user_id= u.user_id where um.event_id=? order by um.id;";

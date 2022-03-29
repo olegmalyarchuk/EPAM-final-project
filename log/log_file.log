@@ -1,0 +1,31 @@
+29-03-2022 19:09:43 ERROR MySQLDaoFactory.<init>, line 29 -> javax.naming.NoInitialContextException: Need to specify class name in environment or system property, or in an application resource file: java.naming.factory.initial
+29-03-2022 19:10:12 ERROR MySQLDaoFactory.<init>, line 29 -> javax.naming.NoInitialContextException: Need to specify class name in environment or system property, or in an application resource file: java.naming.factory.initial
+29-03-2022 19:10:54 ERROR MySQLDaoFactory.<init>, line 29 -> javax.naming.NoInitialContextException: Need to specify class name in environment or system property, or in an application resource file: java.naming.factory.initial
+29-03-2022 19:12:11 ERROR MySQLDaoFactory.<init>, line 29 -> javax.naming.NoInitialContextException: Need to specify class name in environment or system property, or in an application resource file: java.naming.factory.initial
+29-03-2022 19:56:57 ERROR MySQLDaoFactory.<init>, line 29 -> javax.naming.NoInitialContextException: Need to specify class name in environment or system property, or in an application resource file: java.naming.factory.initial
+29-03-2022 20:42:03 ERROR MySQLDaoFactory.<init>, line 29 -> javax.naming.NoInitialContextException: Need to specify class name in environment or system property, or in an application resource file: java.naming.factory.initial
+29-03-2022 20:43:23 ERROR MySQLDaoFactory.<init>, line 29 -> javax.naming.NoInitialContextException: Need to specify class name in environment or system property, or in an application resource file: java.naming.factory.initial
+29-03-2022 20:43:23 ERROR MySQLDaoFactory.<init>, line 29 -> javax.naming.NoInitialContextException: Need to specify class name in environment or system property, or in an application resource file: java.naming.factory.initial
+29-03-2022 21:30:21 ERROR MySQLDaoFactory.<init>, line 29 -> javax.naming.NoInitialContextException: Need to specify class name in environment or system property, or in an application resource file: java.naming.factory.initial
+29-03-2022 21:32:06 ERROR MySQLDaoFactory.<init>, line 29 -> javax.naming.NoInitialContextException: Need to specify class name in environment or system property, or in an application resource file: java.naming.factory.initial
+29-03-2022 21:32:06 ERROR MySQLDaoFactory.<init>, line 29 -> javax.naming.NoInitialContextException: Need to specify class name in environment or system property, or in an application resource file: java.naming.factory.initial
+29-03-2022 21:46:06 ERROR MySQLDaoFactory.<init>, line 29 -> javax.naming.NoInitialContextException: Need to specify class name in environment or system property, or in an application resource file: java.naming.factory.initial
+29-03-2022 22:34:15 ERROR GenericAbstractDao.addToDB, line 123 -> java.sql.SQLIntegrityConstraintViolationException: Duplicate entry '21' for key 'users.PRIMARY'
+29-03-2022 23:35:31 ERROR GenericAbstractDao.findAsListBy, line 108 -> java.sql.SQLException: No value specified for parameter 1
+29-03-2022 23:36:24 ERROR GenericAbstractDao.findAsListBy, line 108 -> java.sql.SQLException: No value specified for parameter 1
+29-03-2022 23:38:45 ERROR GenericAbstractDao.findAllFromTo, line 69 -> java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'limit 0, 1000' at line 1
+29-03-2022 23:40:39 ERROR GenericAbstractDao.addToDB, line 123 -> java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'test@gmail.com' for key 'users.user_email_UNIQUE'
+29-03-2022 23:54:08 ERROR GenericAbstractDao.addToDB, line 123 -> java.sql.SQLIntegrityConstraintViolationException: Column 'role_description' cannot be null
+30-03-2022 00:01:57 ERROR GenericAbstractDao.updateInDB, line 138 -> com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Truncated incorrect DOUBLE value: 'moderator'
+30-03-2022 00:03:13 ERROR GenericAbstractDao.updateInDB, line 138 -> com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Truncated incorrect DOUBLE value: 'moderator'
+30-03-2022 00:25:05 ERROR GenericAbstractDao.addToDB, line 123 -> java.sql.SQLIntegrityConstraintViolationException: Column 'report_name_ua' cannot be null
+30-03-2022 00:25:40 ERROR GenericAbstractDao.addToDB, line 123 -> java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`conference`.`reports`, CONSTRAINT `reports_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `events` (`event_id`) ON DELETE CASCADE ON UPDATE CASCADE)
+30-03-2022 00:35:05 ERROR GenericAbstractDao.addToDB, line 123 -> java.sql.SQLIntegrityConstraintViolationException: Column 'report_name_ua' cannot be null
+30-03-2022 00:35:20 ERROR GenericAbstractDao.updateInDB, line 138 -> java.sql.SQLException: Parameter index out of range (5 > number of parameters, which is 4).
+30-03-2022 00:37:18 ERROR GenericAbstractDao.updateInDB, line 138 -> java.sql.SQLException: Parameter index out of range (5 > number of parameters, which is 4).
+30-03-2022 00:54:02 ERROR GenericAbstractDao.addToDB, line 123 -> java.sql.SQLIntegrityConstraintViolationException: Duplicate entry '200' for key 'event_users.PRIMARY'
+30-03-2022 00:55:23 ERROR GenericAbstractDao.addToDB, line 123 -> java.sql.SQLIntegrityConstraintViolationException: Duplicate entry '200' for key 'event_users.PRIMARY'
+30-03-2022 00:57:11 ERROR GenericAbstractDao.addToDB, line 123 -> java.sql.SQLIntegrityConstraintViolationException: Duplicate entry '200' for key 'event_users.PRIMARY'
+30-03-2022 01:19:45 ERROR GenericAbstractDao.updateInDB, line 138 -> java.sql.SQLException: Parameter index out of range (5 > number of parameters, which is 4).
+30-03-2022 01:20:38 ERROR GenericAbstractDao.updateInDB, line 138 -> java.sql.SQLException: Parameter index out of range (5 > number of parameters, which is 4).
+30-03-2022 01:44:26 ERROR GenericAbstractDao.findAsListBy, line 108 -> java.sql.SQLException: No value specified for parameter 1
