@@ -1,6 +1,7 @@
 package com.example.conference.commands.implementation.profile;
 
 import com.example.conference.commands.ICommand;
+import com.example.conference.cryptor.PasswordCryptor;
 import com.example.conference.entity.User;
 import com.example.conference.exceptions.DBException;
 import com.example.conference.service.*;
@@ -12,6 +13,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.List;
 
 public class CommandEditInfo implements ICommand {
@@ -207,7 +210,15 @@ public class CommandEditInfo implements ICommand {
             newUser.setRole_id(role_id);
             newUser.setUser_name(name);
             newUser.setUser_surname(surname);
-            newUser.setUser_password(password);
+            String securedPassword = password;
+            try {
+                securedPassword = PasswordCryptor.generateStorngPasswordHash(password);
+            } catch (NoSuchAlgorithmException e) {
+                log.error(e);
+            } catch (InvalidKeySpecException e) {
+               log.error(e);
+            }
+            newUser.setUser_password(securedPassword);
             newUser.setUser_phone(phone);
             newUser.setUser_email(email);
             newUser.setUser_photo_url(user_photo_url);

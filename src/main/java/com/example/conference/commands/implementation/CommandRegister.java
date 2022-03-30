@@ -1,6 +1,7 @@
 package com.example.conference.commands.implementation;
 
 import com.example.conference.commands.ICommand;
+import com.example.conference.cryptor.PasswordCryptor;
 import com.example.conference.entity.User;
 import com.example.conference.exceptions.DBException;
 import com.example.conference.mail.GmailSender;
@@ -15,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 
 public class CommandRegister implements ICommand {
     private static final Logger log = Logger.getLogger(CommandLogin.class);
@@ -206,7 +209,16 @@ public class CommandRegister implements ICommand {
             newUser.setRole_id(role_id);
             newUser.setUser_name(firstName);
             newUser.setUser_surname(lastName);
-            newUser.setUser_password(password);
+            //crypting password
+            String securedPassword = password;
+            try {
+                securedPassword = PasswordCryptor.generateStorngPasswordHash(password);
+            } catch (NoSuchAlgorithmException e) {
+                log.error(e);
+            } catch (InvalidKeySpecException e) {
+                log.error(e);
+            }
+            newUser.setUser_password(securedPassword);
             newUser.setUser_phone(phone);
             newUser.setUser_email(email);
             newUser.setUser_photo_url(photo);

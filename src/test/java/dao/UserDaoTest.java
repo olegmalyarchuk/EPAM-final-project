@@ -39,6 +39,7 @@ public class UserDaoTest {
         u.setUser_email("test@gmail.com");
         u.setUser_photo_url("test.jpg");
         u.setUser_address("test");
+
         int cntRows = userDao.calculateUsersNumber();
         boolean result = userDao.addUserToDB(u);
         Assert.assertEquals(result, true);
