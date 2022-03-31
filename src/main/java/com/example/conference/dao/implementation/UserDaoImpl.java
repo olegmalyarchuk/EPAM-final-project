@@ -67,7 +67,7 @@ public class UserDaoImpl extends GenericAbstractDao<User> implements IUserDao {
 
     @Override
     public Integer calculateUsersNumber() throws DBException {
-        return calculateRowCounts(connection, "users");
+        return calculateRowCounts(connection, "users", "user_id");
     }
 
     @Override

@@ -44,7 +44,7 @@ public class ModeratorPrepositionDaoImpl extends GenericAbstractDao<Moderator_pr
 
     @Override
     public Integer calculateModeratorPrepositionNumber() throws DBException {
-        return calculateRowCounts(connection, "moderator_preposition");
+        return calculateRowCounts(connection, "moderator_preposition", "id");
     }
 
     @Override

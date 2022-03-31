@@ -17,16 +17,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </head>
 <body>
-<%
-    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");// HTTP 1.1
-    response.setHeader("Pragma", "no-cache"); // HTTP 1.0
-    response.setHeader("Expires", "0"); // Proxies
-    if(session.getAttribute("email")==null) {
-        request.setAttribute("status", "unregistered");
-        RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
-        dispatcher.forward(request, response);
-    }
-%>
 <input type="hidden" id="status" value="<%=session.getAttribute("status")%>">
 <input type="hidden" id="lang" value="<%=request.getSession().getAttribute("lang")%>">
 <header>

@@ -67,6 +67,7 @@ public interface IReportSpeakerDao {
      */
     boolean deleteReportSpeakersFromDB(Integer report_id);
 
+
     /**
      *     Saves {@link Report_speakers} to database and deletes all prepositions for assigned speaker
      * @param reportTopicSpeaker data which have to be saved

@@ -156,10 +156,10 @@ public class GenericAbstractDao<T> {
     }
 
     /** Method for table row count calculation. Used for pagination */
-    public Integer calculateRowCounts(Connection connection, String tableName) throws DBException {
+    public Integer calculateRowCounts(Connection connection, String tableName, String param) throws DBException {
         Integer result = 0;
         try {
-            PreparedStatement ps = connection.prepareStatement("SELECT COUNT(*) AS ROWCOUNT FROM " + tableName + ";");
+            PreparedStatement ps = connection.prepareStatement("SELECT " + param + " as ROWCOUNT FROM " + tableName +" order by " + param + " desc limit 1;");
             ResultSet resultSet = ps.executeQuery();
             if (resultSet.next()) {
                 result = resultSet.getInt("ROWCOUNT");

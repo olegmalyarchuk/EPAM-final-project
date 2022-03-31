@@ -263,7 +263,7 @@ public class CommandShowProfile implements ICommand {
                     if(eventStatus.equals("finished")) {
                         if(eventsRaw.get(i).isFinished()) events.add(eventsRaw.get(i));
                     } else if(eventStatus.equals("upcoming")) {
-                        if(eventsRaw.get(i).isFinished()) events.add(eventsRaw.get(i));
+                        if(!eventsRaw.get(i).isFinished()) events.add(eventsRaw.get(i));
                     } else if(eventStatus.equals("all")) {
                         events.add(eventsRaw.get(i));
                     }

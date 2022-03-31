@@ -48,7 +48,7 @@ public class ReportPrepositionDaoImpl extends GenericAbstractDao<Report_preposit
 
     @Override
     public Integer calculateReportPrepositionNumber() throws DBException {
-        return calculateRowCounts(connection, "report_preposition");
+        return calculateRowCounts(connection, "report_preposition", "id");
     }
 
     @Override

@@ -13,22 +13,6 @@
     <link rel="shortcut icon" href="/resources/images/logo.png" type="image/png">
 </head>
 <body>
-<%
-    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");// HTTP 1.1
-    response.setHeader("Pragma", "no-cache"); // HTTP 1.0
-    response.setHeader("Expires", "0"); // Proxies
-    if(session.getAttribute("email")==null) {
-        request.setAttribute("status", "unregistered");
-        RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
-        dispatcher.forward(request, response);
-    }
-%>
-<c:choose>
-    <c:when test="${sessionScope.role_id!=2}">
-        <% RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
-            dispatcher.forward(request, response);%>
-    </c:when>
-</c:choose>
 <header>
     <nav class="navbar navbar-expand-md navbar-dark"
          style="background-color: #0074D9">

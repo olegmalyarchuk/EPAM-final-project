@@ -25,7 +25,7 @@ public class CommandExcludeUser implements ICommand {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
         try {
-            Integer id = eventUsersService.calculateEventUsersNumber()+2;
+            Integer id = eventUsersService.calculateEventUsersNumber()+1;
             String email = request.getParameter("email");
             Integer event_id = Integer.valueOf(request.getParameter("event_id"));
             User user = userService.findUserByEmail(email);

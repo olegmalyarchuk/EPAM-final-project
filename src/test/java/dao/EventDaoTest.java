@@ -32,7 +32,8 @@ public class EventDaoTest {
     public void EventDaoTest() throws DBException {
         EventDaoImpl eventDao = new EventDaoImpl(connection);
         Events ev = new Events();
-        ev.setEvent_id(200);
+        Integer cntRow = eventDao.calculateEventNumber()+1;
+        ev.setEvent_id(cntRow);
        ev.setEvent_name_ua("test");
        ev.setEvent_name_en("test");
        ev.setEvent_place_ua("test");
@@ -41,7 +42,6 @@ public class EventDaoTest {
        ev.setEvent_description_en("test");
        ev.setEvent_date(LocalDateTime.now());
        ev.setEvent_photo_url("test.jpg");
-        Integer cntRow = eventDao.calculateEventNumber()+1;
         boolean result = eventDao.addEventsToDB(ev);
         Assert.assertTrue(result);
 
@@ -62,7 +62,7 @@ public class EventDaoTest {
         List<Events> places2 = eventDao.findEventsByPlaceUa("test");
         Assert.assertTrue(places1.size()>0);
 
-        Events event = eventDao.findEventsById(200);
+        Events event = eventDao.findEventsById(cntRow);
         Assert.assertTrue(event!=null);
 
         result = eventDao.updateEventsInDB(event);
@@ -74,7 +74,7 @@ public class EventDaoTest {
         List<Events> all = eventDao.findAllEventsInDB();
         Assert.assertTrue(all.size()>0);
 
-        result = eventDao.deleteEventsByIdFromDB(200);
+        result = eventDao.deleteEventsByIdFromDB(cntRow);
         Assert.assertTrue(result);
 
     }

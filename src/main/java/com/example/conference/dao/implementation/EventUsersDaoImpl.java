@@ -50,7 +50,7 @@ public class EventUsersDaoImpl extends GenericAbstractDao<Event_users> implement
 
     @Override
     public Integer calculateEventUsersNumber() throws DBException {
-        return calculateRowCounts(connection, "event_users");
+        return calculateRowCounts(connection, "event_users", "id");
     }
 
     @Override

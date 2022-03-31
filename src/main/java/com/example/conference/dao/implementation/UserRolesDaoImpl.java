@@ -43,7 +43,7 @@ public class UserRolesDaoImpl extends GenericAbstractDao<User_roles> implements 
 
     @Override
     public Integer calculateUserRolesNumber() throws DBException {
-        return calculateRowCounts(connection, "user_roles");
+        return calculateRowCounts(connection, "user_roles", "role_id");
     }
 
     @Override

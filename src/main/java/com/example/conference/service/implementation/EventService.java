@@ -131,7 +131,6 @@ public class EventService implements IEventService {
         }
         return events;
     }
-
     @Override
     public List<Events> findEventsByPlaceEn(String event_place_en) {
         List<Events> events = new ArrayList<>();

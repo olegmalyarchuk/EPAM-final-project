@@ -18,13 +18,6 @@
     <link rel="shortcut icon" href="/resources/images/logo.png" type="image/png">
 </head>
 <body>
-<%
-    if(session.getAttribute("email")!=null) {
-        session.setAttribute("status", "registered");
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/listEvent");
-       dispatcher.forward(request, response);
-    }
-%>
 <input type="hidden" id="status" value="<%=request.getAttribute("status")%>">
 <input type="hidden" id="statusSession" value="<%=session.getAttribute("status")%>">
 <input type="hidden" id="lang" value="<%=request.getSession().getAttribute("lang")%>">

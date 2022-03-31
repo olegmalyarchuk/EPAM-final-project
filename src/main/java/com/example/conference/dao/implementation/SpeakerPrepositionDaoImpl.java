@@ -49,7 +49,7 @@ public class SpeakerPrepositionDaoImpl extends GenericAbstractDao<Speaker_prepos
 
     @Override
     public Integer calculateSpeakerPrepositionNumber() throws DBException {
-        return calculateRowCounts(connection, "speaker_preposition");
+        return calculateRowCounts(connection, "speaker_preposition", "id");
     }
 
     @Override

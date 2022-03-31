@@ -130,7 +130,9 @@ public class ReportSpeakerService implements IReportSpeakerService {
             return false;
         }
         return result;
+
     }
+
 
     @Override
     public synchronized boolean saveWithProposalsDeletion(Report_speakers reportTopicSpeaker) {

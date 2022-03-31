@@ -71,7 +71,7 @@ public class EventDaoImpl extends GenericAbstractDao<Events> implements IEventDa
 
     @Override
     public Integer calculateEventNumber() throws DBException {
-        return calculateRowCounts(connection, "events");
+        return calculateRowCounts(connection, "events", "event_id");
     }
 
     @Override

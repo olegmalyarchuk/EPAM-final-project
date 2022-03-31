@@ -49,7 +49,7 @@ public class ReportsDaoImpl extends GenericAbstractDao<Reports> implements IRepo
 
     @Override
     public Integer calculateReportsNumber() throws DBException {
-        return calculateRowCounts(connection, "reports");
+        return calculateRowCounts(connection, "reports", "report_id");
     }
 
     @Override

@@ -31,7 +31,7 @@ public class ModeratorPrepositionDaoTest {
         ModeratorPrepositionDaoImpl moderatorPrepositionDao = new ModeratorPrepositionDaoImpl(connection);
         Moderator_preposition mod = new Moderator_preposition();
         Integer cntRow = moderatorPrepositionDao.calculateModeratorPrepositionNumber()+1;
-        mod.setId(100);
+        mod.setId(cntRow);
         mod.setReport_id(14);
         mod.setSpeaker_id(1);
         boolean result = moderatorPrepositionDao.addModeratorPrepositionToDB(mod);

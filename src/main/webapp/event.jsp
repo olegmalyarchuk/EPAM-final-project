@@ -14,16 +14,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 </head>
 <body>
-<%
-    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");// HTTP 1.1
-    response.setHeader("Pragma", "no-cache"); // HTTP 1.0
-    response.setHeader("Expires", "0"); // Proxies
-    if(session.getAttribute("email")==null) {
-        request.setAttribute("status", "unregistered");
-        RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
-        dispatcher.forward(request, response);
-    }
-%>
 <header>
     <nav class="navbar navbar-expand-md navbar-dark"
          style="background-color: #0074D9">
@@ -86,7 +76,12 @@
     <c:when test="${event.isFinished()}">
         <hr>
         <p class="fw-normal fs-5"><fmt:message key="event.registeredusers" /> ${registered}&nbsp&nbsp&nbsp<fmt:message key="event.presentusers" />${present}</p>
-        <a href="editPresence?event_id=${event.event_id}" class="btn btn-success"><fmt:message key="event.editpresence" /></a>
+        <c:choose>
+            <c:when test="${sessionScope.role_id==1}">
+                <a href="editPresence?event_id=${event.event_id}" class="btn btn-success"><fmt:message key="event.editpresence" /></a>
+    </c:when>
+        </c:choose>
+        
     </c:when>
     <c:otherwise>
         <hr>

@@ -25,6 +25,7 @@ public class ReportSpeakerDaoImpl extends GenericAbstractDao<Report_speakers> im
     public static final String SQL_UPDATE_BY_ID = "UPDATE reports_speakers set id=?, report_id=?, speaker_id=? where id=?;";
    public static final String SQL_FIND_BY_ID = "SELECT * FROM reports_speakers WHERE report_id=?;";
     public static final String SQL_DELETE_BY_ID = "DELETE FROM reports_speakers where report_id=?;";
+    public static final String SQL_DELETE_BY_ID_ID = "DELETE FROM reports_speakers where id=?;";
     String speakerPrepositionDeleteQuery = "DELETE FROM speaker_preposition WHERE report_id=?";
     String moderatorPrepositionDeleteQuery = "DELETE FROM moderator_preposition WHERE report_id=?";
     String insertStatement = "INSERT INTO reports_speakers(report_id, speaker_id) VALUES(?, ?);";
@@ -50,7 +51,7 @@ public class ReportSpeakerDaoImpl extends GenericAbstractDao<Report_speakers> im
 
     @Override
     public Integer calculateReportSpeakerNumber() throws DBException {
-        return calculateRowCounts(connection, "reports_speakers");
+        return calculateRowCounts(connection, "reports_speakers", "id");
     }
 
     @Override
@@ -94,6 +95,7 @@ public class ReportSpeakerDaoImpl extends GenericAbstractDao<Report_speakers> im
     public boolean deleteReportSpeakersFromDB(Integer report_id) {
         return deleteFromDB(connection, SQL_DELETE_BY_ID, report_id);
     }
+
 
     @Override
     public boolean saveWithProposalsDeletion(Report_speakers reportTopicSpeaker) {

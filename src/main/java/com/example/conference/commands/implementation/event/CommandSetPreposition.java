@@ -24,7 +24,7 @@ public class CommandSetPreposition implements ICommand {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
         try {
-            Integer id = moderatorPrepositionService.calculateModeratorPrepositionNumber()+2;
+            Integer id = moderatorPrepositionService.calculateModeratorPrepositionNumber()+1;
             Integer report_id = Integer.valueOf(request.getParameter("report_id"));
             Integer speaker_id = Integer.valueOf(request.getParameter("speaker_id"));
             Moderator_preposition mp = new Moderator_preposition();

@@ -30,11 +30,11 @@ public class EventUsersDaoTest {
     public void EventUsersDaoTest() throws DBException {
         EventUsersDaoImpl eventUsersDao = new EventUsersDaoImpl(connection);
         Event_users ev = new Event_users();
-        ev.setId(200);
+        Integer cntRow = eventUsersDao.calculateEventUsersNumber()+1;
+        ev.setId(cntRow);
         ev.setUser_id(1);
         ev.setEvent_id(1);
         ev.setPresent(false);
-        Integer cntRow = eventUsersDao.calculateEventUsersNumber()+1;
         boolean result = eventUsersDao.addEventUsersToDB(ev);
         Assert.assertTrue(result);
 

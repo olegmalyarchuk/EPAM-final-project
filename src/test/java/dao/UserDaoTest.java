@@ -26,6 +26,7 @@ public class UserDaoTest {
     }
 
 
+
     @Test
     public void UserTest() throws DBException {
        UserDaoImpl userDao = new UserDaoImpl(connection);
@@ -42,7 +43,7 @@ public class UserDaoTest {
 
         int cntRows = userDao.calculateUsersNumber();
         boolean result = userDao.addUserToDB(u);
-        Assert.assertEquals(result, true);
+        Assert.assertEquals(true, result);
         u.setUser_phone("+666666666");
          result = userDao.updateUserInDB(u);
         Assert.assertEquals(result, true);

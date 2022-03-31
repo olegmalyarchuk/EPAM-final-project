@@ -46,7 +46,6 @@ public class ReportSpeakerDaoTest {
         rp.setSpeaker_id(1);
         boolean result = reportSpeakerDao.addReportSpeakersToDB(rp);
         Assert.assertTrue(result);
-
         Integer cnt = reportSpeakerDao.calculateReportSpeakerNumber();
         Assert.assertEquals(id, cnt);
 
@@ -58,7 +57,7 @@ public class ReportSpeakerDaoTest {
 
 
 
-        Report_speakers findByRepId = reportSpeakerDao.findReportById(id);
+        Report_speakers findByRepId = reportSpeakerDao.findReportById(report_id);
         Assert.assertTrue(findByRepId!=null);
 
 

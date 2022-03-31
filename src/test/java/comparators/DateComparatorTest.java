@@ -31,9 +31,9 @@ public class DateComparatorTest {
     @Test
     public void checkEquals() {
         Events event1 = new Events();
-        event1.setEvent_date(LocalDateTime.now());
+        event1.setEvent_date(LocalDateTime.of(2022, 12, 1, 10, 10, 10));
         Events event2 = new Events();
-        event2.setEvent_date(LocalDateTime.now());
+        event2.setEvent_date(LocalDateTime.of(2022, 12, 1, 10, 10, 10));
         DateComparator dateComparator = new DateComparator();
         int result = dateComparator.compare(event1, event2);
         Assert.assertTrue(result==0);
