@@ -54,7 +54,7 @@
                         <input type="hidden" name="password" value="<c:out value='${user.user_password}' />" />
 
                     <fieldset class="form-group">
-                        <label><fmt:message key="editUserForm.userid" /></label> <input type="text"
+                        <label></label> <input type="hidden"
                                                             value="<c:out value='${user.id}' />" class="form-control"
                                                             name="user_id" required="required">
                     </fieldset>
@@ -108,6 +108,9 @@
     var editStatus = document.getElementById("editStatus").value;
     var lang = document.getElementById("lang").value;
     if(lang=="en") {
+        if(editStatus == "invalidId") {
+            swal("Error", "Invalid Role ID", "error");
+        }
         if (editStatus == "emptyFirstname") {
             swal("Error", "First name should not be empty", "error");
             //alert("First name should not be empty");
@@ -173,6 +176,9 @@
             //alert("It is technical work on the site. Please try again.")
         }
     } else {
+        if(editStatus == "invalidId") {
+            swal("Error", "Некорректний ID Ролі", "error");
+        }
         if (editStatus == "emptyFirstname") {
             swal("Помилка", "Ім'я не повинно бути порожнє", "error");
             //alert("First name should not be empty");

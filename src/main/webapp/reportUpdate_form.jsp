@@ -52,7 +52,7 @@
                 </caption>
                 <input type="hidden" name="report_id" value="<c:out value='${report_id}' />" />
                 <fieldset class="form-group">
-                    <label> <fmt:message key="reportupdateform.event_id" /></label> <input type="text" class="form-control" required="required" name="event_id" value="<c:out value='${event_id}' />" />
+                    <input type="hidden" class="form-control" required="required" name="event_id" value="<c:out value='${event_id}' />" />
                 </fieldset>
                 <fieldset class="form-group">
                     <label> <fmt:message key="reportupdateform.reportnameua" /></label> <input type="text" class="form-control" name="report_name_ua" required="required">

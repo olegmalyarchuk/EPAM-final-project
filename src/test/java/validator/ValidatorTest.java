@@ -56,6 +56,11 @@ public class ValidatorTest {
         Assert.assertEquals(result, true);
         result = Validator.isValidPhone("+777777777");
         Assert.assertEquals(result, true);
+        result = Validator.isValidPhone("");
+        Assert.assertEquals(result, false);
+        result = Validator.isValidPhone("  ");
+        Assert.assertEquals(result, false);
+
     }
 
     @Test
@@ -70,6 +75,9 @@ public class ValidatorTest {
         Assert.assertEquals(result, false);
         result = Validator.isValidId("");
         Assert.assertEquals(result, false);
+        result = Validator.isValidId(" ");
+        Assert.assertEquals(result, false);
+
     }
 
     @Test
@@ -88,6 +96,10 @@ public class ValidatorTest {
     public void checkText() {
         boolean result = Validator.isValidText("Lorem ipsum");
         Assert.assertEquals(result, true);
+        result = Validator.isValidText("");
+        Assert.assertEquals(result, false);
+        result = Validator.isValidText("  ");
+        Assert.assertEquals(result, false);
     }
 
     @Test
@@ -100,5 +112,11 @@ public class ValidatorTest {
         Assert.assertEquals(result, true);
         result = Validator.isValidDateFormat("2021-12");
         Assert.assertEquals(result, false);
+        result = Validator.isValidDateFormat("");
+        Assert.assertEquals(result, false);
+        result = Validator.isValidDateFormat("  ");
+        Assert.assertEquals(result, false);
+
+
     }
 }

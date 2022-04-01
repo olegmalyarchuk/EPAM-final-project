@@ -29,7 +29,7 @@ public class CommandUpdateUser implements ICommand {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
         Integer user_id = Integer.valueOf(request.getParameter("user_id"));
-        Integer role_id = Integer.valueOf(request.getParameter("role_id"));
+        String role_id0 = request.getParameter("role_id");
         String name = request.getParameter("user_name");
         String surname = request.getParameter("user_surname");
         String password = userService.findUserById(user_id).getUser_password();
@@ -60,10 +60,28 @@ public class CommandUpdateUser implements ICommand {
         } catch (DBException e) {
             log.error(e);
         }
-
-
-        //empty
-        if(name == null || name.equals("")) {
+        if(!Validator.isValidId(role_id0)) {
+            request.setAttribute("editStatus", "invalidId");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("editUser");
+            try {
+                dispatcher.forward(request, response);
+            } catch (ServletException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else if(Integer.valueOf(role_id0) < 1 || Integer.valueOf(role_id0) > 3) {
+            request.setAttribute("editStatus", "invalidId");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("editUser");
+            try {
+                dispatcher.forward(request, response);
+            } catch (ServletException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else if(name == null || name.equals("")) {
             request.setAttribute("editStatus", "emptyFirstname");
             RequestDispatcher dispatcher = request.getRequestDispatcher("editUser");
             try {
@@ -186,6 +204,7 @@ public class CommandUpdateUser implements ICommand {
                 e.printStackTrace();
             }
         } else {
+            Integer role_id = Integer.valueOf(role_id0);
             User newUser = new User();
             newUser.setId(user_id);
             newUser.setRole_id(role_id);
@@ -198,7 +217,6 @@ public class CommandUpdateUser implements ICommand {
             newUser.setUser_address(location);
             boolean isUpdated = userService.updateUserInDB(newUser);
             if(isUpdated) {
-                request.getSession().setAttribute("email", email);
                 request.setAttribute("editStatus", "successUpdate");
             }
             else request.setAttribute("editStatus", "errorUpdate");
