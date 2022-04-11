@@ -69,6 +69,14 @@ public interface IUserDao {
     User findUserByEmail(String email) throws DBException;
 
     /**
+     * Finds Users and speakers by event_id
+     * @param event_id - Event ID
+     * @return  Users and speakers by event_id
+     * @throws DBException if connection is down, broken or unable to retrieve information for certain reasons
+     */
+    List<User> findByEventId(Integer event_id) throws DBException;
+
+    /**
      * Adds new user to DB
      * @param user - user to add in DB
      * @return true if operation success and false if fails

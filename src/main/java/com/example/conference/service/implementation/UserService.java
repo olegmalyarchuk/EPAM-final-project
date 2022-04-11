@@ -129,6 +129,21 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public List<User> findByEventId(Integer event_id){
+        List<User> users = new ArrayList<>();
+        try {
+            daoFactory.open();
+            userDao = daoFactory.getUserDao();
+            users = new ArrayList<>();
+            users = userDao.findByEventId(event_id);
+            daoFactory.close();
+        } catch (DBException e) {
+            log.error(e);
+        }
+        return users;
+    }
+
+    @Override
     public synchronized boolean addUserToDB(User user) {
         boolean result;
         try {

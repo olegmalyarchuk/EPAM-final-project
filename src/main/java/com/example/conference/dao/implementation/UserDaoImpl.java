@@ -32,7 +32,8 @@ public class UserDaoImpl extends GenericAbstractDao<User> implements IUserDao {
     public static final String SQL_FIND_AVAILABLE_SPEAKER_BY_REPORT = "SELECT users.* FROM users WHERE NOT EXISTS (SELECT NULL FROM moderator_preposition mp WHERE mp.speaker_id=users.user_id AND mp.report_id=?) AND EXISTS (SELECT NULL FROM user_roles r WHERE r.role_description='speaker' AND r.role_id=users.role_id) ORDER BY users.user_id;";
     public static final String SQL_UPDATE_IMAGE_BY_ID = "UPDATE users set user_photo_url=? where user_id=?;";
     public static final String SQL_FIND_ROLE = "select role_description  from user_roles r join users u on r.role_id = u.role_id where u.user_id=?;";
-
+    public static final String SQL_FIND_USER_BY_EVENT_ID = "SELECT u.* FROM event_users e join users u on e.user_id = u.user_id where event_id = ?;";
+    public static final String SQL_FIND_SPEAKER_BY_EVENT_ID = "SELECT * from users where user_id = (select speaker_id FROM reports_speakers rs join reports r on rs.report_id = r.report_id where event_id = ?);";
 
     private Mapper<User, PreparedStatement> mapperToDB = (User user, PreparedStatement preparedStatement) -> {
         preparedStatement.setInt(1, user.getId());
@@ -113,6 +114,14 @@ public class UserDaoImpl extends GenericAbstractDao<User> implements IUserDao {
     @Override
     public User findUserByEmail(String email) throws DBException {
         return findBy(connection, User.class, SQL_SELECT_BY_EMAIL, email);
+    }
+
+    @Override
+    public List<User> findByEventId(Integer event_id) throws DBException {
+      List<User> usersAndSpeakers = new ArrayList<>();
+      usersAndSpeakers =  findAsListBy(connection, User.class, SQL_FIND_USER_BY_EVENT_ID, event_id);
+      usersAndSpeakers.addAll(findAsListBy(connection, User.class, SQL_FIND_SPEAKER_BY_EVENT_ID, event_id));
+      return usersAndSpeakers;
     }
 
     @Override

@@ -51,40 +51,13 @@ public class CommandUpdateEvent implements ICommand {
             else request.setAttribute("status", "errorUpdate");
             String lang = "en";
             if(request.getSession().getAttribute("lang").equals("ua")) lang = "ua";
-            dataforMailUpdate(event_id, lang);
+            List<User> userList = userService.findByEventId(event_id);
+            String event_name = service.findEventsById(event_id).getEvent_name_en();
+            GmailSender.sendEventChange(userList, event_name, lang);
             response.sendRedirect("listEvent");
         } catch (IOException | DBException e) {
             log.error(e);
         }
     }
 
-    private void dataforMailUpdate(int event_id, String lang) throws DBException {
-        int id = event_id;
-        List<User> userList = new ArrayList<>();
-        List<Report_speakers> rs = reportSpeakerService.findAllReportSpeakersInDB();
-        List<Event_users> ev = eventUsersService.findAllEventUsersInDB();
-        for(int i = 0; i < ev.size(); i++) {
-            if(ev.get(i).getEvent_id()==id) {
-                Integer user_id = ev.get(i).getUser_id();
-                User u = userService.findUserById(user_id);
-                userList.add(u);
-            }
-        }
-        for(int i = 0; i < rs.size(); i++) {
-            Report_speakers report_speakers = rs.get(i);
-            Integer speaker_id = report_speakers.getSpeaker_id();
-            Integer report_id = report_speakers.getReport_id();
-            List<Reports> reports = reportService.findAllReportsInDB();
-            for(int j = 0; j < reports.size(); j++) {
-                if(reports.get(j).getEvent_id()==id) {
-                    User u = userService.findUserById(speaker_id);
-                    userList.add(u);
-                    break;
-                }
-            }
-        }
-        String event_name = service.findEventsById(id).getEvent_name_en();
-        if(lang.equals("ua")) service.findEventsById(id).getEvent_name_ua();
-        GmailSender.sendEventChange(userList, event_name, lang);
-    }
 }
