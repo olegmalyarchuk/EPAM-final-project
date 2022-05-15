@@ -7,10 +7,10 @@
           <map>
             <entry key="com.zeroturnaround.jrebel.FormatVersion" value="7.0.0" />
             <entry key="jrebelEnabled" value="true" />
-            <entry key="lastExternalPluginCheckTime" value="1647853837943" />
+            <entry key="lastExternalPluginCheckTime" value="1651352117542" />
           </map>
         </option>
-        <option name="version" value="9" />
+        <option name="version" value="10" />
       </configuration>
     </facet>
     <facet type="web" name="Web">

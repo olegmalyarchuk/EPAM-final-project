@@ -5,8 +5,11 @@ import com.example.conference.entity.*;
 import com.example.conference.exceptions.DBException;
 import com.example.conference.mail.GmailSender;
 import com.example.conference.service.*;
+import com.example.conference.validator.Validator;
 import org.apache.log4j.Logger;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -54,7 +57,7 @@ public class CommandUpdateEvent implements ICommand {
             List<User> userList = userService.findByEventId(event_id);
             String event_name = service.findEventsById(event_id).getEvent_name_en();
             GmailSender.sendEventChange(userList, event_name, lang);
-            response.sendRedirect("listEvent");
+            response.sendRedirect("/listEvent");
         } catch (IOException | DBException e) {
             log.error(e);
         }

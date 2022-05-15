@@ -48,7 +48,7 @@ public class CommandRegister implements ICommand {
 
         //empty
         if(firstName == null || firstName.equals("")) {
-            req.setAttribute("status", "emptyFirstname");
+            //req.setAttribute("status", "emptyFirstname");
             dispatcher = req.getRequestDispatcher("register.jsp");
             try {
                 dispatcher.forward(req, resp);

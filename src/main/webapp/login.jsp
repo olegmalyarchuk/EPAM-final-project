@@ -28,7 +28,7 @@
             <div class="signin-content">
                 <div class="signin-image">
                     <figure><img src="resources/images/auth/signin-image.jpg" alt="sing up image"></figure>
-                    <a href="register.jsp" class="signup-image-link"><fmt:message key="login.createaccount" /></a>
+                    <a href="register" class="signup-image-link"><fmt:message key="login.createaccount" /></a>
                 </div>
 
                 <div class="signin-form">

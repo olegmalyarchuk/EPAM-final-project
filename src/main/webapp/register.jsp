@@ -81,7 +81,7 @@
 <link rel="stylesheet" href="alert/dist/sweatalert.css ">
 <script type="text/javascript">
     var status = document.getElementById("status").value;
-    var lang = document.getElementById("lang").value;
+    var lang = "en";
     if(lang=="en") {
         if (status == "emptyFirstname") {
             swal("Error", "First name should not be empty", "error");
